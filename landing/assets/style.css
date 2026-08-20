@@ -1,0 +1,265 @@
+/* RootCause Bitcoin Defense — landing
+   Misma paleta que el panel de la aplicación: fondo profundo, naranja Bitcoin.
+   Sin dependencias, sin fuentes remotas, sin analítica. */
+
+:root {
+  --bg: #070f18;
+  --bg-alt: #0b1725;
+  --panel: #101f30;
+  --border: #1c3247;
+  --text: #e6edf5;
+  --muted: #93a7bd;
+  --accent: #f7931a;
+  --accent-soft: rgba(247, 147, 26, 0.12);
+  --ok: #3fb950;
+  --warn: #d29922;
+  --bad: #f85149;
+  --radius: 14px;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 { line-height: 1.25; margin: 0 0 0.6rem; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: 1.05rem; }
+p { margin: 0 0 1rem; }
+
+code, pre { font-family: var(--mono); }
+
+code {
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 0.1em 0.4em;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+/* ── Navegación ─────────────────────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(7, 15, 24, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.nav-logo span { color: var(--accent); font-size: 1.2rem; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  font-size: 0.92rem;
+}
+
+.nav-links a { color: var(--muted); }
+.nav-links a:hover { color: var(--text); text-decoration: none; }
+
+.btn-nav {
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.8rem;
+  border-radius: 8px;
+  color: var(--text) !important;
+}
+
+.btn-nav:hover { border-color: var(--accent); }
+
+/* ── Secciones ──────────────────────────────────────────────────────────── */
+section { padding: 4rem 1.25rem; }
+.inner { max-width: 1100px; margin: 0 auto; }
+.alt { background: var(--bg-alt); border-block: 1px solid var(--border); }
+
+.eyebrow {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.lead { color: var(--muted); font-size: 1.05rem; max-width: 62ch; }
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+.hero { padding-top: 3.5rem; text-align: center; }
+
+.ascii {
+  color: var(--accent);
+  font-family: var(--mono);
+  white-space: pre;
+  font-size: clamp(0.34rem, 1.25vw, 0.8rem);
+  line-height: 1;
+  overflow-x: auto;
+  margin: 0 0 1.5rem;
+}
+
+.hero h1 {
+  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.hero .lead { margin: 0 auto 1.8rem; }
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+
+.badge {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  color: var(--muted);
+}
+
+.badge.on { color: var(--ok); border-color: rgba(63, 185, 80, 0.4); }
+
+.cta { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn:hover { text-decoration: none; border-color: var(--accent); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #10151b;
+  border-color: var(--accent);
+}
+
+.btn-primary:hover { background: #ffa733; }
+
+/* ── Rejillas ───────────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 2rem;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+}
+
+.card h3 { color: var(--text); }
+.card p { color: var(--muted); margin-bottom: 0; font-size: 0.95rem; }
+.card .mark { font-size: 1.4rem; display: block; margin-bottom: 0.5rem; }
+
+/* ── Tabla ──────────────────────────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin-top: 1.5rem; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93rem;
+  min-width: 520px;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+th { color: var(--accent); font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+td { color: var(--muted); }
+td strong, td code { color: var(--text); }
+
+/* ── Bloque de código ───────────────────────────────────────────────────── */
+pre.block {
+  background: #060c14;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+  overflow-x: auto;
+  font-size: 0.86rem;
+  color: var(--muted);
+  margin: 1.4rem 0 0;
+}
+
+pre.block .ok { color: var(--ok); }
+pre.block .cmd { color: var(--text); }
+
+/* ── Listas de honestidad ───────────────────────────────────────────────── */
+.two-col {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: 2rem;
+}
+
+.list { list-style: none; padding: 0; margin: 0; }
+.list li { padding: 0.45rem 0 0.45rem 1.8rem; position: relative; color: var(--muted); }
+.list li::before { position: absolute; left: 0; }
+.list.yes li::before { content: "✓"; color: var(--ok); }
+.list.no li::before { content: "✕"; color: var(--bad); }
+
+/* ── Pie ────────────────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 1.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+footer .inner { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+footer a { color: var(--muted); }
+footer a:hover { color: var(--accent); }
+
+.family { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+
+@media (max-width: 640px) {
+  section { padding: 3rem 1rem; }
+  .nav-links { gap: 0.75rem; font-size: 0.85rem; }
+}

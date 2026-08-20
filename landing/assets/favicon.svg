@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="RootCause Bitcoin Defense">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffb24c"/>
+      <stop offset="1" stop-color="#f7931a"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="#091522"/>
+  <path d="M64 16 104 31v31c0 26-15 42-40 51C39 104 24 88 24 62V31z" fill="url(#g)"/>
+  <text x="64" y="83" text-anchor="middle" font-family="system-ui,sans-serif" font-size="55" font-weight="800" fill="#111">₿</text>
+</svg>

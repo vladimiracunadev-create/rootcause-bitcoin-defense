@@ -189,18 +189,19 @@ El dashboard y la API comparten el mismo proceso local. El diseño sin
 dependencias externas facilita auditoría, ejecución en Windows, macOS, Linux o
 contenedores y posterior incorporación al stack real de RootCause.
 
-Consulta:
+El índice completo de la documentación está en
+[docs/INDEX.md](docs/INDEX.md). Los cuatro documentos con los que suele empezar
+la gente:
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — componentes y flujo de datos;
-- [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) — qué se defiende y qué no;
-- [docs/ADR-0001-plataforma-y-lenguaje.md](docs/ADR-0001-plataforma-y-lenguaje.md)
-  — por qué escritorio y no web alojada, por qué Node hoy y bajo qué condiciones
-  se migraría a Rust;
-- [docs/WINDOWS-APP.md](docs/WINDOWS-APP.md) — empaquetado, instalación y
-  verificación de los artefactos;
-- [docs/INTEGRATION-ROOTCAUSE.md](docs/INTEGRATION-ROOTCAUSE.md) — encaje con el
-  producto existente;
-- [docs/API.md](docs/API.md) — contrato HTTP completo.
+| Si eres… | Empieza por |
+| --- | --- |
+| Nuevo en el tema | [docs/MANUAL_PARA_NOVATOS.md](docs/MANUAL_PARA_NOVATOS.md) — sin dar nada por sabido |
+| Usuario del panel | [docs/MANUAL_USUARIO.md](docs/MANUAL_USUARIO.md) — pantalla por pantalla, Windows y localhost |
+| Operador | [docs/OPERACION.md](docs/OPERACION.md) — qué hacer ante cada hallazgo |
+| Desarrollador | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) y [docs/HEURISTICAS.md](docs/HEURISTICAS.md) |
+
+Y si aparece una palabra que no conoces, está en
+[docs/GLOSARIO.md](docs/GLOSARIO.md).
 
 ## Reglas incluidas
 

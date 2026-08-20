@@ -1,0 +1,77 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Deploy Landing Page — RootCause Bitcoin Defense
+#
+# Publica landing/ en GitHub Pages (mismo esquema que las ediciones Windows,
+# Web y Mobile). Se dispara solo cuando cambia la landing o este workflow.
+#
+# La landing es estática y autocontenida: HTML, una hoja de estilos y un SVG.
+# Sin fuentes remotas, sin analítica, sin scripts de terceros — la misma regla
+# que se aplica al panel de la aplicación.
+# ─────────────────────────────────────────────────────────────────────────────
+name: Deploy Landing Page
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "landing/**"
+      - ".github/workflows/deploy-landing.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Publicar en GitHub Pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      # La landing no puede traer nada de fuera. Si alguien mete un CDN, una
+      # fuente remota o un pixel de analítica, este paso tumba el despliegue.
+      # Se vigilan los RECURSOS que el navegador descarga, no los enlaces: un
+      # <a href> a GitHub es contenido, un <script src> a un CDN es un tercero
+      # ejecutando código en la página.
+      - name: Verificar que la landing no llama a terceros
+        run: |
+          if grep -rInE '<(script|img|iframe|source|video|audio|embed|object)[^>]+(src|data)="https?://' landing/; then
+            echo "Recurso externo cargado en la landing."
+            exit 1
+          fi
+          if grep -rInE '<link[^>]+href="https?://' landing/; then
+            echo "Hoja de estilos o fuente remota en la landing."
+            exit 1
+          fi
+          if grep -rInE '(@import[^;]*|url\(\s*.?)https?://' landing/; then
+            echo "Import o url() remoto en el CSS de la landing."
+            exit 1
+          fi
+          if grep -rInE 'googletagmanager|google-analytics|hotjar|segment\.io|plausible\.io|matomo' landing/; then
+            echo "Analítica detectada en la landing."
+            exit 1
+          fi
+          echo "  landing autocontenida"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+
+      - name: Subir artefacto
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: landing
+
+      - name: Desplegar
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

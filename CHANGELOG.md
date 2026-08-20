@@ -31,7 +31,15 @@ del proyecto.
 - workflow de release de Windows que instala el `.exe` en silencio, arranca la
   aplicación instalada y publica `SHA256SUMS.txt`;
 - análisis CodeQL semanal y Dependabot para GitHub Actions;
-- `docs/ADR-0001-plataforma-y-lenguaje.md` y `docs/WINDOWS-APP.md`.
+- `docs/ADR-0001-plataforma-y-lenguaje.md` y `docs/WINDOWS-APP.md`;
+- documentación completa alineada con el resto de la familia RootCause: índice
+  (`INDEX.md`), glosario de términos, manual de usuario para la versión Windows
+  y para el panel local, manual para quien empieza de cero, operación,
+  troubleshooting, heurísticas de las 11 reglas, detección de amenazas,
+  limitaciones, requisitos, testing, CI, checklist de release, política de
+  privacidad local, catálogo de producto, comparativa con otras herramientas,
+  licencia y decisión, y por qué JavaScript sin dependencias;
+- landing pública en GitHub Pages.
 
 ### Cambia
 

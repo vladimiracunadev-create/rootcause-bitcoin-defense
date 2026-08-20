@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="RootCause Bitcoin Defense — aplicación de escritorio watch-only que inventaría la procedencia de claves Bitcoin, detecta firmware con defectos de entropía publicados y explica la causa raíz con evidencia. Todo local, cero dependencias, nunca pide semillas." />
+  <meta property="og:title" content="RootCause Bitcoin Defense — defensa watch-only para custodia Bitcoin" />
+  <meta property="og:description"
+    content="Tu wallet puede estar comprometida sin que nadie la haya tocado. Inventario de procedencia de claves, avisos de firmware y respuesta a incidentes. Local, sin dependencias y sin pedirte jamás una semilla." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vladimiracunadev-create.github.io/rootcause-bitcoin-defense/" />
+  <title>RootCause Bitcoin Defense</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <span class="nav-logo"><span aria-hidden="true">₿</span> RootCause Bitcoin Defense</span>
+      <nav class="nav-links">
+        <a href="#problema">El problema</a>
+        <a href="#que-hace">Qué hace</a>
+        <a href="#prueba">La prueba</a>
+        <a href="#honestidad">Honestidad</a>
+        <a href="#instalar">Instalar</a>
+        <a href="#familia">Familia</a>
+        <a class="btn-nav" href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense">Ver en GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="inner">
+      <pre class="ascii" aria-hidden="true">
+██████╗  ██████╗  ██████╗ ████████╗ ██████╗ █████╗ ██╗   ██╗███████╗███████╗
+██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██╔════╝██╔══██╗██║   ██║██╔════╝██╔════╝
+██████╔╝██║   ██║██║   ██║   ██║   ██║     ███████║██║   ██║███████╗█████╗  
+██╔══██╗██║   ██║██║   ██║   ██║   ██║     ██╔══██║██║   ██║╚════██║██╔══╝  
+██║  ██║╚██████╔╝╚██████╔╝   ██║   ╚██████╗██║  ██║╚██████╔╝███████║███████╗
+╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝    ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝
+                  B I T C O I N   D E F E N S E                             
+</pre>
+
+      <h1>Tu wallet puede estar comprometida<br />sin que nadie la haya tocado</h1>
+
+      <p class="lead">
+        Si la semilla nació de un firmware con un defecto de entropía, el atacante no
+        necesita robarte nada: reconstruye la clave y firma una transacción
+        perfectamente válida. Esta aplicación inventaría <strong>de dónde viene</strong>
+        cada una de tus claves, la contrasta con los avisos publicados y te dice qué
+        hacer, con evidencia.
+      </p>
+
+      <div class="badges">
+        <span class="badge on">Dependencias: 0</span>
+        <span class="badge on">Telemetría: 0</span>
+        <span class="badge on">Claves privadas: nunca</span>
+        <span class="badge">Windows · Linux · macOS</span>
+        <span class="badge">MIT</span>
+      </div>
+
+      <div class="cta">
+        <a class="btn btn-primary"
+          href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/releases/latest">Descargar para
+          Windows</a>
+        <a class="btn"
+          href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/blob/main/docs/MANUAL_PARA_NOVATOS.md">Empezar
+          desde cero</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="problema" class="alt">
+    <div class="inner">
+      <p class="eyebrow">Por qué existe</p>
+      <h2>Dos incidentes de 2026, una misma lección</h2>
+      <p class="lead">
+        El protocolo Bitcoin no fue vulnerado en ninguno de los dos. Y aun así,
+        ambos cambiaron el riesgo real de miles de personas.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <span class="mark" aria-hidden="true">◆</span>
+          <h3>COLDCARD, julio de 2026</h3>
+          <p>
+            Ciertas versiones de firmware generaban semillas con mucha menos entropía
+            de la esperada. El dispositivo siguió fuera de línea todo el tiempo; las
+            claves eran, sencillamente, reconstruibles. <strong>Actualizar el firmware
+            no repara una semilla ya creada.</strong>
+          </p>
+        </article>
+        <article class="card">
+          <span class="mark" aria-hidden="true">◆</span>
+          <h3>Trezor, agosto de 2026</h3>
+          <p>
+            Un proveedor logístico expuso datos de pedidos. Ni una clave comprometida,
+            pero con nombre, teléfono y dirección el phishing deja de ser genérico y
+            pasa a ser creíble. <strong>La superficie de una wallet incluye a quien la
+            usa.</strong>
+          </p>
+        </article>
+        <article class="card">
+          <span class="mark" aria-hidden="true">◆</span>
+          <h3>Lo que no se ve mirando</h3>
+          <p>
+            Una clave con 32 bits de azar y otra con 256 producen direcciones
+            idénticas en forma. No hay análisis público que las distinga. La única
+            respuesta es <strong>saber cómo nació cada clave</strong>: fabricante,
+            modelo, firmware y método.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="que-hace">
+    <div class="inner">
+      <p class="eyebrow">Qué hace</p>
+      <h2>Once reglas, causa raíz y siguiente paso</h2>
+      <p class="lead">
+        Cada hallazgo trae qué ocurre, <em>por qué</em> ocurre, la evidencia que lo
+        sostiene y los pasos de remediación —tomados del aviso del fabricante cuando
+        existe.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Detecta</th>
+              <th>Severidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>BTC-KEY-001</code></td><td>Semilla creada con firmware afectado por un aviso</td><td>Crítica</td></tr>
+            <tr><td><code>BTC-KEY-002</code></td><td>No se puede demostrar con qué firmware nació la clave</td><td>Alta / media</td></tr>
+            <tr><td><code>BTC-KEY-003</code></td><td>Origen de entropía desconocido</td><td>Media</td></tr>
+            <tr><td><code>BTC-CUSTODY-001</code></td><td>Alto valor bajo una sola clave</td><td>Crítica</td></tr>
+            <tr><td><code>BTC-CUSTODY-002</code></td><td>Multisig sin diversidad de fabricantes</td><td>Alta / media</td></tr>
+            <tr><td><code>BTC-TX-001</code></td><td>Gasto observado sin aprobación conocida</td><td>Crítica</td></tr>
+            <tr><td><code>BTC-NODE-001…004</code></td><td>Nodo caído, sin sincronizar, aislado o con mempool saturado</td><td>Alta / media</td></tr>
+            <tr><td><code>BTC-PRIVACY-001</code></td><td>Acceso masivo a datos de clientes</td><td>Crítica / media</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <span class="mark" aria-hidden="true">▣</span>
+          <h3>Inventario de procedencia</h3>
+          <p>Wallets, firmantes, fabricante, modelo y firmware al crear la semilla. Nunca claves.</p>
+        </article>
+        <article class="card">
+          <span class="mark" aria-hidden="true">◎</span>
+          <h3>Matriz de avisos fechada</h3>
+          <p>Rangos afectados por modelo y canal, con su fecha de verificación a la vista.</p>
+        </article>
+        <article class="card">
+          <span class="mark" aria-hidden="true">◈</span>
+          <h3>Bitcoin Core en solo lectura</h3>
+          <p>Once métodos de consulta en allowlist. Firmar, enviar o desbloquear se rechaza antes de salir.</p>
+        </article>
+        <article class="card">
+          <span class="mark" aria-hidden="true">⛓</span>
+          <h3>Auditoría encadenada</h3>
+          <p>Cada acción incluye el hash de la anterior: alterar el pasado rompe la cadena y se detecta.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="prueba" class="alt">
+    <div class="inner">
+      <p class="eyebrow">La prueba</p>
+      <h2>Las promesas se ejecutan, no se leen</h2>
+      <p class="lead">
+        En cada cambio, la integración continua arranca la aplicación real y le
+        intenta entregar semillas, mnemónicos, passphrases y claves privadas
+        extendidas. Si alguna vez las aceptara, la compilación falla y ese cambio no
+        se publica.
+      </p>
+
+      <pre class="block"><span class="cmd">$ node scripts/check-security-claims.js</span>
+  <span class="ok">ok</span>  allowlist RPC solo de lectura (11 métodos)
+  <span class="ok">ok</span>  RPC remoto rechazado por defecto
+  <span class="ok">ok</span>  bind por defecto en loopback
+  <span class="ok">ok</span>  watchtower apagado por defecto
+  <span class="ok">ok</span>  cabecera CSP self-only
+  <span class="ok">ok</span>  mutación sin cabecera local rechazada
+  <span class="ok">ok</span>  material secreto rechazado (seed)
+  <span class="ok">ok</span>  material secreto rechazado (mnemonic anidado)
+  <span class="ok">ok</span>  material secreto rechazado (passphrase)
+  <span class="ok">ok</span>  material secreto rechazado (xprv en texto libre)
+  <span class="ok">ok</span>  procedencia pública aceptada
+Invariantes de seguridad verificados: 20 comprobaciones.</pre>
+
+      <div class="grid">
+        <article class="card">
+          <h3>El artefacto se arranca antes de publicarse</h3>
+          <p>
+            En cada release, el instalador se instala en silencio y la aplicación
+            instalada tiene que responder con inventario. Un binario que pesa lo
+            esperado puede abrirse vacío; aquí eso no llega a publicarse.
+          </p>
+        </article>
+        <article class="card">
+          <h3>El runtime viaja verificado</h3>
+          <p>
+            El motor Node.js oficial se descarga y se comprueba contra su SHA-256
+            publicado. La versión exacta y su hash quedan escritos dentro del propio
+            paquete, en <code>BUILD-INFO.json</code>.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="honestidad">
+    <div class="inner">
+      <p class="eyebrow">Honestidad</p>
+      <h2>Lo que hace y lo que no</h2>
+      <p class="lead">
+        Un detector que no declara sus límites produce una falsa sensación de
+        cobertura. En custodia de bitcoin, eso cuesta dinero real.
+      </p>
+
+      <div class="two-col">
+        <div>
+          <h3>Sí hace</h3>
+          <ul class="list yes">
+            <li>Inventariar la procedencia de claves y firmantes</li>
+            <li>Cruzarla con avisos de seguridad publicados</li>
+            <li>Detectar concentración y multisig sin diversidad</li>
+            <li>Vigilar gastos fuera de política contra tu nodo</li>
+            <li>Levantar incidentes con causa raíz y runbook</li>
+            <li>Cifrar el estado local con AES-256-GCM</li>
+          </ul>
+        </div>
+        <div>
+          <h3>No hace, y no podría</h3>
+          <ul class="list no">
+            <li>Pedir, guardar o derivar tus claves y semillas</li>
+            <li>Firmar o transmitir transacciones</li>
+            <li>Cancelar o revertir una transacción confirmada</li>
+            <li>Adivinar si una semilla es débil mirando una dirección</li>
+            <li>Impedir un gasto si el atacante ya tiene la clave</li>
+            <li>Sustituir una auditoría criptográfica profesional</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="instalar" class="alt">
+    <div class="inner">
+      <p class="eyebrow">Instalar</p>
+      <h2>Dos formatos, sin requisitos previos</h2>
+      <p class="lead">
+        No hace falta tener Node.js instalado ni permisos de administrador. Verifica
+        siempre la descarga contra <code>SHA256SUMS.txt</code> antes de ejecutar nada.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <h3>Instalador de Windows</h3>
+          <p>
+            Instalación por usuario, accesos directos y desinstalador. Los datos quedan
+            aparte del programa, así que actualizar no los pisa.
+          </p>
+        </article>
+        <article class="card">
+          <h3>ZIP portable</h3>
+          <p>
+            Descomprimir y ejecutar. Ideal para equipos donde no se instala software o
+            para auditar el contenido antes de usarlo.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Desde el código</h3>
+          <p>
+            Windows, Linux y macOS con Node 22.12 o superior. Sin
+            <code>npm install</code>, porque no hay nada que instalar.
+          </p>
+        </article>
+      </div>
+
+      <pre class="block"><span class="cmd">PS&gt; Get-FileHash .\RootCause-Bitcoin-Defense-0.2.0-win-x64-setup.exe -Algorithm SHA256</span>
+<span class="cmd">$ git clone https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense</span>
+<span class="cmd">$ node src/server.js</span>   → http://127.0.0.1:8787</pre>
+
+      <div class="cta" style="margin-top:2rem">
+        <a class="btn btn-primary"
+          href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/releases/latest">Ir a Releases</a>
+        <a class="btn"
+          href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/blob/main/docs/INDEX.md">Leer la
+          documentación</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="familia">
+    <div class="inner">
+      <p class="eyebrow">Familia RootCause</p>
+      <h2>Un mismo criterio, cuatro superficies</h2>
+      <p class="lead">
+        Causa raíz con evidencia, todo local, telemetría cero y los límites por
+        delante. Cada edición lleva esa idea a su dominio.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <h3><a href="https://github.com/vladimiracunadev-create/rootcause-windows-inspector">Windows Inspector</a></h3>
+          <p>Sistema operativo: CPU, disco, red, procesos, autoarranque y servicios. Rust.</p>
+        </article>
+        <article class="card">
+          <h3><a href="https://github.com/vladimiracunadev-create/rootcause-web-inspector">Web Inspector</a></h3>
+          <p>Navegador: cookies, sesiones, extensiones, descargas y permisos. JavaScript sin dependencias.</p>
+        </article>
+        <article class="card">
+          <h3><a href="https://github.com/vladimiracunadev-create/rootcause-mobile-inspector">Mobile Inspector</a></h3>
+          <p>Android e iOS: consumo por app, stalkerware y permisos. Flutter.</p>
+        </article>
+        <article class="card">
+          <h3>Bitcoin Defense</h3>
+          <p>Custodia Bitcoin: procedencia de claves, avisos de firmware y gasto fuera de política. Estás aquí.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="inner">
+      <div>
+        <strong>RootCause Bitcoin Defense</strong> · MIT · Vladimir Acuña<br />
+        Watch-only por diseño: nunca pide semillas, passphrases ni claves privadas.
+      </div>
+      <div>
+        <a href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense">Código</a> ·
+        <a
+          href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/blob/main/SECURITY.md">Seguridad</a>
+        ·
+        <a
+          href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/blob/main/docs/POLITICA_DE_PRIVACIDAD_LOCAL.md">Privacidad</a>
+        ·
+        <a
+          href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/blob/main/docs/LIMITACIONES.md">Limitaciones</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
