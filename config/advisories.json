@@ -1,0 +1,80 @@
+[
+  {
+    "id": "BTC-ADV-2026-COLDCARD-ENTROPY",
+    "title": "COLDCARD seed-generation entropy defect",
+    "severity": "critical",
+    "status": "active",
+    "publishedAt": "2026-07-30T00:00:00Z",
+    "verifiedAt": "2026-08-20T00:00:00Z",
+    "summary": "Affected firmware could generate seeds with substantially less entropy than intended. Updating firmware does not repair an already-generated seed.",
+    "vendor": "COLDCARD",
+    "affected": [
+      {
+        "models": ["Mk2", "Mk3"],
+        "track": "standard",
+        "minInclusive": "4.0.1",
+        "maxInclusive": "4.1.9"
+      },
+      {
+        "models": ["Mk4", "Mk5"],
+        "track": "standard",
+        "maxExclusive": "5.6.0"
+      },
+      {
+        "models": ["Mk4", "Mk5"],
+        "track": "edge",
+        "maxExclusive": "6.6.0X"
+      },
+      {
+        "models": ["Q"],
+        "track": "standard",
+        "maxExclusive": "1.5.0Q"
+      },
+      {
+        "models": ["Q"],
+        "track": "edge",
+        "maxExclusive": "6.6.0QX"
+      }
+    ],
+    "mitigation": [
+      "Stop issuing new receive addresses from the affected wallet.",
+      "Create a new seed using fixed firmware or an independent trusted signer.",
+      "Verify the new fingerprint and receive address on a separate device.",
+      "Migrate with a small test transaction before moving the remaining funds.",
+      "Treat the old seed as permanently compromised."
+    ],
+    "sources": [
+      {
+        "label": "Coinkite security advisory",
+        "url": "https://blog.coinkite.com/coldcard-mk3-seed-generation-warning/"
+      },
+      {
+        "label": "Block technical root-cause analysis",
+        "url": "https://engineering.block.xyz/blog/predictable-rng-fallback-and-32-bit-reseed-in-coldcard-firmware"
+      }
+    ]
+  },
+  {
+    "id": "BTC-ADV-2026-TREZOR-SHIPMONK",
+    "title": "Trezor shipping-provider customer-data breach",
+    "severity": "high",
+    "status": "monitoring",
+    "publishedAt": "2026-08-12T00:00:00Z",
+    "verifiedAt": "2026-08-20T00:00:00Z",
+    "summary": "A third-party logistics breach exposed customer order data. Devices and private keys were not reported compromised, but phishing and targeted-attack risk increased.",
+    "vendor": "Trezor",
+    "affected": [],
+    "mitigation": [
+      "Never enter a wallet backup on a website.",
+      "Verify urgent communications using an independently opened official channel.",
+      "Minimize and expire order data held by third parties.",
+      "Do not store customer identity and wallet ownership in the same trust domain."
+    ],
+    "sources": [
+      {
+        "label": "Trezor incident notice",
+        "url": "https://trezor.io/blog/news/recent-customer-data-exposed-in-shipping-provider-incident"
+      }
+    ]
+  }
+]

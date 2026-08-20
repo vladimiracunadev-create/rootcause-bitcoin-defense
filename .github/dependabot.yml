@@ -1,0 +1,20 @@
+# La aplicacion no tiene dependencias npm a proposito, asi que aqui solo se
+# vigila lo unico que si es codigo de terceros ejecutandose en este proyecto:
+# las GitHub Actions. Estan pinneadas a commit SHA y Dependabot es quien
+# propone subirlas, con su nota de version al lado.
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/Santiago
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
+    labels:
+      - dependencias
+      - github-actions

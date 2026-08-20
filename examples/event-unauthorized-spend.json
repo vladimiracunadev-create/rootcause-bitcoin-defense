@@ -1,0 +1,6 @@
+{
+  "txid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "walletId": "wallet-demo-coldcard",
+  "spendsWatchedWallet": true,
+  "source": "regtest-laboratory"
+}

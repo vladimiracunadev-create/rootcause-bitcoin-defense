@@ -1,0 +1,22 @@
+services:
+  rootcause-bitcoin-defense:
+    build: .
+    environment:
+      DEMO_MODE: "true"
+      HOST: "0.0.0.0"
+      PORT: "8787"
+    ports:
+      - "127.0.0.1:8787:8787"
+    read_only: true
+    tmpfs:
+      - /tmp
+    volumes:
+      - rootcause-data:/var/lib/rootcause-bitcoin-defense
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+
+volumes:
+  rootcause-data:

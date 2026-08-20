@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "highValueThresholdSats": 10000000,
+  "requireIndependentVendorsForHighValue": true,
+  "minimumHighValueQuorum": {
+    "required": 2,
+    "total": 3
+  },
+  "blockUnknownFirmware": true,
+  "blockAffectedWalletDeposits": true,
+  "automaticActions": [
+    "create_incident",
+    "capture_evidence",
+    "disable_new_deposit_addresses",
+    "deny_policy_authorization",
+    "notify_operators"
+  ],
+  "humanApprovalRequired": [
+    "create_migration_psbt",
+    "change_wallet_descriptor",
+    "broadcast_transaction",
+    "rotate_signers"
+  ],
+  "forbiddenActions": [
+    "collect_seed_words",
+    "collect_private_keys",
+    "collect_bip39_passphrases",
+    "sign_on_application_server",
+    "auto_broadcast_recovery_transaction"
+  ]
+}

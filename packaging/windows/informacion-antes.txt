@@ -1,0 +1,37 @@
+RootCause Bitcoin Defense - antes de instalar
+=============================================
+
+Que hace esta aplicacion
+------------------------
+Inventaria la PROCEDENCIA de tus claves Bitcoin (fabricante, modelo, firmware
+usado al crear la semilla), la contrasta con avisos de seguridad publicos y
+levanta incidentes con causa raiz, evidencia y runbook de remediacion.
+
+Que NO hace, por diseno
+-----------------------
+- No pide ni almacena semillas, palabras de recuperacion, passphrases BIP-39,
+  WIF, xprv ni ninguna clave privada. Si se las envias, las rechaza.
+- No firma transacciones ni las transmite a la red.
+- No sale a Internet: el panel se sirve en 127.0.0.1 y no consulta servicios
+  de terceros. La conexion opcional a Bitcoin Core es local y de SOLO LECTURA.
+
+Que se instala
+--------------
+Una carpeta con el codigo de la aplicacion y el motor Node.js oficial,
+verificado por SHA-256 al empaquetar. No se instalan dependencias de terceros,
+no se registran servicios y no se modifica el arranque de Windows.
+
+Donde quedan tus datos
+----------------------
+En %LOCALAPPDATA%\RootCause\bitcoin-defense, cifrados con AES-256-GCM cuando
+activas el modo persistente. La clave la generas tu y no se guarda junto a los
+datos. Si la pierdes, no hay recuperacion posible.
+
+Limites honestos
+----------------
+Esta aplicacion no puede determinar la entropia real de una semilla mirando una
+direccion, no puede revertir una transaccion confirmada y no sustituye una
+auditoria criptografica ni un proceso profesional de respuesta a incidentes.
+
+Codigo fuente, modelo de amenazas y avisos:
+https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense

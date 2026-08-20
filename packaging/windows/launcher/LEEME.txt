@@ -1,0 +1,52 @@
+RootCause Bitcoin Defense - edicion portable para Windows
+=========================================================
+
+Que es
+------
+Un panel local watch-only para inventariar la procedencia de claves Bitcoin,
+detectar exposicion criptografica y responder incidentes. No pide ni almacena
+semillas, passphrases ni claves privadas, y no firma ni envia transacciones.
+
+Como se usa
+-----------
+1. Ejecuta "RootCause Bitcoin Defense.cmd".
+2. Se abre http://127.0.0.1:8787 en tu navegador por defecto.
+3. Cierra la ventana de consola para detener la aplicacion.
+
+La primera vez arranca en modo demostracion con datos ficticios y todo en
+memoria: nada se escribe en disco.
+
+Datos reales
+------------
+1. Ejecuta "Generar clave de datos.cmd".
+2. Crea %LOCALAPPDATA%\RootCause\bitcoin-defense\config.cmd con:
+       set "DEMO_MODE=false"
+       set "ROOTCAUSE_DATA_KEY=valor-generado"
+3. Vuelve a ejecutar el lanzador. El estado se cifra con AES-256-GCM en
+   %LOCALAPPDATA%\RootCause\bitcoin-defense\data.
+
+Nodo Bitcoin Core (opcional, solo lectura)
+------------------------------------------
+Anade a config.cmd:
+       set "BITCOIN_RPC_URL=http://127.0.0.1:8332"
+       set "BITCOIN_RPC_COOKIE_FILE=C:\ruta\a\.cookie"
+       set "WATCHTOWER_ENABLED=true"
+
+La aplicacion solo puede invocar metodos RPC de lectura. Cualquier metodo de
+firma, envio o desbloqueo se rechaza antes de salir a la red.
+
+Que incluye esta carpeta
+------------------------
+  runtime\node.exe   Motor Node.js oficial, verificado por SHA-256 al empaquetar
+  src\               Codigo de la aplicacion
+  config\            Avisos de seguridad y politicas versionadas
+  scripts\           Utilidades (clave de datos, validacion del repositorio)
+  docs\              Arquitectura, modelo de amenazas, runbooks
+
+Desinstalar
+-----------
+Borra esta carpeta. Los datos del usuario viven aparte, en
+%LOCALAPPDATA%\RootCause\bitcoin-defense.
+
+Codigo fuente y avisos de seguridad:
+https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense

@@ -1,0 +1,17 @@
+{
+  "name": "RootCause Bitcoin Defense",
+  "short_name": "RC Bitcoin",
+  "description": "Defensa watch-only y análisis causal para Bitcoin.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06101a",
+  "theme_color": "#091522",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

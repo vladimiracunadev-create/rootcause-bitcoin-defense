@@ -1,0 +1,23 @@
+import fs from "node:fs/promises";
+import { loadConfig, assertProductionConfig } from "../src/config.js";
+import { EncryptedFileStore } from "../src/infrastructure/encrypted-store.js";
+import { createDemoState } from "../src/services/demo-state.js";
+
+const config = loadConfig({ ...process.env, DEMO_MODE: "false" });
+assertProductionConfig(config);
+
+try {
+  await fs.access(config.dataFile);
+  console.error("Refusing to overwrite existing encrypted state: " + config.dataFile);
+  process.exit(1);
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
+
+const store = new EncryptedFileStore(
+  config.dataFile,
+  config.dataKey,
+  createDemoState()
+);
+await store.save(createDemoState());
+console.log("Encrypted demonstration state created at " + config.dataFile);

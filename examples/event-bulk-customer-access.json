@@ -1,0 +1,6 @@
+{
+  "type": "bulk_customer_data_access",
+  "vendor": "Proveedor de laboratorio",
+  "recordCount": 12000,
+  "authorized": false
+}

@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#091522">
+    <meta
+      name="description"
+      content="Defensa watch-only, análisis causal y respuesta a incidentes para Bitcoin."
+    >
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <title>RootCause Bitcoin Defense</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Navegación principal">
+        <a class="brand" href="/" aria-label="RootCause Bitcoin Defense">
+          <span class="brand-mark" aria-hidden="true">₿</span>
+          <span>
+            <strong>RootCause</strong>
+            <small>Bitcoin Defense</small>
+          </span>
+        </a>
+
+        <nav class="nav-list">
+          <button class="nav-item active" type="button" data-view-target="dashboard">
+            <span aria-hidden="true">◫</span> Resumen
+          </button>
+          <button class="nav-item" type="button" data-view-target="custody">
+            <span aria-hidden="true">◇</span> Custodia
+          </button>
+          <button class="nav-item" type="button" data-view-target="incidents">
+            <span aria-hidden="true">△</span> Incidentes
+          </button>
+          <button class="nav-item" type="button" data-view-target="intelligence">
+            <span aria-hidden="true">◎</span> Inteligencia
+          </button>
+          <button class="nav-item" type="button" data-view-target="laboratory">
+            <span aria-hidden="true">⌁</span> Laboratorio
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <div>
+            <strong>Modo watch-only</strong>
+            <p>Sin semillas, claves privadas ni firma.</p>
+          </div>
+        </div>
+      </aside>
+
+      <div class="workspace">
+        <header class="topbar">
+          <button class="mobile-menu" type="button" aria-label="Abrir navegación">☰</button>
+          <div>
+            <p class="eyebrow">CENTRO DE DEFENSA</p>
+            <h1 id="page-title">Panorama de riesgo</h1>
+          </div>
+          <div class="topbar-actions">
+            <span id="mode-badge" class="mode-badge">Cargando</span>
+            <button id="scan-button" class="primary-button" type="button">
+              Ejecutar análisis
+            </button>
+          </div>
+        </header>
+
+        <main>
+          <section class="view active" data-view="dashboard">
+            <div class="hero-grid">
+              <article class="risk-panel panel">
+                <div>
+                  <p class="eyebrow">RIESGO COMPUESTO</p>
+                  <h2>Exposición criptográfica</h2>
+                  <p id="risk-explanation" class="muted">
+                    Calculando procedencia de claves, custodia y vigilancia.
+                  </p>
+                </div>
+                <div id="risk-ring" class="risk-ring" aria-label="Puntaje de riesgo">
+                  <span id="risk-score">--</span>
+                  <small>/ 100</small>
+                </div>
+              </article>
+
+              <article class="panel causal-panel">
+                <p class="eyebrow">CADENA CAUSAL DESTACADA</p>
+                <div class="causal-flow" aria-label="Cadena causal Coldcard">
+                  <span>Build</span><b>→</b><span>RNG</span><b>→</b><span>Semilla</span>
+                  <b>→</b><span>Clave</span><b>→</b><span>Gasto</span>
+                </div>
+                <p class="muted">
+                  RootCause conecta la evidencia técnica con el activo expuesto y la
+                  acción segura disponible.
+                </p>
+              </article>
+            </div>
+
+            <div class="metric-grid">
+              <article class="metric-card">
+                <span>Wallets vigiladas</span>
+                <strong id="metric-wallets">--</strong>
+                <small id="metric-signers">-- firmantes</small>
+              </article>
+              <article class="metric-card">
+                <span>Incidentes activos</span>
+                <strong id="metric-incidents">--</strong>
+                <small id="metric-critical">-- críticos</small>
+              </article>
+              <article class="metric-card">
+                <span>Saldo observado</span>
+                <strong id="metric-btc">-- BTC</strong>
+                <small>Solo metadatos públicos</small>
+              </article>
+              <article class="metric-card">
+                <span>Bitcoin Core</span>
+                <strong id="metric-node">--</strong>
+                <small id="metric-node-detail">Sin consultar</small>
+              </article>
+            </div>
+
+            <div class="content-grid">
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <p class="eyebrow">PRIORIDAD</p>
+                    <h2>Incidentes abiertos</h2>
+                  </div>
+                  <button class="text-button" type="button" data-view-target="incidents">
+                    Ver todos
+                  </button>
+                </div>
+                <div id="dashboard-incidents" class="incident-list skeleton">
+                  Cargando incidentes…
+                </div>
+              </article>
+
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <p class="eyebrow">NODO LOCAL</p>
+                    <h2>Telemetría Bitcoin</h2>
+                  </div>
+                  <button id="refresh-node" class="icon-button" type="button" title="Consultar nodo">
+                    ↻
+                  </button>
+                </div>
+                <div id="node-details" class="node-details">
+                  <p class="muted">Esperando snapshot del nodo.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="view" data-view="custody">
+            <div class="section-intro">
+              <div>
+                <p class="eyebrow">INVENTARIO CRIPTOGRÁFICO</p>
+                <h2>Wallets y firmantes</h2>
+              </div>
+              <p>
+                Registra únicamente fingerprints y procedencia. La aplicación rechaza
+                semillas, passphrases, WIF y claves privadas.
+              </p>
+            </div>
+
+            <div id="wallet-grid" class="wallet-grid"></div>
+
+            <article class="panel form-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">NUEVO ACTIVO</p>
+                  <h2>Registrar wallet watch-only</h2>
+                </div>
+                <span class="secure-chip">No secrets</span>
+              </div>
+
+              <form id="wallet-form">
+                <div class="form-grid three">
+                  <label>
+                    Nombre
+                    <input name="name" required maxlength="120" placeholder="Tesorería principal">
+                  </label>
+                  <label>
+                    Fingerprint de wallet
+                    <input
+                      name="fingerprint"
+                      required
+                      pattern="[0-9a-fA-F]{8}"
+                      maxlength="8"
+                      placeholder="A1B2C3D4"
+                    >
+                  </label>
+                  <label>
+                    Tipo de custodia
+                    <select name="walletType" id="wallet-type">
+                      <option value="single-sig">Single-signature</option>
+                      <option value="multisig">Multisig 2-de-3</option>
+                    </select>
+                  </label>
+                  <label>
+                    Red
+                    <select name="network">
+                      <option value="mainnet">Mainnet</option>
+                      <option value="signet">Signet</option>
+                      <option value="regtest">Regtest</option>
+                      <option value="testnet4">Testnet4</option>
+                    </select>
+                  </label>
+                  <label>
+                    Saldo observado (sats)
+                    <input name="balanceSats" type="number" min="0" step="1" value="0">
+                  </label>
+                </div>
+
+                <div id="signer-fields" class="signer-fields"></div>
+
+                <div class="form-actions">
+                  <p>
+                    Nunca escribas palabras de recuperación. Solo se aceptan metadatos
+                    verificables del dispositivo.
+                  </p>
+                  <button class="primary-button" type="submit">Registrar y analizar</button>
+                </div>
+              </form>
+            </article>
+          </section>
+
+          <section class="view" data-view="incidents">
+            <div class="section-intro">
+              <div>
+                <p class="eyebrow">RESPUESTA OPERATIVA</p>
+                <h2>Incidentes y evidencia</h2>
+              </div>
+              <p>
+                Un gasto Bitcoin válido no puede revertirse. La prioridad es contener
+                firmantes restantes, preservar evidencia y migrar UTXO todavía seguros.
+              </p>
+            </div>
+            <div id="incident-table" class="table-wrap panel"></div>
+          </section>
+
+          <section class="view" data-view="intelligence">
+            <div class="section-intro">
+              <div>
+                <p class="eyebrow">AVISOS VERIFICADOS</p>
+                <h2>Inteligencia de vulnerabilidades</h2>
+              </div>
+              <p>
+                La matriz incluida está fechada. Antes de actuar, RootCause exige
+                confirmar el aviso en la fuente oficial.
+              </p>
+            </div>
+            <div id="advisory-grid" class="advisory-grid"></div>
+          </section>
+
+          <section class="view" data-view="laboratory">
+            <div class="section-intro">
+              <div>
+                <p class="eyebrow">ENTORNO SEGURO</p>
+                <h2>Laboratorio de incidentes</h2>
+              </div>
+              <p>
+                Simula una transacción no aprobada sin usar direcciones, claves ni
+                fondos reales.
+              </p>
+            </div>
+
+            <div class="laboratory-grid">
+              <article class="panel">
+                <p class="eyebrow">SIMULACIÓN</p>
+                <h2>Gasto fuera de política</h2>
+                <p class="muted">
+                  Genera un txid ficticio y lo presenta a la watchtower como un gasto
+                  desde una wallet vigilada.
+                </p>
+                <label>
+                  Wallet de prueba
+                  <select id="simulation-wallet"></select>
+                </label>
+                <button id="simulate-spend" class="danger-button" type="button">
+                  Simular gasto no autorizado
+                </button>
+              </article>
+
+              <article class="panel">
+                <p class="eyebrow">LÍMITES DEL SISTEMA</p>
+                <h2>Qué hace y qué no hace</h2>
+                <ul class="check-list">
+                  <li><b>Detecta</b> firmware vulnerable y custodia frágil.</li>
+                  <li><b>Correlaciona</b> firmante, aviso, wallet y transacción.</li>
+                  <li><b>Deniega</b> autorizaciones internas cuando existe control.</li>
+                  <li><b>No firma</b> ni transmite fondos automáticamente.</li>
+                  <li><b>No recupera</b> una transacción Bitcoin confirmada.</li>
+                </ul>
+              </article>
+
+              <article class="panel wide">
+                <p class="eyebrow">ARQUITECTURA</p>
+                <div class="architecture-flow">
+                  <span>Advisories<br><small>firmware y proveedores</small></span>
+                  <b>+</b>
+                  <span>Bitcoin Core<br><small>RPC de solo lectura</small></span>
+                  <b>+</b>
+                  <span>Inventario<br><small>procedencia pública</small></span>
+                  <b>→</b>
+                  <span class="accent">RootCause<br><small>reglas y causalidad</small></span>
+                  <b>→</b>
+                  <span>Incidente<br><small>evidencia y runbook</small></span>
+                </div>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

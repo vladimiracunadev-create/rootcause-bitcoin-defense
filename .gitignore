@@ -1,0 +1,14 @@
+.env
+data/*
+!data/.gitkeep
+coverage/
+node_modules/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+rootcause-bitcoin-defense.zip
+
+# Artefactos de empaquetado de Windows: se generan, no se versionan.
+build/
+packaging/windows/rootcause.ico

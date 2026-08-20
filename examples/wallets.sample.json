@@ -1,0 +1,40 @@
+{
+  "name": "Tesorería 2-de-3",
+  "fingerprint": "D15EA5ED",
+  "network": "signet",
+  "walletType": "multisig",
+  "balanceSats": 25000000,
+  "quorum": {
+    "required": 2,
+    "total": 3
+  },
+  "signers": [
+    {
+      "label": "Firmante A",
+      "fingerprint": "A1000001",
+      "vendor": "Vendor A",
+      "model": "Model A",
+      "firmwareAtSeedCreation": "1.2.3",
+      "firmwareTrack": "standard",
+      "seedOrigin": "device"
+    },
+    {
+      "label": "Firmante B",
+      "fingerprint": "B2000002",
+      "vendor": "Vendor B",
+      "model": "Model B",
+      "firmwareAtSeedCreation": "2.3.4",
+      "firmwareTrack": "standard",
+      "seedOrigin": "device"
+    },
+    {
+      "label": "Firmante C",
+      "fingerprint": "C3000003",
+      "vendor": "Vendor C",
+      "model": "Model C",
+      "firmwareAtSeedCreation": "3.4.5",
+      "firmwareTrack": "standard",
+      "seedOrigin": "dice"
+    }
+  ]
+}
