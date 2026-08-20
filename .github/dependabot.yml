@@ -12,6 +12,17 @@ updates:
       day: monday
       time: "07:00"
       timezone: America/Santiago
+    # Agrupado a proposito: `codeql-action/init` y `codeql-action/analyze` son
+    # el MISMO action y tienen que subir juntos. Si Dependabot los propone por
+    # separado, el PR que solo mueve uno deja el workflow con dos versiones
+    # incompatibles y CodeQL falla sin que nadie haya roto nada.
+    groups:
+      codeql-action:
+        patterns:
+          - "github/codeql-action*"
+      actions-oficiales:
+        patterns:
+          - "actions/*"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "ci"
