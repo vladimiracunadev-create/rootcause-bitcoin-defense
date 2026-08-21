@@ -1,5 +1,16 @@
 # Contribuir
 
+| Tu cambio debe pasar | Comando |
+| --- | --- |
+| Las cinco puertas de calidad | `pnpm check` |
+| El estilo visual de la documentación | `node scripts/check-doc-style.js` |
+| Los secretos del histórico | `node scripts/check-history-secrets.js --staged` |
+| La auditoría de custodia, si tocas reglas o configuración | `node scripts/audit-bitcoin.js` |
+
+> **Dos cosas no se negocian y las zanja el CI, no una opinión:** ninguna
+> contribución puede introducir la capacidad de recibir, almacenar o usar
+> material secreto, ni una dependencia de terceros.
+
 ## Preparación
 
 ~~~bash

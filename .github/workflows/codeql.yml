@@ -39,6 +39,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          # Sin credenciales persistidas en .git/config: nada de lo que
+          # corre después necesita empujar al repositorio.
+          persist-credentials: false
 
       - name: Inicializar CodeQL
         uses: github/codeql-action/init@5595ccaf912efad79be6eef63a5619ff05969be3 # v4.37.6

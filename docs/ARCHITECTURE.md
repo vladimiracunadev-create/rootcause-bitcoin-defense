@@ -28,6 +28,18 @@ flowchart TD
 
 ## Límites de confianza
 
+Cuatro dominios, y la frontera entre ellos es lo que define el producto:
+
+| Dominio | Contiene | Qué cruza la frontera hacia RootCause |
+| --- | --- | --- |
+| 1 · Firmantes | Semillas y claves privadas | Solo metadatos públicos: huella, fabricante, modelo, firmware al crear la semilla, procedencia |
+| 2 · Bitcoin Core | La verdad sobre la cadena | Respuestas de 11 métodos RPC de lectura, por loopback |
+| 3 · RootCause | Inventario, reglas, incidentes, evidencia | Nada sale: el panel se sirve en 127.0.0.1 |
+| 4 · Proveedores y avisos | Datos de fabricantes y terceros | Entradas versionadas y fechadas en `config/advisories.json` |
+
+> **La frontera del dominio 1 es de una sola dirección.** RootCause nunca entra:
+> recibe metadatos y confirmaciones de operaciones hechas en el dispositivo.
+
 ### Dominio 1: firmantes
 
 Contiene semillas y claves. RootCause no entra en este dominio. Recibe solo:

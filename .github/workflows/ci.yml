@@ -14,7 +14,8 @@
 #   4. app-windows    → empaqueta la edicion de escritorio y la ARRANCA para
 #                       comprobar que sirve el panel. Un ZIP del tamano
 #                       esperado no prueba que la aplicacion funcione.
-#   5. documentacion  → los enlaces internos de los documentos existen.
+#   5. documentacion  → los enlaces internos existen y el estilo visual sigue
+#                       siendo el de la familia RootCause.
 #
 # Robustez: actions oficiales pinneadas a commit SHA, permisos minimos,
 # concurrency con cancelacion y timeouts explicitos. No se ejecuta `npm ci`
@@ -52,6 +53,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          # Sin credenciales persistidas en .git/config: nada de lo que
+          # corre después necesita empujar al repositorio.
+          persist-credentials: false
 
       - name: Node ${{ matrix.node }}
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -71,6 +76,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          # Sin credenciales persistidas en .git/config: nada de lo que
+          # corre después necesita empujar al repositorio.
+          persist-credentials: false
 
       - name: Node LTS
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -107,6 +116,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          # Sin credenciales persistidas en .git/config: nada de lo que
+          # corre después necesita empujar al repositorio.
+          persist-credentials: false
 
       - name: Node LTS
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -136,6 +149,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          # Sin credenciales persistidas en .git/config: nada de lo que
+          # corre después necesita empujar al repositorio.
+          persist-credentials: false
 
       - name: Generar el icono desde codigo
         shell: powershell
@@ -207,6 +224,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          # Sin credenciales persistidas en .git/config: nada de lo que
+          # corre después necesita empujar al repositorio.
+          persist-credentials: false
 
       - name: Node LTS
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -216,3 +237,9 @@ jobs:
       # Un README que apunta a un documento inexistente es una promesa rota.
       - name: Los documentos referenciados existen
         run: node scripts/check-docs.js
+
+      # El lenguaje visual de la familia RootCause no puede depender de que
+      # alguien se acuerde: un H1, tablas con cabecera, bloques con lenguaje y
+      # todo documento de docs/ enlazado desde el índice.
+      - name: Estilo visual de la documentación
+        run: node scripts/check-doc-style.js

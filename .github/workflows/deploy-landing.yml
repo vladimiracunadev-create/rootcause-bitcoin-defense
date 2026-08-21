@@ -38,6 +38,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          # Sin credenciales persistidas en .git/config: nada de lo que
+          # corre después necesita empujar al repositorio.
+          persist-credentials: false
 
       # La landing no puede traer nada de fuera. Si alguien mete un CDN, una
       # fuente remota o un pixel de analítica, este paso tumba el despliegue.

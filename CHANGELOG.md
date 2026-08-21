@@ -58,10 +58,23 @@ funcionalidad del propio producto.
 - `docs/AUDITORIA_14_ETAPAS.md`, `docs/AUDITORIA_CONTINUA.md`,
   `docs/AGENTE_Y_PLUGIN.md` y `docs/POSTURA_DE_DESPLIEGUE.md`.
 
+### Añade — estilo visual
+
+- `scripts/check-doc-style.js`: puerta que mantiene el lenguaje visual de la
+  familia RootCause en los 41 documentos —un H1, tablas con cabecera, bloques de
+  código con lenguaje declarado y ningún documento de `docs/` fuera del índice;
+- los informes de auditoría se generan con esa misma estética: semáforo
+  🟢🟡🔴⚪, resumen ejecutivo, cobertura por etapa, detalle por bloque y plan de
+  remediación como lista de verificación;
+- tablas de resumen en los documentos que no las tenían: arquitectura, roadmap,
+  runbook, checklist, contribución, principios y política de seguridad.
+
 ### Corrige
 
 - `BUILD-INFO.json` se escribía con BOM y `JSON.parse` no podía leerlo: la
   procedencia del artefacto era ilegible por máquina;
+- los checkouts de todos los workflows dejan de persistir credenciales en
+  `.git/config` (hallazgo `artipacked` de zizmor);
 - la regla de bind abierto distingue ahora un contenedor —donde `0.0.0.0` es lo
   normal y quien decide la exposición es el mapeo de puertos— de una instalación
   de escritorio expuesta.

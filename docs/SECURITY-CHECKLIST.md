@@ -1,4 +1,16 @@
-# Checklist de seguridad
+# Checklist de seguridad — comprobaciones antes de cada paso irreversible
+
+| Checklist | Cuándo | Qué garantiza |
+| --- | --- | --- |
+| Antes de cada release | Al publicar un artefacto | Que lo que se distribuye superó las puertas y se puede verificar |
+| Antes de conectar un nodo | Al salir del modo demostración | Que el RPC es local, mínimo y de solo lectura |
+| Antes de registrar custodia real | Al introducir wallets con fondos | Que el estado está cifrado y el runbook está ensayado |
+| Wallet | Por cada wallet nueva | Que la procedencia está documentada y el quorum tiene margen |
+| Proveedor y privacidad | Al tratar datos de terceros | Que identidad y titularidad no comparten dominio de confianza |
+
+> **Buena parte de esto lo comprueba ahora una máquina.** `node scripts/audit-bitcoin.js`
+> cubre las etapas automatizables ([`AUDITORIA_14_ETAPAS.md`](AUDITORIA_14_ETAPAS.md));
+> lo que queda en esta lista es lo que exige criterio humano.
 
 ## Antes de cada release
 

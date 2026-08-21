@@ -8,6 +8,18 @@
 Este documento existe porque las dos preguntas —«¿dónde debe vivir esto?» y
 «¿en qué lenguaje?»— tienen respuestas distintas y conviene no mezclarlas.
 
+## Resumen de la decisión
+
+| | |
+| --- | --- |
+| **Plataforma** | Aplicación de escritorio, empezando por Windows |
+| **Descartado** | Despliegue web alojado — no puede leer el nodo local y convierte el inventario en un objetivo |
+| **Móvil** | Solo como acompañante de lectura; el trabajo de procedencia es de escritorio |
+| **Lenguaje hoy** | JavaScript sobre Node, sin dependencias |
+| **Coste asumido** | Cargar con el runtime: ~32 MB y republicar ante cada CVE de Node |
+| **Lenguaje probable mañana** | Rust, con cuatro disparadores concretos escritos abajo |
+| **Descartado** | Go — no aporta nada que Rust no dé mejor en este dominio |
+
 ## 1. Contexto
 
 RootCause Bitcoin Defense no es una wallet. No custodia claves, no firma y no

@@ -1,5 +1,15 @@
 # Política de seguridad
 
+| Materia | Postura |
+| --- | --- |
+| Material secreto | **Nunca se acepta.** Semillas, mnemónicos, passphrases, `xprv`/`tprv` y WIF se rechazan con `422` |
+| Firma y transmisión | No implementadas: la aplicación no puede mover fondos |
+| Superficie de red | Loopback por defecto; RPC remoto desactivado salvo decisión explícita |
+| Dependencias de terceros | Ninguna. El único componente ajeno distribuido es el motor Node, verificado por SHA-256 |
+| Artefactos | Cada release publica `SHA256SUMS.txt`; los binarios aún no van firmados |
+| Reporte de vulnerabilidades | Ver más abajo, con lo que **no** debe incluirse en el aviso |
+
+
 RootCause Bitcoin Defense procesa información sensible de custodia, aunque no
 debe procesar material secreto. Trátalo como un componente de alta criticidad.
 

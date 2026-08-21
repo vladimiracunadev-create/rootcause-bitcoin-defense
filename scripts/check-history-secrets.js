@@ -21,6 +21,27 @@ import { PROJECT_ROOT } from "../src/config.js";
 const args = process.argv.slice(2);
 const flag = (name) => args.includes("--" + name);
 
+// Exenciones declaradas y versionadas. Los marcadores en línea solo alcanzan a
+// lo que se añade a partir de ahora; el histórico ya escrito no se puede
+// re-marcar sin reescribirlo. Por eso las excepciones permanentes viven en un
+// archivo que se revisa en el PR que las introduce.
+let EXCEPTIONS = [];
+try {
+  EXCEPTIONS = JSON.parse(
+    fs.readFileSync(path.join(PROJECT_ROOT, "config", "secret-scan-allow.json"), "utf8")
+  ).exceptions || [];
+} catch {
+  EXCEPTIONS = [];
+}
+const exceptionUse = new Map(EXCEPTIONS.map((entry) => [entry.path + "|" + entry.id, 0]));
+
+function isExcepted(file, id) {
+  const key = file + "|" + id;
+  if (!exceptionUse.has(key)) return false;
+  exceptionUse.set(key, exceptionUse.get(key) + 1);
+  return true;
+}
+
 // Cada patrón declara qué es y por qué importa: un hallazgo sin explicación
 // entrena a la gente a ignorar la herramienta.
 const PATTERNS = [
@@ -114,16 +135,27 @@ const PATTERNS = [
     id: "RC-RPC-PASSWORD",
     label: "contraseña de RPC de Bitcoin Core con valor asignado",
     severity: "high",
-    regex: /(?:BITCOIN_RPC_PASSWORD|rpcpassword)\s*[=:]\s*["']?[^\s"'#]{6,}/
+    custom: (line) => {
+      const match = line.match(
+        /(?:BITCOIN_RPC_PASSWORD|rpcpassword)\s*[=:]\s*["']?([^\s"'#]{6,})/i
+      );
+      return Boolean(match) && !PLACEHOLDER.test(match[1]);
+    }
   }
 ];
 
 // Valores que delatan un ejemplo y no una credencial real.
 const PLACEHOLDER =
-  /^(?:usuario|usuaria|user|username|clave|contrasena|contraseña|password|passwd|pass|secret|token|ejemplo|example|sample|demo|test|prueba|dummy|fake|changeme|xxx+|placeholder|valor|tu-\w+|your-\w+|<[^>]+>|\$\{[^}]+\}|\*+|\.{3,})$/i;
+  /^(?:(?:una|un|el|la|mi|the|my)[-_])?(?:usuario|usuaria|user|username|clave|contrasena|contraseña|password|passwd|pass|secret|token|ejemplo|example|sample|demo|test|prueba|dummy|fake|changeme|xxx+|placeholder|valor)(?:[-_](?:de[-_])?(?:ejemplo|example|prueba|test|demo|falsa|falso|ficticia|ficticio))?$|^(?:tu|your)[-_]\w+$|^<[^>]+>$|^\$\{[^}]+\}$|^\*+$|^\.{3,}$/i;
 
 // Muestra de la wordlist BIP-39: suficiente para reconocer una frase real sin
 // versionar las 2048 palabras dentro de un verificador de seguridad.
+//
+// Va marcada porque, si no, este detector se detecta a sí mismo: son palabras de
+// la lista en líneas contiguas, que es exactamente lo que busca. La exención es
+// explícita, acotada y se cuenta en el informe.
+//
+// secret-scan: allow-begin
 const BIP39_SAMPLE = new Set(
   ("abandon ability able about above absent absorb abstract absurd abuse access accident account " +
     "accuse achieve acid acoustic acquire across act action actor actress actual adapt add addict " +
@@ -157,6 +189,7 @@ const BIP39_SAMPLE = new Set(
     "crumble crunch crush cry crystal cube culture cup cupboard curious current curtain curve cushion " +
     "custom cute cycle zebra zero zone zoo").split(/\s+/)
 );
+// secret-scan: allow-end
 
 // Rutas cuya presencia en el histórico ya es sospechosa por sí misma.
 const FORBIDDEN_PATHS = [
@@ -211,6 +244,7 @@ let currentCommit = staged ? "(staged)" : "(desconocido)";
 let currentFile = "";
 let linesScanned = 0;
 let allowedLines = 0;
+let inAllowedRange = false;
 
 for (const line of diffText.split("\n")) {
   if (line.startsWith("commit ")) {
@@ -219,6 +253,7 @@ for (const line of diffText.split("\n")) {
   }
   if (line.startsWith("+++ b/")) {
     currentFile = line.slice(6);
+    inAllowedRange = false;
     for (const forbidden of FORBIDDEN_PATHS) {
       if (forbidden.test(currentFile)) {
         findings.push({
@@ -239,9 +274,20 @@ for (const line of diffText.split("\n")) {
   const content = line.slice(1);
   linesScanned += 1;
 
-  // Escape explícito y auditable para un caso deliberado. Se cuenta y se
-  // reporta: una exención silenciosa sería un agujero.
-  if (/secret-scan:\s*allow/i.test(content)) {
+  // Escapes explícitos y auditables para casos deliberados —una wordlist de
+  // referencia, un fixture—. Se cuentan y se reportan: una exención silenciosa
+  // sería un agujero.
+  if (/secret-scan:\s*allow-begin/i.test(content)) {
+    inAllowedRange = true;
+    allowedLines += 1;
+    continue;
+  }
+  if (/secret-scan:\s*allow-end/i.test(content)) {
+    inAllowedRange = false;
+    allowedLines += 1;
+    continue;
+  }
+  if (inAllowedRange || /secret-scan:\s*allow/i.test(content)) {
     allowedLines += 1;
     continue;
   }
@@ -249,6 +295,7 @@ for (const line of diffText.split("\n")) {
   for (const pattern of PATTERNS) {
     const hit = pattern.custom ? pattern.custom(content) : pattern.regex.test(content);
     if (!hit) continue;
+    if (isExcepted(currentFile, pattern.id)) continue;
     findings.push({
       id: pattern.id,
       label: pattern.label,
@@ -298,7 +345,22 @@ if (flag("json")) {
   );
   if (allowedLines) {
     console.log(
-      "  EXENCIONES: " + allowedLines + " línea(s) marcadas con `secret-scan: allow`."
+      "  EXENCIONES EN LÍNEA: " + allowedLines + " marcadas con `secret-scan: allow`."
+    );
+  }
+  const usedExceptions = [...exceptionUse.entries()].filter(([, count]) => count > 0);
+  const staleExceptions = [...exceptionUse.entries()].filter(([, count]) => count === 0);
+  if (usedExceptions.length) {
+    console.log("  EXENCIONES DECLARADAS (config/secret-scan-allow.json):");
+    for (const [key, count] of usedExceptions) {
+      console.log("      " + key.replace("|", " · ") + "  (" + count + " coincidencia/s)");
+    }
+  }
+  if (staleExceptions.length) {
+    console.log(
+      "  EXENCIONES QUE YA NO HACEN FALTA: " +
+        staleExceptions.map(([key]) => key.replace("|", " · ")).join(", ") +
+        " — retíralas: una exención de más tapa hallazgos futuros."
     );
   }
 

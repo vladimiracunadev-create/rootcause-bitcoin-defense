@@ -488,7 +488,21 @@ const counts = results.reduce((acc, entry) => {
 
 const plan = [...new Set(results.flatMap((entry) => entry.actions || []))];
 
-const ICON = { ok: "OK ", atencion: "!! ", fallo: "XX ", omitida: ".. " };
+// Mismo semáforo que el resto de la familia RootCause: verde conforme, amarillo
+// deuda, rojo promesa rota, blanco no comprobado.
+const ICON = { ok: "🟢", atencion: "🟡", fallo: "🔴", omitida: "⚪" };
+const ESTADO = {
+  ok: "Conforme",
+  atencion: "Con atención",
+  fallo: "Fallida",
+  omitida: "Omitida"
+};
+const BLOQUES = [
+  { nombre: "Bloque A — Las claves", etapas: [1, 2, 3] },
+  { nombre: "Bloque B — El software", etapas: [4, 5, 6, 7, 8] },
+  { nombre: "Bloque C — La instalación", etapas: [9, 10, 11, 12, 13] },
+  { nombre: "Bloque D — Las personas", etapas: [14] }
+];
 
 if (flag("json")) {
   console.log(JSON.stringify({ stateSource, counts, results, plan }, null, 2));
@@ -498,9 +512,10 @@ if (flag("json")) {
   console.log("");
   for (const entry of results) {
     console.log(
-      (ICON[entry.status] || "?? ") +
+      (ICON[entry.status] || "⚫") +
+        "  " +
         String(entry.number).padStart(2, "0") +
-        ". " +
+        " · " +
         entry.title
     );
     console.log("      cobertura: " + entry.coverage);
@@ -524,60 +539,159 @@ if (flag("json")) {
   }
 }
 
+// Una celda de tabla no puede llevar tuberías ni saltos: se escapan una sola vez
+// y en un solo sitio, para que el informe nunca salga con la tabla rota.
+function escapaCelda(texto) {
+  // Los saltos se obtienen por código para no depender de secuencias de escape
+  // en un archivo que se edita con herramientas muy distintas.
+  const salto = String.fromCharCode(10);
+  const retorno = String.fromCharCode(13);
+  return String(texto)
+    .replace(/[|]/g, "&#124;")
+    .split(retorno)
+    .join(" ")
+    .split(salto)
+    .join(" ")
+    .trim();
+}
+
 if (flag("report")) {
   const today = new Date().toISOString().slice(0, 10);
+  const version = JSON.parse(
+    await fs.readFile(path.join(PROJECT_ROOT, "package.json"), "utf8")
+  ).version;
   const file = path.join(PROJECT_ROOT, "SECURITY_AUDIT_BITCOIN_" + today + ".md");
+
+  const fila = (entry) =>
+    "| " +
+    String(entry.number).padStart(2, "0") +
+    " | " +
+    entry.title +
+    " | " +
+    ICON[entry.status] +
+    " " +
+    ESTADO[entry.status] +
+    " | " +
+    escapaCelda(entry.coverage) +
+    " |";
+
   const lines = [
-    "# Auditoría de custodia Bitcoin — " + today,
+    "# Auditoría de custodia Bitcoin — RootCause Bitcoin Defense v" + version,
     "",
-    "Generada por `node scripts/audit-bitcoin.js --report` (skill `bitcoin-custody-audit`).",
+    "**Fecha:** " +
+      today +
+      " · **Etapas:** " +
+      results.length +
+      " de 14 · **Inventario:** " +
+      stateSource,
     "",
-    "## Resumen",
+    "---",
     "",
-    "| Estado | Etapas |",
-    "| --- | --- |",
-    "| Conformes | " + (counts.ok || 0) + " |",
-    "| Con atención | " + (counts.atencion || 0) + " |",
-    "| Fallidas | " + (counts.fallo || 0) + " |",
-    "| Omitidas (no comprobadas) | " + (counts.omitida || 0) + " |",
+    "## 1 · Resumen ejecutivo",
     "",
-    "Inventario leído de: " + stateSource + ".",
+    "| Estado | Etapas | Qué significa |",
+    "| --- | ---: | --- |",
+    "| 🟢 Conforme | " + (counts.ok || 0) + " | La comprobación se hizo y salió bien |",
+    "| 🟡 Con atención | " +
+      (counts.atencion || 0) +
+      " | Deuda declarada, no rotura: no tumba el proceso |",
+    "| 🔴 Fallida | " +
+      (counts.fallo || 0) +
+      " | Una promesa del producto dejó de cumplirse |",
+    "| ⚪ Omitida | " +
+      (counts.omitida || 0) +
+      " | **No comprobada.** Nunca es un aprobado |",
     "",
-    "> Una etapa omitida **no** es una etapa aprobada: es una comprobación que no pudo hacerse.",
+    "> **La cobertura se declara siempre.** Un «0 hallazgos» sobre una superficie",
+    "> que no se miró es una mentira con formato de informe. Por eso las etapas",
+    "> omitidas se cuentan aparte y dicen por qué no pudieron ejecutarse.",
     "",
-    "## Etapas",
+    "---",
+    "",
+    "## 2 · Cobertura por etapa",
+    "",
+    "| # | Etapa | Estado | Cobertura declarada |",
+    "| ---: | --- | --- | --- |",
+    ...results.map(fila),
+    "",
+    "---",
+    "",
+    "## 3 · Detalle por bloque",
     ""
   ];
-  for (const entry of results) {
-    lines.push("### " + entry.number + ". " + entry.title + " — " + entry.status.toUpperCase());
-    lines.push("");
-    lines.push("- **Pregunta:** " + entry.question);
-    lines.push("- **Cobertura:** " + entry.coverage);
-    for (const detail of entry.details || []) lines.push("- " + detail);
-    lines.push("");
+
+  let seccion = 0;
+  for (const bloque of BLOQUES) {
+    const delBloque = results.filter((entry) => bloque.etapas.includes(entry.number));
+    if (!delBloque.length) continue;
+    seccion += 1;
+    lines.push("### 3." + seccion + " · " + bloque.nombre, "");
+    for (const entry of delBloque) {
+      lines.push(
+        "#### " +
+          ICON[entry.status] +
+          " " +
+          String(entry.number).padStart(2, "0") +
+          " · " +
+          entry.title,
+        "",
+        "| | |",
+        "| --- | --- |",
+        "| **Pregunta** | " + entry.question + " |",
+        "| **Estado** | " + ICON[entry.status] + " " + ESTADO[entry.status] + " |",
+        "| **Cobertura** | " + escapaCelda(entry.coverage) + " |"
+      );
+      if (entry.details?.length) {
+        lines.push(
+          "| **Detalle** | " +
+            entry.details
+              .map((detail) => escapaCelda(String(detail)))
+              .join("<br>") +
+            " |"
+        );
+      }
+      lines.push("");
+    }
   }
+
+  lines.push("---", "", "## 4 · Plan de remediación", "");
   if (plan.length) {
-    lines.push("## Plan de remediación");
-    lines.push("");
+    lines.push("Ordenado como se ejecuta: primero lo que puede costar dinero hoy.", "");
     plan.forEach((action) => lines.push("- [ ] " + action));
-    lines.push("");
+  } else {
+    lines.push("Sin acciones pendientes: ninguna etapa produjo remediación.");
   }
-  lines.push("## Cómo reproducir");
-  lines.push("");
-  lines.push("```bash");
-  lines.push("node scripts/audit-bitcoin.js --report");
-  lines.push("```");
-  lines.push("");
-  await fs.writeFile(file, lines.join("\n"), "utf8");
-  console.log("\nInforme escrito en: " + path.relative(PROJECT_ROOT, file));
+
+  lines.push(
+    "",
+    "---",
+    "",
+    "## 5 · Cómo reproducir",
+    "",
+    "```bash",
+    "node scripts/audit-bitcoin.js --report",
+    "```",
+    "",
+    "| Recurso | Dónde |",
+    "| --- | --- |",
+    "| Las 14 etapas, explicadas | [`docs/AUDITORIA_14_ETAPAS.md`](docs/AUDITORIA_14_ETAPAS.md) |",
+    "| Postura de la instalación | [`docs/POSTURA_DE_DESPLIEGUE.md`](docs/POSTURA_DE_DESPLIEGUE.md) |",
+    "| Reglas y umbrales | [`docs/HEURISTICAS.md`](docs/HEURISTICAS.md) |",
+    "| Límites honestos | [`docs/LIMITACIONES.md`](docs/LIMITACIONES.md) |",
+    "",
+    "> Un verde aquí significa exactamente esto: **ninguna de las comprobaciones",
+    "> ejecutadas se activó con los datos disponibles**. Ni una palabra más.",
+    ""
+  );
+
+  await fs.writeFile(file, lines.join(String.fromCharCode(10)), "utf8");
+  console.log(String.fromCharCode(10) + "Informe escrito en: " + path.relative(PROJECT_ROOT, file));
 }
 
 // Por defecto solo bloquean los fallos: «con atención» describe deuda, no
 // rotura. Con --fail-on-attention también bloquea la deuda, que es lo que hace
 // falta cuando un job existe precisamente para vigilarla.
-const blocking = flag("fail-on-attention")
-  ? ["fallo", "atencion"]
-  : ["fallo"];
+const blocking = flag("fail-on-attention") ? ["fallo", "atencion"] : ["fallo"];
 if (results.some((entry) => blocking.includes(entry.status))) process.exitCode = 1;
 
 // Ordenación estable de los hallazgos de postura para el consumidor JSON.

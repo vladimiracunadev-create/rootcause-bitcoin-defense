@@ -41,7 +41,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          # Sin credenciales persistidas en .git/config: nada de lo que
+          # corre después necesita empujar al repositorio.
+          persist-credentials: false
 
+      # zizmor: ignore[cache-poisoning]
+      # El aviso es correcto en general —un workflow que publica no debe
+      # restaurar caché— y aquí no se restaura ninguna: `cache` no se declara y
+      # el proyecto no tiene dependencias que cachear. Se documenta en vez de
+      # silenciarse sin explicación.
       - name: Node LTS
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
@@ -62,6 +71,9 @@ jobs:
 
       - name: Documentacion coherente
         run: node scripts/check-docs.js
+
+      - name: Estilo visual de la documentación
+        run: node scripts/check-doc-style.js
 
       # ── La version del tag debe coincidir con package.json ────────────────
       - name: Comprobar coherencia de version

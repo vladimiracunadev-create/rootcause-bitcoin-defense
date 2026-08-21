@@ -9,17 +9,18 @@ funcione, sino que algo sigue siendo imposible.
 
 ---
 
-## Las cinco puertas
+## Las seis puertas
 
 | Puerta | Comando | Naturaleza |
 |---|---|---|
 | Validación del repositorio | `node scripts/validate-repo.js` | Estructural |
 | Claim solo-local | `node scripts/check-local-only.js` | Estructural |
 | Coherencia documental | `node scripts/check-docs.js` | Estructural |
+| Estilo visual de la documentación | `node scripts/check-doc-style.js` | Estructural |
 | Pruebas | `node --test` | Unitarias e integración |
 | Invariantes de seguridad | `node scripts/check-security-claims.js` | **Ejecuta la aplicación real** |
 
-Las cinco, en orden, con un solo comando:
+Las seis, en orden, con un solo comando:
 
 ~~~bash
 pnpm check

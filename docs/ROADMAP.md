@@ -1,4 +1,17 @@
-# Roadmap
+# Roadmap — estado actual y evolución prevista
+
+| Versión | Foco | Estado |
+| --- | --- | --- |
+| 0.1 | Referencia funcional: panel, reglas, RPC de lectura, cifrado | 🟢 Publicada |
+| 0.2 | Aplicación de escritorio para Windows y puertas de calidad ejecutables | 🟢 Publicada |
+| 0.3 | Auditoría en cuatro niveles, postura del despliegue y más detección | 🟢 Publicada |
+| 0.4 | Watchtower real: descriptores, UTXO, ZMQ, reorgs | ⚪ Prevista |
+| 0.5 | Cadena de suministro: avisos firmados, SBOM, build reproducible | ⚪ Prevista |
+| 1.0 | Uso empresarial: multiusuario, integración con el stack RootCause | ⚪ Prevista |
+
+> **Las casillas de abajo son el detalle histórico.** La numeración original
+> (0.1 a 1.0) se conserva tal cual se planificó; la tabla de arriba refleja
+> dónde está realmente el producto hoy.
 
 ## 0.1 - Referencia funcional
 

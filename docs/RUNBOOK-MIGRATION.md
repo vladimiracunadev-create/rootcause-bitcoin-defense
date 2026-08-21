@@ -1,5 +1,17 @@
 # Runbook: wallet con semilla potencialmente afectada
 
+| Fase | Qué se hace | Qué se verifica antes de seguir |
+| --- | --- | --- |
+| 1 · Activación | Confirmar que el aviso te afecta de verdad | Modelo, canal y firmware al crear la semilla contra la fuente oficial |
+| 2 · Contención | Dejar de recibir en la wallet afectada | Ninguna dirección nueva emitida |
+| 3 · Preparación | Equipo limpio, responsable y segunda persona | Saldo confirmado desde nodos controlados |
+| 4 · Nuevo destino | Crear semilla nueva en dispositivo sano | Huella y dirección **en la pantalla del dispositivo** |
+| 5 · Prueba | Mover una cantidad pequeña | Confirmación en la cadena antes de continuar |
+| 6 · Migración | Mover el resto | Evidencia preservada y auditoría íntegra |
+
+> **La semilla antigua se trata como comprometida de forma permanente.** No se
+> reutiliza «para cosas pequeñas».
+
 ## Advertencia
 
 Este documento es una guía operacional de diseño. No ejecutes una migración con

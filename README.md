@@ -104,7 +104,7 @@ examinar el caso COLDCARD, reconocer incidentes y simular un gasto no autorizado
 
 ## Verificación
 
-`pnpm check` encadena las cinco puertas que también corren en CI:
+`pnpm check` encadena las seis puertas que también corren en CI:
 
 ~~~bash
 pnpm check
@@ -115,6 +115,7 @@ pnpm check
 | `node scripts/validate-repo.js` | Archivos obligatorios, JSON válido, sintaxis, versión sincronizada con `/api/health`, ausencia de material privado embebido |
 | `node scripts/check-local-only.js` | Cero dependencias, cero orígenes remotos en el panel, CSP `self` intacta |
 | `node scripts/check-docs.js` | Todo documento referenciado existe |
+| `node scripts/check-doc-style.js` | El lenguaje visual de la familia RootCause: un H1, tablas con cabecera, bloques con lenguaje y todo `docs/` en el índice |
 | `node --test` | Pruebas unitarias y de integración |
 | `node scripts/check-security-claims.js` | Arranca la aplicación real y comprueba que rechaza semillas, mnemónicos, passphrases, xprv, mutaciones sin cabecera local, peticiones cross-site y RPC remoto |
 

@@ -28,7 +28,7 @@ test("detecta RPC remoto habilitado y autenticación por contraseña", () => {
     ALLOW_REMOTE_RPC: "true",
     BITCOIN_RPC_URL: "http://203.0.113.10:8332",
     BITCOIN_RPC_USER: "operador",
-    BITCOIN_RPC_PASSWORD: "una-contraseña"
+    BITCOIN_RPC_PASSWORD: "contrasena-de-ejemplo"
   });
   const codes = evaluatePosture(emptyState, { config }).map((entry) => entry.code);
   assert.ok(codes.includes("BTC-OPSEC-004"), "RPC remoto");

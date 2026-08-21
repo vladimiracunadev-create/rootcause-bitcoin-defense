@@ -35,6 +35,18 @@ junto a los demás en el panel y en `/api/summary`.
 
 ## Los ocho controles
 
+| Código | Control | Severidad |
+| --- | --- | --- |
+| `BTC-OPSEC-001` | El panel escucha fuera de loopback | 🔴 Crítica · 🟡 media en contenedor |
+| `BTC-OPSEC-002` | Inventario con saldo en modo demostración | 🟡 Media |
+| `BTC-OPSEC-003` | Clave de datos por debajo del mínimo | 🟠 Alta bajo 64 bits · 🟡 media hasta 128 |
+| `BTC-OPSEC-004` | RPC remoto habilitado | 🟠 Alta |
+| `BTC-OPSEC-005` | RPC con usuario y contraseña en vez de cookie | 🟡 Media |
+| `BTC-OPSEC-006` | Watchtower apagado con wallets de alto valor | 🟡 Media |
+| `BTC-OPSEC-007` | Límites de petición relajados | ⚪ Baja |
+| `BTC-OPSEC-008` | La cadena de auditoría no verifica | 🔴 Crítica |
+
+
 ### `BTC-OPSEC-001` · El panel escucha fuera de loopback
 
 **Crítico** fuera de contenedor · **medio** dentro.
