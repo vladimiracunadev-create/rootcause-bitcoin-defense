@@ -127,6 +127,27 @@ for (const file of files) {
     }
   }
 
+  // ── Firma visual de la familia RootCause en el README ─────────────────────
+  //
+  // Los cuatro repositorios se reconocen a simple vista por lo mismo: el banner
+  // ASCII en caja doble, la fila de badges, la línea de enlaces destacados y el
+  // lema. Si eso se pierde, el repositorio deja de parecer parte de la familia.
+  if (relative === "README.md") {
+    if (!/╔═+╗[\s\S]*ROOTCAUSE|╔═+╗[\s\S]*█/.test(content)) {
+      report(1, "sin el banner ASCII en caja doble de la familia RootCause");
+    }
+    const badges = content.match(/\[!\[[^\]]*\]\(https:\/\/[^)]+\)\]\([^)]+\)/g) || [];
+    if (badges.length < 6) {
+      report(1, "menos de seis badges: la familia muestra CI, licencia, plataforma y claims");
+    }
+    if (!content.includes("Manual de usuario →")) {
+      report(1, "sin la línea de enlaces destacados (producto · descarga · manual)");
+    }
+    if (!/>\s\*\*Diagnóstico primero\. Intervención después\.\*\*/.test(content)) {
+      report(1, "sin el lema de la familia: «Diagnóstico primero. Intervención después.»");
+    }
+  }
+
   // ── Densidad mínima de estructura ──────────────────────────────────────────
   // No es capricho tipográfico: en esta familia la información que se consulta
   // deprisa —estados, umbrales, comandos— va en tabla, no en párrafo.

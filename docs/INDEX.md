@@ -2,7 +2,7 @@
 
 Toda la documentación del proyecto, agrupada por a quién sirve.
 
-## Si es tu primera vez
+## 🌱 Si es tu primera vez
 
 | Documento | Contenido |
 |---|---|
@@ -10,7 +10,7 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 | [`GLOSARIO.md`](GLOSARIO.md) | Todos los términos: claves, semillas, entropía, custodia, red Bitcoin y vocabulario del proyecto |
 | [`MANUAL_USUARIO.md`](MANUAL_USUARIO.md) | Pantalla por pantalla, para la versión Windows y para el panel local |
 
-## Para usuarios y operadores
+## 🧭 Para usuarios y operadores
 
 | Documento | Contenido |
 |---|---|
@@ -22,7 +22,7 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 | [`POSTURA_DE_DESPLIEGUE.md`](POSTURA_DE_DESPLIEGUE.md) | Los ocho controles con los que la aplicación se audita a sí misma |
 | [`SECURITY-CHECKLIST.md`](SECURITY-CHECKLIST.md) | Comprobaciones antes de usarlo con información real |
 
-## Para desarrolladores
+## 🛠️ Para desarrolladores
 
 | Documento | Contenido |
 |---|---|
@@ -39,7 +39,7 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 | [`AGENTE_Y_PLUGIN.md`](AGENTE_Y_PLUGIN.md) | El agente especializado, el comando y el plugin distribuible |
 | [`JAVASCRIPT_PARA_ROOTCAUSE.md`](JAVASCRIPT_PARA_ROOTCAUSE.md) | Por qué JavaScript sin dependencias, sin TypeScript y sin framework |
 
-## Seguridad y alcance
+## 🛡️ Seguridad y alcance
 
 | Documento | Contenido |
 |---|---|
@@ -48,7 +48,7 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 | [`LIMITACIONES.md`](LIMITACIONES.md) | Lo que este producto **no** puede hacer, sin adornos |
 | [`INCIDENT-COLDCARD-2026.md`](INCIDENT-COLDCARD-2026.md) | El incidente que originó el producto, analizado |
 
-## Decisiones y producto
+## 🧩 Decisiones y producto
 
 | Documento | Contenido |
 |---|---|
@@ -60,7 +60,7 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 | [`LICENCIA_Y_DECISION.md`](LICENCIA_Y_DECISION.md) | Por qué MIT y qué implica para forks |
 | [`RECLUTADORES.md`](RECLUTADORES.md) | Para reclutadores: qué demuestra este repositorio, en diez minutos |
 
-## Documentos raíz
+## 📁 Documentos raíz
 
 - [`../README.md`](../README.md) — visión general
 - [`../SECURITY.md`](../SECURITY.md) — política de seguridad y verificación de artefactos
@@ -69,7 +69,7 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 - [`../MASTER_PROMPT.md`](../MASTER_PROMPT.md) — principios fundacionales del proyecto
 - [`../LICENSE`](../LICENSE) — MIT
 
-## Proyectos hermanos
+## 🔗 Proyectos hermanos
 
 [rootcause-windows-inspector](https://github.com/vladimiracunadev-create/rootcause-windows-inspector) ·
 [rootcause-web-inspector](https://github.com/vladimiracunadev-create/rootcause-web-inspector) ·

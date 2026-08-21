@@ -5,7 +5,7 @@ comando que lo confirma.
 
 ---
 
-## La aplicación de Windows
+## 💾 La aplicación de Windows
 
 ### Windows dice que el archivo no es seguro / SmartScreen lo bloquea
 
@@ -61,7 +61,7 @@ ahí con la clave correcta; sin la clave adecuada el estado no se descifra.
 
 ---
 
-## El panel local (desde el código)
+## 💻 El panel local (desde el código)
 
 ### `corepack: command not found` o pnpm no resuelve
 
@@ -98,7 +98,7 @@ node --version
 
 ---
 
-## La API
+## 🧩 La API
 
 ### Todo `POST` devuelve `403 MUTATION_HEADER_REQUIRED`
 
@@ -147,7 +147,7 @@ Superaste `RATE_LIMIT_PER_MINUTE` (120 por defecto).
 
 ---
 
-## Bitcoin Core
+## 🔗 Bitcoin Core
 
 ### `BTC-NODE-001` con `Remote Bitcoin RPC is disabled`
 
@@ -172,7 +172,7 @@ El watchtower está apagado por defecto. Enciéndelo con
 
 ---
 
-## Desarrollo y CI
+## 🛠️ Desarrollo y CI
 
 ### `pnpm check` falla en `check-local-only`
 
@@ -204,7 +204,7 @@ huérfano.
 
 ---
 
-## Nada de lo anterior
+## ❓ Nada de lo anterior
 
 Abre un issue con: sistema operativo, `node --version`, cómo lo ejecutas
 (Windows o código), el comando exacto y la salida completa. **Nunca pegues

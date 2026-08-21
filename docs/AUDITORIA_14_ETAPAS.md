@@ -13,7 +13,7 @@ Definición del skill: [`.claude/skills/bitcoin-custody-audit/SKILL.md`](../.cla
 
 ---
 
-## Las tres reglas heredadas
+## ⚖️ Las tres reglas heredadas
 
 1. **La cobertura se declara siempre.** Cada etapa dice qué miró. Un «0
    hallazgos» sobre una superficie que no se miró es una mentira con formato de
@@ -26,7 +26,7 @@ Definición del skill: [`.claude/skills/bitcoin-custody-audit/SKILL.md`](../.cla
 
 ---
 
-## Bloque A — Las claves
+## 🔑 Bloque A — Las claves
 
 ### 1. Procedencia de claves y firmantes
 *¿Se puede demostrar con qué firmware y método nació cada semilla?*
@@ -48,7 +48,7 @@ mundo** cambió aunque tu repositorio no.
 Alto valor en single-sig, quorum N-de-N sin margen y multisig sin diversidad de
 fabricantes. Las tres son configuraciones que parecen bien hasta el día que no.
 
-## Bloque B — El software
+## 💻 Bloque B — El software
 
 ### 4. Rechazo de material secreto
 *¿Sigue siendo imposible entregarle una semilla?*
@@ -88,7 +88,7 @@ referencia remota en el panel, CSP intacta.
 Archivos obligatorios, JSON válido, sintaxis, versión sincronizada entre
 `package.json` y `/api/health`, y todos los enlaces de la documentación.
 
-## Bloque C — La instalación
+## 🖥️ Bloque C — La instalación
 
 ### 9. Postura de la instalación
 *¿Cómo está configurada ahora mismo?*
@@ -120,7 +120,7 @@ Que el release publique checksums, que instale el artefacto en silencio y que
 compruebe que la aplicación instalada **tiene contenido**. Un binario que compila
 y pesa lo esperado puede abrirse vacío.
 
-## Bloque D — Las personas
+## 👤 Bloque D — Las personas
 
 ### 14. Proceso humano de respuesta
 *¿Existe runbook y quién decide qué, antes de necesitarlo?*
@@ -132,7 +132,7 @@ más evitable.
 
 ---
 
-## Uso
+## ⚡ Uso
 
 ```bash
 # Las 14 etapas
@@ -154,7 +154,7 @@ Salida: una línea por etapa con `OK`, `!!` (atención), `XX` (fallo) o `..`
 Código de salida `1` solo si alguna etapa **falla**. «Con atención» describe
 deuda, no rotura, y no tumba el proceso.
 
-## Correspondencia con las 12 capas originales
+## 🔁 Correspondencia con las 12 capas originales
 
 | Capa de `security-audit` | Aquí |
 |---|---|
@@ -166,7 +166,7 @@ deuda, no rotura, y no tumba el proceso.
 | `container`, `typosquat`, `pypi-malware`, `news` | No aplican: sin imagen de producción ni paquetes |
 | — | Etapas 1, 2, 3, 9, 10, 11, 13 y 14 son propias del dominio |
 
-## Automatización
+## 🤖 Automatización
 
 El workflow [`security-audit.yml`](../.github/workflows/security-audit.yml)
 ejecuta estas etapas en cada push, en cada PR y **cada lunes**, porque un aviso

@@ -10,7 +10,7 @@ completa antes de entrar en vocabulario.
 
 ---
 
-## 1. Claves y semillas
+## 🔑 1 · Claves y semillas
 
 | Término | Qué es | Por qué importa aquí |
 |---|---|---|
@@ -27,7 +27,7 @@ completa antes de entrar en vocabulario.
 
 ---
 
-## 2. Entropía y procedencia
+## 🎲 2 · Entropía y procedencia
 
 | Término | Qué es | Por qué importa aquí |
 |---|---|---|
@@ -41,7 +41,7 @@ completa antes de entrar en vocabulario.
 
 ---
 
-## 3. Custodia
+## 🏛️ 3 · Custodia
 
 | Término | Qué es | Por qué importa aquí |
 |---|---|---|
@@ -59,7 +59,7 @@ completa antes de entrar en vocabulario.
 
 ---
 
-## 4. Bitcoin, la red
+## 🌐 4 · Bitcoin, la red
 
 | Término | Qué es | Por qué importa aquí |
 |---|---|---|
@@ -77,7 +77,7 @@ completa antes de entrar en vocabulario.
 
 ---
 
-## 5. Seguridad y respuesta a incidentes
+## 🛡️ 5 · Seguridad y respuesta a incidentes
 
 | Término | Qué es | Por qué importa aquí |
 |---|---|---|
@@ -98,7 +98,7 @@ completa antes de entrar en vocabulario.
 
 ---
 
-## 6. Vocabulario del proyecto
+## 📘 6 · Vocabulario del proyecto
 
 | Término | Qué es |
 |---|---|
@@ -113,7 +113,7 @@ completa antes de entrar en vocabulario.
 
 ---
 
-## Términos que verás y NO significan lo que parece
+## ⚠️ Términos que verás y NO significan lo que parece
 
 - **«Wallet»** en este producto es una *ficha de inventario*, no un monedero con
   fondos que puedas mover. No hay fondos dentro de la aplicación.

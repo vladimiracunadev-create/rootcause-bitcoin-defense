@@ -11,7 +11,7 @@ inventa nada que el anterior no verifique.**
 | 3 | Agente y comando | `.claude/agents/`, `.claude/commands/` | Criterio aplicado a casos que no encajan en un script |
 | 4 | Funcionalidad del producto | `src/domain/posture.js`, `/api/posture` | La aplicación se audita a sí misma, sin nadie delante |
 
-## Nivel 3 — el agente
+## 🤖 Nivel 3 — el agente
 
 `bitcoin-security-auditor` es un auditor especializado **exclusivamente** en
 custodia Bitcoin. Ejecuta las 14 etapas cuando hay repositorio y las aplica como
@@ -44,7 +44,7 @@ entrevista cuando no lo hay.
 —claves, software, instalación, personas—, traduciendo cada hallazgo a riesgo
 real para los fondos en vez de a jerga de la herramienta.
 
-## El plugin
+## 🧩 El plugin
 
 `plugin/` empaqueta el skill, el agente y el comando para instalarlos en otra
 máquina o en otro repositorio.
@@ -83,7 +83,7 @@ aplica las mismas 14 etapas como entrevista y revisión manual; las etapas 1, 2,
 comando que no existiría sería exactamente el tipo de afirmación sin cobertura
 que todo este trabajo intenta evitar.
 
-## Relación con el skill genérico de 12 capas
+## 🔁 Relación con el skill genérico de 12 capas
 
 `security-audit` audita **el repositorio**: dependencias, CVE, SAST, contenedor,
 secretos. `bitcoin-custody-audit` audita **la custodia**: de dónde vienen las
@@ -93,7 +93,7 @@ No se solapan: se encadenan. El orden natural es primero el genérico sobre el
 repositorio y después el de dominio sobre la custodia. La correspondencia capa a
 capa está en [`AUDITORIA_14_ETAPAS.md`](AUDITORIA_14_ETAPAS.md).
 
-## Por qué cuatro niveles y no uno
+## ⚖️ Por qué cuatro niveles y no uno
 
 Porque cada uno falla de una manera distinta y se cubren entre ellos:
 

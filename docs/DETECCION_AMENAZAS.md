@@ -9,7 +9,7 @@ esto es su versión operativa.
 
 ---
 
-## La tesis del producto
+## 🎯 La tesis del producto
 
 La mayoría de las herramientas de seguridad Bitcoin vigilan **el movimiento**:
 alertan cuando algo se mueve. Este producto vigila **el origen**: si una clave
@@ -21,7 +21,7 @@ transacción.
 
 ---
 
-## Cobertura por amenaza
+## 🛡️ Cobertura por amenaza
 
 | Amenaza | Cobertura | Cómo |
 |---|---|---|
@@ -44,7 +44,7 @@ transacción.
 
 ---
 
-## Los dos casos reales que modelaron el producto
+## 📌 Los dos casos reales que modelaron el producto
 
 ### COLDCARD, julio de 2026 — defecto de entropía
 
@@ -70,7 +70,7 @@ superficie de ataque de una wallet incluye a las personas que la usan.**
 
 ---
 
-## Cómo se decide que algo es un hallazgo
+## ⚖️ Cómo se decide que algo es un hallazgo
 
 Tres condiciones, y las tres a la vez:
 
@@ -86,7 +86,7 @@ Cualquier regla que no cumpla las tres no entra. Está en
 
 ---
 
-## Falsos positivos que vas a ver, y por qué se aceptan
+## 🟡 Falsos positivos que vas a ver, y por qué se aceptan
 
 | Caso | Por qué la regla salta igual |
 |---|---|
@@ -96,7 +96,7 @@ Cualquier regla que no cumpla las tres no entra. Está en
 
 ---
 
-## Los falsos negativos que debes asumir
+## 🔴 Los falsos negativos que debes asumir
 
 Más importante todavía. El panel puede estar verde y existir un problema si:
 

@@ -5,7 +5,7 @@ quien tiene diez minutos y necesita formarse un juicio.
 
 ---
 
-## En una frase
+## 🎯 En una frase
 
 Aplicación de escritorio local-first para Windows que inventaría la procedencia
 de claves Bitcoin y detecta exposición criptográfica, escrita en JavaScript sin
@@ -14,7 +14,7 @@ verificadas ejecutando la aplicación en cada build.
 
 ---
 
-## Recorrido de diez minutos
+## ⏱️ Recorrido de diez minutos
 
 | Minuto | Archivo | Qué demuestra |
 |---|---|---|
@@ -23,10 +23,11 @@ verificadas ejecutando la aplicación en cada build.
 | 4–6 | [`../src/domain/rule-engine.js`](../src/domain/rule-engine.js) | Motor de reglas con causa raíz, evidencia y remediación por hallazgo; ids deterministas para idempotencia |
 | 6–8 | [`ADR-0001-plataforma-y-lenguaje.md`](ADR-0001-plataforma-y-lenguaje.md) | Decisión técnica argumentada, con coste asumido y disparadores explícitos para revertirla |
 | 8–10 | [`../.github/workflows/release-windows.yml`](../.github/workflows/release-windows.yml) | El artefacto se instala en silencio y se **arranca** antes de publicarse |
+| Extra | [`AUDITORIA_14_ETAPAS.md`](AUDITORIA_14_ETAPAS.md) | Auditoría de dominio propia, con cobertura declarada etapa por etapa |
 
 ---
 
-## Capacidades que este repositorio evidencia
+## 🛠️ Capacidades que este repositorio evidencia
 
 ### Ingeniería de seguridad
 
@@ -72,22 +73,24 @@ descarta el despliegue web alojado, con motivos.
 
 ---
 
-## Números
+## 📊 Números
 
 | Métrica | Valor |
 |---|---|
 | Dependencias de producción y desarrollo | 0 |
-| Líneas de código de la aplicación | ~2.500 |
-| Pruebas automatizadas | 24 |
+| Líneas de código de la aplicación | ~3.000 |
+| Pruebas automatizadas | 44 |
 | Invariantes verificados con la app en marcha | 20 |
-| Reglas de detección | 11 |
-| Trabajos de CI por push | 8 |
+| Reglas de detección | 20, en siete familias |
+| Etapas de auditoría de custodia | 14, con informe y plan de remediación |
+| Puertas de calidad | 6, todas ejecutables en local |
+| Trabajos de CI por push | 14 |
 | Sistemas operativos probados | 3 |
 | Formatos de distribución Windows | 2 + checksums |
 
 ---
 
-## Cómo verificarlo sin creerme
+## 🔍 Cómo verificarlo sin creerme
 
 ~~~bash
 git clone https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense
@@ -101,7 +104,7 @@ a la aplicación y su rechazo.
 
 ---
 
-## Lo que este repositorio NO demuestra
+## ⚖️ Lo que este repositorio NO demuestra
 
 Por si el juicio tiene que ser completo:
 
@@ -116,7 +119,7 @@ Por si el juicio tiene que ser completo:
 
 ---
 
-## Contexto
+## 🔗 Contexto
 
 Cuarta edición de la familia RootCause, junto a
 [Windows Inspector](https://github.com/vladimiracunadev-create/rootcause-windows-inspector) (Rust),

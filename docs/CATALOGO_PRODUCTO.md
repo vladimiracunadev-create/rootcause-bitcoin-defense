@@ -14,7 +14,7 @@ empaquetado que ese dominio pide.
 
 ---
 
-## Qué comparten las cuatro
+## 🧬 Qué comparten las cuatro
 
 No es una marca común: son decisiones repetidas a propósito.
 
@@ -29,7 +29,7 @@ No es una marca común: son decisiones repetidas a propósito.
 
 ---
 
-## Qué hace única a esta edición
+## 🎯 Qué hace única a esta edición
 
 Las otras tres observan **lo que está pasando ahora** en un sistema. Esta
 observa **de dónde vino una clave**, que es una pregunta sobre el pasado.
@@ -50,7 +50,7 @@ De ahí tres rasgos que no tienen las hermanas:
 
 ---
 
-## A quién sirve cada una
+## 🧭 A quién sirve cada una
 
 | Si eres… | Empieza por |
 |---|---|
@@ -66,7 +66,7 @@ ellas quiere crear.
 
 ---
 
-## Cómo encaja con el RootCause existente
+## 🔗 Cómo encaja con el RootCause existente
 
 Este repositorio es un **módulo independiente**, no un reemplazo. No sustituye
 el collector, el motor de reglas, el correlador, las evidencias, el notificador
@@ -79,7 +79,7 @@ lenguaje para una eventual fusión, en
 
 ---
 
-## Distribución
+## 💾 Distribución
 
 | Edición | Cómo se instala |
 |---|---|

@@ -9,7 +9,7 @@ qué no resuelve y si te sirve a ti**.
 
 ---
 
-## 1. La idea de fondo, con una analogía
+## 🔓 1 · La idea de fondo, con una analogía
 
 Imagina una caja fuerte cuya combinación se genera sola, dentro de la caja, la
 primera vez que la enciendes. Esa combinación no está escrita en ningún
@@ -45,7 +45,7 @@ tus claves es, literalmente, lo que hace esta aplicación.
 
 ---
 
-## 2. Qué hace este programa, en una frase
+## 🎯 2 · Qué hace este programa, en una frase
 
 Anota de dónde vienen tus claves, lo compara con los defectos que los
 fabricantes han publicado, y te avisa si alguna nació con un problema conocido
@@ -55,7 +55,7 @@ Nada más. Y, sobre todo, **nada menos**.
 
 ---
 
-## 3. Qué NO hace (léelo dos veces)
+## 🚫 3 · Qué NO hace (léelo dos veces)
 
 Esta lista importa más que la anterior, porque es donde la gente se hace
 ilusiones:
@@ -74,7 +74,7 @@ envío, no existe, y quien te diga que sí te está estafando.
 
 ---
 
-## 4. Las cuatro palabras que necesitas
+## 📘 4 · Las cuatro palabras que necesitas
 
 Solo cuatro. El resto está en el [glosario](GLOSARIO.md).
 
@@ -93,7 +93,7 @@ contrario de tener todo bajo una sola clave.
 
 ---
 
-## 5. Cómo se usa, sin tecnicismos
+## ⚡ 5 · Cómo se usa, sin tecnicismos
 
 1. **Lo abres.** Se abre una ventana negra de texto (es normal, es el programa
    funcionando) y enseguida tu navegador con un panel oscuro.
@@ -121,7 +121,7 @@ Para cerrarlo: cierra la ventana negra. Ya está. No queda nada corriendo.
 
 ---
 
-## 6. ¿Esto es para mí?
+## 🤔 6 · ¿Esto es para mí?
 
 **Te sirve si:**
 
@@ -139,7 +139,7 @@ Para cerrarlo: cierra la ventana negra. Ya está. No queda nada corriendo.
 
 ---
 
-## 7. Las tres reglas que valen más que el programa
+## 🛡️ 7 · Las tres reglas que valen más que el programa
 
 Si solo te llevas tres cosas de todo este documento, que sean estas:
 
@@ -159,7 +159,7 @@ del dispositivo es justo para eso.
 
 ---
 
-## 8. Si algo te pasa de verdad
+## 🚨 8 · Si algo te pasa de verdad
 
 Si el programa te marca un incidente crítico y no sabes qué hacer, el orden es
 este y no otro:
@@ -177,7 +177,7 @@ este y no otro:
 
 ---
 
-## 9. ¿Y por qué debería fiarme de este programa?
+## 🔍 9 · ¿Y por qué debería fiarme de este programa?
 
 Buena pregunta, y la correcta. Tres respuestas comprobables:
 

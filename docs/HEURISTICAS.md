@@ -9,7 +9,7 @@ defenderse con la evidencia que adjunta.
 
 ---
 
-## Cómo se construye un hallazgo
+## 🧱 Cómo se construye un hallazgo
 
 Cada activación produce un objeto con:
 
@@ -28,7 +28,7 @@ El `id` determinista es lo que permite que `POST /api/scan` sea idempotente: un
 problema que sigue ahí actualiza su `lastSeenAt` en vez de crear un incidente
 nuevo cada vez que pulsas *Analizar*.
 
-## Puntaje de riesgo
+## 🚦 Puntaje de riesgo
 
 Definido en [`src/domain/risk.js`](../src/domain/risk.js):
 
@@ -61,7 +61,7 @@ en el tiempo.
 
 ---
 
-## Familia BTC-KEY — procedencia de la semilla
+## 🔑 Familia BTC-KEY — procedencia de la semilla
 
 ### `BTC-KEY-001` · Semilla creada con firmware afectado
 
@@ -106,7 +106,7 @@ en el tiempo.
 
 ---
 
-## Familia BTC-CUSTODY — arquitectura de custodia
+## 🏛️ Familia BTC-CUSTODY — arquitectura de custodia
 
 ### `BTC-CUSTODY-001` · Fondos de alto valor dependen de una sola clave
 
@@ -134,7 +134,7 @@ en el tiempo.
 
 ---
 
-## Familia BTC-TX — gasto observado
+## 💸 Familia BTC-TX — gasto observado
 
 ### `BTC-TX-001` · Gasto observado sin aprobación conocida
 
@@ -151,7 +151,7 @@ en el tiempo.
 
 ---
 
-## Familia BTC-NODE — salud de la observación
+## 🔗 Familia BTC-NODE — salud de la observación
 
 Estas cuatro reglas **no hablan de tus fondos**: hablan de si la aplicación está
 viendo la realidad o está ciega.
@@ -186,7 +186,7 @@ viendo la realidad o está ciega.
 
 ---
 
-## Familia BTC-PRIVACY — datos personales
+## 👤 Familia BTC-PRIVACY — datos personales
 
 ### `BTC-PRIVACY-001` · Acceso masivo a datos de clientes
 
@@ -259,7 +259,7 @@ Estas dos cruzan varias entidades a la vez, así que viven en
 
 ---
 
-## Familia BTC-INTEL — la inteligencia tiene fecha
+## 🗓️ Familia BTC-INTEL — la inteligencia tiene fecha
 
 ### `BTC-INTEL-001` · Matriz de avisos sin verificar
 
@@ -282,7 +282,7 @@ Estas dos cruzan varias entidades a la vez, así que viven en
 
 ---
 
-## Familia BTC-OPSEC — la instalación
+## 🖥️ Familia BTC-OPSEC — la instalación
 
 Ocho controles sobre el propio despliegue, documentados en
 [`POSTURA_DE_DESPLIEGUE.md`](POSTURA_DE_DESPLIEGUE.md): bind fuera de loopback,
@@ -295,7 +295,7 @@ el arranque, no el estado.
 
 ---
 
-## Lo que deliberadamente NO se detecta
+## 🚫 Lo que deliberadamente NO se detecta
 
 Para que el mapa sea honesto, conviene decir qué no hay:
 
@@ -313,7 +313,7 @@ El mapa completo de alcance está en
 
 ---
 
-## Añadir una regla
+## ➕ Añadir una regla
 
 1. Escríbela en `src/domain/rule-engine.js` devolviendo `makeFinding(...)` con
    causa raíz y remediación **reales**; una regla sin remediación es ruido.

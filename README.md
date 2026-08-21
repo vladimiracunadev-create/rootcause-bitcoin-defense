@@ -1,21 +1,64 @@
 # RootCause Bitcoin Defense
 
+```text
+╔═══════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                   ║
+║  ██████╗  ██████╗  ██████╗ ████████╗ ██████╗  █████╗ ██╗   ██╗███████╗███████╗    ║
+║  ██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝██╔════╝ ██╔══██╗██║   ██║██╔════╝██╔════╝    ║
+║  ██████╔╝██║   ██║██║   ██║   ██║   ██║      ███████║██║   ██║███████╗█████╗      ║
+║  ██╔══██╗██║   ██║██║   ██║   ██║   ██║      ██╔══██║██║   ██║╚════██║██╔══╝      ║
+║  ██║  ██║╚██████╔╝╚██████╔╝   ██║   ╚██████╗ ██║  ██║╚██████╔╝███████║███████╗    ║
+║  ╚═╝  ╚═╝ ╚═════╝  ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚══════╝╚══════╝      ║
+║                                                                                   ║
+║                       B I T C O I N   D E F E N S E                               ║
+║              Defensa watch-only de custodia · Node + JS · v0.3.0                  ║
+╚═══════════════════════════════════════════════════════════════════════════════════╝
+```
+
 [![CI](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/ci.yml/badge.svg)](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/codeql.yml/badge.svg)](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/codeql.yml)
-[![Release Windows](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/release-windows.yml/badge.svg)](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/release-windows.yml)
 [![Auditoría de seguridad](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/security-audit.yml/badge.svg)](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/security-audit.yml)
-[![Licencia MIT](https://img.shields.io/badge/licencia-MIT-informational)](LICENSE)
-[![Dependencias](https://img.shields.io/badge/dependencias-cero-success)](docs/ARCHITECTURE.md)
+[![CodeQL](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/codeql.yml/badge.svg)](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node](https://img.shields.io/badge/node-%E2%89%A5%2022.12-green.svg)](docs/REQUIREMENTS.md)
+[![Platform](https://img.shields.io/badge/plataforma-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](docs/WINDOWS-APP.md)
+[![Dependencias](https://img.shields.io/badge/dependencias-0-success.svg)](docs/JAVASCRIPT_PARA_ROOTCAUSE.md)
+[![Telemetría](https://img.shields.io/badge/telemetr%C3%ADa-cero-success.svg)](docs/POLITICA_DE_PRIVACIDAD_LOCAL.md)
+[![Claves privadas](https://img.shields.io/badge/claves%20privadas-nunca-critical.svg)](docs/LIMITACIONES.md)
+[![Version](https://img.shields.io/badge/version-0.3.0-green.svg)](docs/ROADMAP.md)
 
-Aplicación local y watch-only para inventariar la procedencia de claves Bitcoin,
-detectar exposición criptográfica, correlacionar incidentes y ejecutar respuestas
-seguras sin custodiar secretos.
+🌐 **[Página del producto →](https://vladimiracunadev-create.github.io/rootcause-bitcoin-defense/)**  ·  💾 **[Descargar para Windows →](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/releases/latest)**  ·  📘 **[Manual de usuario →](docs/MANUAL_USUARIO.md)** (qué es cada cosa, en claro)
 
-Este repositorio es un módulo independiente y listo para integrarse con el producto
-RootCause existente. No reemplaza su collector, motor de reglas, correlador,
-evidencias, notificador ni auditoría.
+---
 
-## Por qué existe
+**RootCause Bitcoin Defense es el hermano de custodia de
+[rootcause-windows-inspector](https://github.com/vladimiracunadev-create/rootcause-windows-inspector),
+[rootcause-web-inspector](https://github.com/vladimiracunadev-create/rootcause-web-inspector)
+y [rootcause-mobile-inspector](https://github.com/vladimiracunadev-create/rootcause-mobile-inspector):**
+una aplicación local y watch-only que inventaría **la procedencia de tus claves
+Bitcoin**, escrita en JavaScript sobre Node, **sin una sola dependencia**.
+
+Hereda la misma razón de existir, llevada a un dominio donde el síntoma llega
+tarde: **una wallet puede estar comprometida sin que nadie la haya tocado.** Si
+la semilla nació de un firmware con un defecto de entropía, el atacante no roba
+nada — reconstruye la clave y firma una transacción perfectamente válida. Y eso
+**no se ve mirando la wallet**: solo se ve sabiendo con qué dispositivo, modelo y
+versión de firmware se creó cada semilla.
+
+> **Diagnóstico primero. Intervención después.**
+
+Es un **sensor de procedencia y apoyo a la decisión**, no una wallet: no custodia
+claves, no firma, no transmite y **nunca acepta una semilla** —si se la envías,
+la rechaza—. Detecta el origen del riesgo, lo explica con evidencia y deja el
+runbook; mover fondos es siempre una decisión humana verificada en dispositivos
+independientes.
+
+> 🛡️ **Qué detecta hoy, amenaza por amenaza (con honestidad):** [`docs/DETECCION_AMENAZAS.md`](docs/DETECCION_AMENAZAS.md)
+>
+> 🔬 **Y cómo se comprueba que todo esto es cierto:** [`docs/AUDITORIA_14_ETAPAS.md`](docs/AUDITORIA_14_ETAPAS.md)
+
+---
+
+## 🎯 Por qué existe
 
 En julio y agosto de 2026, el incidente de COLDCARD mostró que una wallet física
 puede mantenerse fuera de línea y aun así estar comprometida si la semilla fue
@@ -40,7 +83,7 @@ RootCause Bitcoin Defense convierte esas lecciones en controles de aplicación:
 - almacenamiento local cifrado con AES-256-GCM;
 - dashboard web instalable como PWA.
 
-## Principios no negociables
+## 🚫 Principios no negociables
 
 1. La aplicación nunca solicita ni almacena semillas, palabras de recuperación,
    passphrases BIP-39, WIF, xprv o claves privadas.
@@ -52,7 +95,7 @@ RootCause Bitcoin Defense convierte esas lecciones en controles de aplicación:
 7. Toda migración de fondos requiere verificación humana en dispositivos
    independientes.
 
-## Instalar en Windows
+## 💾 Instalar en Windows
 
 La forma normal de usar esta aplicación es como programa de escritorio. Los
 artefactos se publican en
@@ -84,7 +127,7 @@ pnpm package:windows
 La aplicación corre igual en Linux y macOS ejecutándola desde el código; lo
 específico de Windows es únicamente el empaquetado.
 
-## Inicio rápido
+## ⚡ Inicio rápido
 
 Requisitos:
 
@@ -102,7 +145,7 @@ Abre http://127.0.0.1:8787.
 La configuración inicial usa datos ficticios y mantiene todo en memoria. Permite
 examinar el caso COLDCARD, reconocer incidentes y simular un gasto no autorizado.
 
-## Verificación
+## ✅ Verificación
 
 `pnpm check` encadena las seis puertas que también corren en CI:
 
@@ -132,7 +175,7 @@ README son afirmaciones verificables, no notas de intención.
 Si el entorno bloquea la resolución de Corepack, ninguna de ellas depende de
 paquetes descargados y todas pueden ejecutarse directamente con `node`.
 
-## Persistencia cifrada
+## 🔐 Persistencia cifrada
 
 Genera una clave de datos:
 
@@ -150,7 +193,7 @@ DEMO_MODE=false ROOTCAUSE_DATA_KEY="valor-generado" pnpm start
 El estado se cifra con AES-256-GCM. La clave no se escribe en el repositorio ni
 en el archivo de datos.
 
-## Conectar Bitcoin Core
+## 🔗 Conectar Bitcoin Core
 
 La opción preferida es el archivo cookie de autenticación de Bitcoin Core:
 
@@ -183,7 +226,7 @@ Bitcoin Core advierte que RPC concede control significativo sobre el nodo y no
 debe exponerse a Internet. La allowlist de esta aplicación es una defensa
 adicional y no sustituye el aislamiento del sistema operativo.
 
-## Arquitectura
+## 🏗️ Arquitectura
 
 ~~~mermaid
 flowchart TD
@@ -212,7 +255,7 @@ la gente:
 Y si aparece una palabra que no conoces, está en
 [docs/GLOSARIO.md](docs/GLOSARIO.md).
 
-## Reglas incluidas
+## 🚦 Reglas incluidas
 
 | Código | Detección |
 | --- | --- |
@@ -237,7 +280,7 @@ Y si aparece una palabra que no conoces, está en
 Especificación de cada una en [docs/HEURISTICAS.md](docs/HEURISTICAS.md); la
 familia `BTC-OPSEC` en [docs/POSTURA_DE_DESPLIEGUE.md](docs/POSTURA_DE_DESPLIEGUE.md).
 
-## Auditoría de custodia en 14 etapas
+## 🔬 Auditoría de custodia en 14 etapas
 
 El repositorio trae su propia auditoría de dominio, ejecutable en un comando:
 
@@ -262,7 +305,7 @@ instalable en `plugin/`— documentado en
 nuevo no espera a que alguien haga commit:
 [docs/AUDITORIA_CONTINUA.md](docs/AUDITORIA_CONTINUA.md).
 
-## API mínima
+## 🧩 API mínima
 
 Las mutaciones requieren el encabezado local x-rootcause-request con valor 1.
 
@@ -277,7 +320,7 @@ curl -X POST http://127.0.0.1:8787/api/scan \
 
 La API completa está descrita en docs/API.md.
 
-## Estructura
+## 📁 Estructura
 
 ~~~text
 .claude/                 Skill, agente y comando de auditoría de custodia
@@ -298,7 +341,7 @@ src/web/static/          Dashboard responsive y PWA
 test/                    Pruebas unitarias y de integración
 ~~~
 
-## Limitaciones honestas
+## ⚖️ Limitaciones honestas
 
 - No puede determinar la entropía real de una semilla mirando una dirección.
   Necesita procedencia verificable: fabricante, modelo, versión usada al crearla
@@ -311,7 +354,7 @@ test/                    Pruebas unitarias y de integración
 - La matriz de avisos está fechada al 20 de agosto de 2026 y debe actualizarse
   desde fuentes oficiales.
 
-## Fuentes técnicas
+## 📚 Fuentes técnicas
 
 - Coinkite, COLDCARD Security Advisory:
   https://blog.coinkite.com/coldcard-mk3-seed-generation-warning/
@@ -326,6 +369,6 @@ test/                    Pruebas unitarias y de integración
 - Bitcoin Core HWI:
   https://github.com/bitcoin-core/HWI
 
-## Licencia
+## 📄 Licencia
 
 MIT. Revisa SECURITY.md antes de desplegar la aplicación con información real.

@@ -6,7 +6,7 @@ no, empieza por [`MANUAL_USUARIO.md`](MANUAL_USUARIO.md).
 
 ---
 
-## La rutina
+## 🗓️ La rutina
 
 | Cuándo | Qué |
 |---|---|
@@ -22,7 +22,7 @@ Cada aviso muestra su `verifiedAt` justo para que no puedas engañarte.
 
 ---
 
-## Ante un incidente crítico
+## 🚨 Ante un incidente crítico
 
 ### `BTC-KEY-001` — firmware afectado al crear la semilla
 
@@ -84,7 +84,7 @@ permanente que acaba por no mirarse.
 
 ---
 
-## Ante los avisos medios
+## 🟡 Ante los avisos medios
 
 | Hallazgo | Acción | Plazo razonable |
 |---|---|---|
@@ -95,7 +95,7 @@ permanente que acaba por no mirarse.
 
 ---
 
-## Ante un `BTC-NODE-*`
+## 🔗 Ante un `BTC-NODE-*`
 
 Estos **no hablan de tus fondos**, hablan de tu capacidad de observar.
 
@@ -111,7 +111,7 @@ no haya problemas: es que no se pueden ver.
 
 ---
 
-## Higiene de la propia herramienta
+## 🧼 Higiene de la propia herramienta
 
 **La clave de datos.** Vive en tu gestor de contraseñas, nunca junto a los datos
 cifrados y nunca en el repositorio. Si la pierdes, el archivo no se recupera.
@@ -137,7 +137,7 @@ del usuario final.
 
 ---
 
-## Los tres principios que gobiernan todo lo anterior
+## ⚖️ Los tres principios que gobiernan todo lo anterior
 
 1. **La evidencia primero.** Antes de remediar, preserva. Un incidente sin
    evidencia es una anécdota.

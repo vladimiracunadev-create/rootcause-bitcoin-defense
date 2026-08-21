@@ -58,6 +58,16 @@ funcionalidad del propio producto.
 - `docs/AUDITORIA_14_ETAPAS.md`, `docs/AUDITORIA_CONTINUA.md`,
   `docs/AGENTE_Y_PLUGIN.md` y `docs/POSTURA_DE_DESPLIEGUE.md`.
 
+### Añade — identidad visual de la familia
+
+- README con la firma de la familia RootCause: banner ASCII en caja doble, fila
+  de badges, línea de enlaces destacados, el lema «Diagnóstico primero.
+  Intervención después.» y el aviso de honestidad sobre lo que detecta;
+- secciones con emoji en toda la documentación, como en las ediciones Windows,
+  Web y Mobile;
+- `check-doc-style.js` vigila también esa firma: sin banner, sin seis badges,
+  sin línea de enlaces o sin lema, el build cae.
+
 ### Añade — estilo visual
 
 - `scripts/check-doc-style.js`: puerta que mantiene el lenguaje visual de la
@@ -80,6 +90,12 @@ funcionalidad del propio producto.
 
 - `BUILD-INFO.json` se escribía con BOM y `JSON.parse` no podía leerlo: la
   procedencia del artefacto era ilegible por máquina;
+- `Dockerfile`: el usuario pasa a ser numérico (`1000:1000`), porque un host que
+  no resuelva el nombre `node` acabaría ejecutando el proceso como root, y la
+  comprobación de salud pasa a notación JSON para no interponer un shell entre
+  Docker y el proceso;
+- `gitleaks` se descargaba renombrado y su verificación de checksum fallaba
+  siempre; ahora el archivo conserva su nombre y el hash se comprueba de verdad;
 - los checkouts de todos los workflows dejan de persistir credenciales en
   `.git/config` (hallazgo `artipacked` de zizmor);
 - la regla de bind abierto distingue ahora un contenedor —donde `0.0.0.0` es lo

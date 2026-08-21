@@ -13,7 +13,7 @@ dentro, verificado por SHA-256 contra `SHASUMS256.txt` de nodejs.org en el
 momento de empaquetar. El hash queda registrado en `BUILD-INFO.json`, dentro del
 propio paquete.
 
-## Qué ve el usuario
+## 🖥️ Qué ve el usuario
 
 1. Ejecuta **RootCause Bitcoin Defense** (acceso directo o `.cmd`).
 2. Se abre una ventana de consola con la dirección del panel y se lanza el
@@ -25,7 +25,7 @@ que hace el lanzador de escritorio y nadie más. Un despliegue de servidor nunca
 lanza un navegador, y la apertura se bloquea si el proceso no está escuchando en
 una dirección de loopback.
 
-## Dónde queda cada cosa
+## 📁 Dónde queda cada cosa
 
 | Contenido | Ruta |
 | --- | --- |
@@ -53,7 +53,7 @@ set "WATCHTOWER_ENABLED=true"
 Si `DEMO_MODE=false` y falta `ROOTCAUSE_DATA_KEY`, el lanzador se detiene y
 explica cómo generarla en vez de arrancar sin cifrado.
 
-## Construir los artefactos
+## 🛠️ Construir los artefactos
 
 Requisitos: Windows con PowerShell 5.1 o superior. Para el instalador, además,
 Inno Setup 6 (`choco install innosetup`).
@@ -79,7 +79,7 @@ pnpm package:windows
 y hacer reproducible la compilación; sin ese parámetro resuelve la última LTS de
 la rama indicada en `-NodeMajor`.
 
-## Qué se verifica antes de publicar
+## ✅ Qué se verifica antes de publicar
 
 Un paquete que pesa lo esperado no prueba nada. La cadena de verificación es:
 
@@ -102,7 +102,7 @@ Para verificar una descarga:
 Get-FileHash .\RootCause-Bitcoin-Defense-0.1.0-win-x64-setup.exe -Algorithm SHA256
 ~~~
 
-## Mantenimiento del runtime
+## 🗓️ Mantenimiento del runtime
 
 Empaquetar Node significa hacerse cargo de él. Cuando Node publique una versión
 de seguridad de la rama incluida, hay que republicar la aplicación aunque el
@@ -115,7 +115,7 @@ código propio no haya cambiado:
 El motivo de asumir este coste, y las condiciones bajo las cuales dejaría de
 merecer la pena, están en [ADR-0001](ADR-0001-plataforma-y-lenguaje.md).
 
-## Limitaciones conocidas
+## ⚖️ Limitaciones conocidas
 
 - Solo x64. No se publica compilación ARM64 todavía.
 - Los binarios no están firmados con certificado de código: SmartScreen puede

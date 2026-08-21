@@ -15,7 +15,7 @@ máquina. Si no conoces el vocabulario, ten a mano el
 
 ---
 
-## Parte 1 — Arrancar
+## ⚡ Parte 1 — Arrancar
 
 ### 1.a Versión Windows
 
@@ -53,7 +53,7 @@ aprender: puedes tocar todo sin consecuencias.
 
 ---
 
-## Parte 2 — Las cinco vistas
+## 🖥️ Parte 2 — Las cinco vistas
 
 ### ◫ Resumen — *Panorama de riesgo*
 
@@ -145,7 +145,7 @@ la mitad del trabajo.
 
 ---
 
-## Parte 3 — Pasar a datos reales
+## 🔐 Parte 3 — Pasar a datos reales
 
 Mientras estés en modo demostración, nada de lo que hagas se guarda. Para usarlo
 en serio hacen falta dos cosas: una clave de datos y decirle que salga del modo
@@ -199,7 +199,7 @@ watchtower está apagado por defecto: no consulta nada hasta que tú lo enciende
 
 ---
 
-## Parte 4 — Qué hacer cuando algo se pone rojo
+## 🚨 Parte 4 — Qué hacer cuando algo se pone rojo
 
 El detalle está en [`OPERACION.md`](OPERACION.md), pero el resumen es corto:
 
@@ -219,7 +219,7 @@ con una cantidad pequeña primero.
 
 ---
 
-## Parte 5 — Preguntas que salen siempre
+## ❓ Parte 5 — Preguntas que salen siempre
 
 **¿Esto guarda mis bitcoins?** No. No hay fondos dentro. Es un inventario y un
 detector.

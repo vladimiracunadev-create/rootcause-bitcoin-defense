@@ -14,7 +14,7 @@ o de un fabricante de hardware no espera a que alguien haga commit.
 
 ---
 
-## 1. Reevaluación inmediata al cambiar
+## ⚡ 1 · Reevaluación inmediata al cambiar
 
 Desde la versión 0.3.0, toda mutación vuelve a disparar el análisis completo
 —reglas de wallet, correlaciones, inteligencia y postura— y deja constancia:
@@ -36,7 +36,7 @@ reconstruir después **qué sabía la aplicación y cuándo lo supo**.
 
 ---
 
-## 2. El workflow de auditoría
+## 🤖 2 · El workflow de auditoría
 
 [`security-audit.yml`](../.github/workflows/security-audit.yml) traslada al CI el
 criterio del skill de auditoría en 12 capas, adaptado a un repositorio sin
@@ -89,7 +89,7 @@ promete algo que el proyecto no practica es peor que no publicarlo.
 
 ---
 
-## 3. Qué hacer cuando la auditoría avisa
+## 🚨 3 · Qué hacer cuando la auditoría avisa
 
 | Aviso | Acción | Plazo |
 |---|---|---|
@@ -101,7 +101,7 @@ promete algo que el proyecto no practica es peor que no publicarlo.
 
 ---
 
-## 4. Actualizar la matriz de avisos
+## 🗓️ 4 · Actualizar la matriz de avisos
 
 Es la única tarea de mantenimiento que no se puede automatizar hoy, y por eso
 tiene su propia regla que la vigila.
@@ -119,7 +119,7 @@ producto, y no la detecta ninguna herramienta: depende de quien lo mantiene.
 
 ---
 
-## 5. Ejecutarlo todo en local
+## 💻 5 · Ejecutarlo todo en local
 
 ```bash
 # Las cinco puertas de siempre

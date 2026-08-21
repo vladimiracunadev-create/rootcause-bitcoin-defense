@@ -8,7 +8,7 @@ propio registro sigue íntegro.
 Es la diferencia entre «tus claves tienen un problema» y «la herramienta con la
 que miras tus claves tiene un problema». La segunda no suele mirarla nadie.
 
-## Cómo se consulta
+## ⚡ Cómo se consulta
 
 ```bash
 curl http://127.0.0.1:8787/api/posture
@@ -33,7 +33,7 @@ junto a los demás en el panel y en `/api/summary`.
 }
 ```
 
-## Los ocho controles
+## 🚦 Los ocho controles
 
 | Código | Control | Severidad |
 | --- | --- | --- |
@@ -104,7 +104,7 @@ amplían la superficie de abuso local sin aportar nada al uso normal del panel.
 se modificó después de escribirse. La primera acción no es arreglar nada, es
 **preservar el archivo**: es evidencia.
 
-## Cómo se comporta ante la duda
+## ⚖️ Cómo se comporta ante la duda
 
 Tres decisiones deliberadas, todas en la misma dirección:
 
@@ -116,7 +116,7 @@ Tres decisiones deliberadas, todas en la misma dirección:
 - **La postura no se persiste.** Se recalcula en cada consulta. Un hallazgo de
   postura de ayer no dice nada sobre el arranque de hoy.
 
-## Reevaluación al cambiar
+## 🔄 Reevaluación al cambiar
 
 Desde la versión 0.3.0, **cualquier cambio de inventario vuelve a disparar el
 análisis completo**, incluida la postura: registrar una wallet, observar una
@@ -127,7 +127,7 @@ Antes, el panel podía quedarse desactualizado hasta que alguien pulsara
 *Analizar*. Un inventario que cambia y un panel que no se entera es un panel que
 miente durante ese intervalo.
 
-## Relación con la auditoría de 14 etapas
+## 🔗 Relación con la auditoría de 14 etapas
 
 Las etapas 9 y 11 de [`AUDITORIA_14_ETAPAS.md`](AUDITORIA_14_ETAPAS.md) son
 exactamente estos controles, ejecutados desde la línea de comandos en vez de

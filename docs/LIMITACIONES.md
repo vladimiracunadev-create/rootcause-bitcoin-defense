@@ -9,7 +9,7 @@ Divididas en tres clases: límites **físicos** (nadie puede), límites de
 
 ---
 
-## 1. Límites físicos — nadie puede, ni este producto ni ninguno
+## 🧱 1 · Límites físicos — nadie puede, ni este producto ni ninguno
 
 ### No se puede saber si una semilla es débil mirando una dirección
 
@@ -40,7 +40,7 @@ frecuente, y por eso `BTC-KEY-001` no se cierra al actualizar.
 
 ---
 
-## 2. Límites de alcance — decisiones deliberadas
+## 🎯 2 · Límites de alcance — decisiones deliberadas
 
 ### No custodia, no firma, no transmite
 
@@ -74,7 +74,7 @@ deterministas y auditables; cualquier capa de explicación es accesoria.
 
 ---
 
-## 3. Límites de implementación — hoy no, y está anotado
+## 🚧 3 · Límites de implementación — hoy no, y está anotado
 
 | Límite | Consecuencia práctica | Estado |
 |---|---|---|
@@ -90,7 +90,7 @@ deterministas y auditables; cualquier capa de explicación es accesoria.
 
 ---
 
-## 4. Lo que la matriz de avisos NO garantiza
+## 🗓️ 4 · Lo que la matriz de avisos NO garantiza
 
 `config/advisories.json` está fechada. Cada entrada lleva `publishedAt` y
 `verifiedAt`, y ambas se muestran en el panel a propósito.
@@ -105,7 +105,7 @@ deterministas y auditables; cualquier capa de explicación es accesoria.
 
 ---
 
-## 5. Lo que no sustituye
+## ⚖️ 5 · Lo que no sustituye
 
 Ni pretende hacerlo:
 
@@ -118,7 +118,7 @@ Ni pretende hacerlo:
 
 ---
 
-## 6. Cómo verificar estas afirmaciones tú mismo
+## 🔍 6 · Cómo verificar estas afirmaciones tú mismo
 
 No hace falta creer en ninguna de las anteriores:
 
