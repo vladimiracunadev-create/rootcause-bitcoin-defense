@@ -65,8 +65,15 @@ vacía. El ZIP se sube como artefacto de CI con 7 días de retención.
 
 ### 5. `documentacion`
 
-`check-docs.js`: ningún `.md` puede citar una ruta o enlazar un documento que no
-existe.
+Tres comprobaciones encadenadas:
+
+- `check-docs.js`: ningún `.md` puede citar una ruta o enlazar un documento que
+  no existe.
+- `check-doc-style.js`: el lenguaje visual de la familia —un H1, tablas con
+  cabecera, bloques con lenguaje, todo `docs/` indexado— y la firma del README:
+  banner ASCII, seis badges como mínimo, línea de enlaces y lema.
+- `generate-rule-docs.js --check`: las 26 fichas de regla y su versión publicada
+  coinciden con `config/rules-catalog.json`, del que se generan.
 
 ---
 

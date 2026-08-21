@@ -79,11 +79,11 @@ descarta el despliegue web alojado, con motivos.
 |---|---|
 | Dependencias de producción y desarrollo | 0 |
 | Líneas de código de la aplicación | ~3.000 |
-| Pruebas automatizadas | 44 |
+| Pruebas automatizadas | 50 |
 | Invariantes verificados con la app en marcha | 20 |
-| Reglas de detección | 20, en siete familias |
+| Reglas de detección | 26, en siete familias, cada una con su ficha |
 | Etapas de auditoría de custodia | 14, con informe y plan de remediación |
-| Puertas de calidad | 6, todas ejecutables en local |
+| Puertas de calidad | 7, todas ejecutables en local |
 | Trabajos de CI por push | 14 |
 | Sistemas operativos probados | 3 |
 | Formatos de distribución Windows | 2 + checksums |

@@ -7,6 +7,11 @@ que adjuntan y —lo más importante— **qué no significan**. Fuente:
 Una regla aquí no es una alarma: es una afirmación causal que debe poder
 defenderse con la evidencia que adjunta.
 
+> **Este documento explica las familias y el modelo.** La ficha individual de
+> cada regla —con su umbral, su evidencia, su remediación y qué **no** significa—
+> está en [`reglas/README.md`](reglas/README.md), generada desde
+> [`config/rules-catalog.json`](../config/rules-catalog.json).
+
 ---
 
 ## 🧱 Cómo se construye un hallazgo

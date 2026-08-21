@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Las 26 reglas de RootCause Bitcoin Defense: qué dispara cada una, con qué umbral, qué evidencia adjunta y qué NO significa cuando salta." />
+  <meta property="og:title" content="Reglas — RootCause Bitcoin Defense" />
+  <meta property="og:description"
+    content="Procedencia de claves, arquitectura de custodia, gasto observado, salud del nodo, privacidad, frescura de la inteligencia y postura del despliegue." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vladimiracunadev-create.github.io/rootcause-bitcoin-defense/reglas.html" />
+  <title>Reglas — RootCause Bitcoin Defense</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <span class="nav-logo"><span aria-hidden="true">₿</span> RootCause Bitcoin Defense</span>
+      <nav class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="index.html#problema">El problema</a>
+        <a href="index.html#prueba">La prueba</a>
+        <a href="reglas.html">Reglas</a>
+        <a href="index.html#instalar">Instalar</a>
+        <a class="btn-nav" href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense">Ver en GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero hero-compacto">
+    <div class="inner">
+      <p class="eyebrow">Catálogo de detección</p>
+      <h1>26 reglas, y lo que cada una <em>no</em> significa</h1>
+      <p class="lead">
+        Cada regla es una afirmación causal que debe poder defenderse con la
+        evidencia que adjunta. Por eso todas declaran su umbral, su evidencia y
+        sus límites: una alerta sin siguiente paso entrena a ignorar alertas.
+      </p>
+      <div class="badges">
+        <span class="badge on">🔴 Crítica</span>
+        <span class="badge">🟠 Alta</span>
+        <span class="badge">🟡 Media</span>
+        <span class="badge">⚪ Baja</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="inner">
+      <section class="familia">
+        <p class="eyebrow">🔑 BTC-KEY</p>
+        <h2>Procedencia de la semilla</h2>
+        <p class="lead">De dónde vino la clave y si se puede demostrar.</p>
+        <div class="grid">
+          <article class="card regla" id="BTC-KEY-001">
+            <p class="eyebrow"><code>BTC-KEY-001</code> · 🔴 Crítica</p>
+            <h3>Semilla creada con firmware afectado</h3>
+            <p>La semilla nació de un proceso con un defecto publicado. El atacante no necesita robar nada: reconstruye la clave y firma una transacción perfectamente válida.</p>
+            <p class="dispara"><strong>Dispara:</strong> Un firmante coincide con un aviso activo: mismo fabricante, modelo en la lista, canal (<code>standard</code>/<code>edge</code>) coincidente y <code>firmwareAtSeedCreation</code> dentro del rango afectado.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No significa que los fondos se hayan movido, ni que vayan a moverse hoy.</p>
+          </article>
+          <article class="card regla" id="BTC-KEY-002">
+            <p class="eyebrow"><code>BTC-KEY-002</code> · 🟠 Alta · 🟡 Media</p>
+            <h3>Firmware de creación desconocido</h3>
+            <p><strong>La ausencia de dato es el hallazgo.</strong> Si no puedes demostrar con qué firmware nació una clave, no puedes descartar ningún aviso presente ni futuro.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>firmwareAtSeedCreation</code> ausente o igual a <code>unknown</code> en algún firmante.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No acusa al dispositivo: acusa a la trazabilidad.</p>
+          </article>
+          <article class="card regla" id="BTC-KEY-003">
+            <p class="eyebrow"><code>BTC-KEY-003</code> · 🟡 Media</p>
+            <h3>Origen de entropía desconocido</h3>
+            <p>La aplicación desconoce cómo se creó la semilla: si la generó el dispositivo, se importó o se creó con una fuente independiente.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>seedOrigin === "unknown"</code>. Valores válidos: <code>device</code>, <code>dice</code>, <code>external</code>, <code>unknown</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No dice que la entropía sea mala. Dice que nadie puede afirmar que sea buena.</p>
+          </article>
+        </div>
+      </section>
+      <section class="familia">
+        <p class="eyebrow">🏛️ BTC-CUSTODY</p>
+        <h2>Arquitectura de custodia</h2>
+        <p class="lead">Si la arquitectura contiene el compromiso de un firmante.</p>
+        <div class="grid">
+          <article class="card regla" id="BTC-CUSTODY-001">
+            <p class="eyebrow"><code>BTC-CUSTODY-001</code> · 🔴 Crítica</p>
+            <h3>Fondos de alto valor dependen de una sola clave</h3>
+            <p>Una sola firma puede gastar todos los fondos de esa wallet. Comprometer una clave es perderlo todo.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>balanceSats &gt;= highValueThresholdSats</code> <strong>y</strong> <code>walletType === "single-sig"</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Single-sig no es «inseguro» en abstracto: la regla habla de <strong>concentración por encima de un umbral que tú eliges</strong>.</p>
+          </article>
+          <article class="card regla" id="BTC-CUSTODY-002">
+            <p class="eyebrow"><code>BTC-CUSTODY-002</code> · 🟠 Alta · 🟡 Media</p>
+            <h3>Multisig sin diversidad de implementación</h3>
+            <p>El quorum existe, pero un fallo común de firmware podría afectar a varios firmantes a la vez. Sobre el papel hay tres llaves; en la práctica hay un solo punto de fallo.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>walletType === "multisig"</code> y <code>quorum.independentVendors &lt; 2</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No dice que el multisig esté mal formado: dice que no protege de lo que dice proteger.</p>
+          </article>
+          <article class="card regla" id="BTC-CUSTODY-003">
+            <p class="eyebrow"><code>BTC-CUSTODY-003</code> · 🟠 Alta · 🟡 Media</p>
+            <h3>Quorum sin tolerancia a fallos (N-de-N)</h3>
+            <p>Un 3-de-3 no reparte el riesgo: lo multiplica. Sigue haciendo falta comprometer todas las claves para robar, pero basta <strong>perder una</strong> para que los fondos queden irrecuperables.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>walletType === "multisig"</code>, <code>quorum.total &gt; 1</code> y <code>quorum.required === quorum.total</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No es un problema de robo, es un problema de pérdida. Es la configuración que más fondos ha congelado para siempre.</p>
+          </article>
+        </div>
+      </section>
+      <section class="familia">
+        <p class="eyebrow">💸 BTC-TX</p>
+        <h2>Gasto observado</h2>
+        <p class="lead">Movimientos que no coinciden con ninguna aprobación registrada.</p>
+        <div class="grid">
+          <article class="card regla" id="BTC-TX-001">
+            <p class="eyebrow"><code>BTC-TX-001</code> · 🔴 Crítica</p>
+            <h3>Gasto observado sin aprobación conocida</h3>
+            <p>La cadena recibió una transacción válida fuera del flujo de autorización que tú registraste.</p>
+            <p class="dispara"><strong>Dispara:</strong> El evento marca <code>spendsWatchedWallet</code> y su <code>approvalHash</code> no coincide con ninguna aprobación registrada.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No afirma que sea un robo. Afirma que <strong>nadie registró la aprobación</strong>.</p>
+          </article>
+          <article class="card regla" id="BTC-TX-002">
+            <p class="eyebrow"><code>BTC-TX-002</code> · 🔴 Crítica</p>
+            <h3>Barrido del saldo de una wallet vigilada</h3>
+            <p>Ese patrón es el de un vaciado, no el de un pago. Cambia la urgencia respecto a <code>BTC-TX-001</code>.</p>
+            <p class="dispara"><strong>Dispara:</strong> Un gasto sin aprobación cuyo <code>valueSats</code> alcanza el <strong>90 % o más</strong> del saldo declarado de la wallet.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Sin <code>valueSats</code> la regla <strong>no se activa</strong>: sin importe no se puede distinguir un pago de un vaciado, y prefiere callar a inventar.</p>
+          </article>
+          <article class="card regla" id="BTC-TX-003">
+            <p class="eyebrow"><code>BTC-TX-003</code> · 🔴 Crítica</p>
+            <h3>Varios gastos sin aprobación en ventana corta</h3>
+            <p>Un gasto sin registrar es un error de proceso; una ráfaga es extracción activa.</p>
+            <p class="dispara"><strong>Dispara:</strong> Dos o más gastos sin aprobación de la <strong>misma wallet</strong> dentro de una ventana de 60 minutos.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No sustituye a <code>BTC-TX-001</code>: cada gasto sigue generando el suyo. Esta regla añade el patrón temporal.</p>
+          </article>
+        </div>
+      </section>
+      <section class="familia">
+        <p class="eyebrow">🔗 BTC-NODE</p>
+        <h2>Salud de la observación</h2>
+        <p class="lead">Si la aplicación está viendo la realidad o está ciega.</p>
+        <div class="grid">
+          <article class="card regla" id="BTC-NODE-001">
+            <p class="eyebrow"><code>BTC-NODE-001</code> · 🟠 Alta</p>
+            <h3>Bitcoin Core no disponible</h3>
+            <p>El canal de observación no puede validar el estado local de Bitcoin. <strong>No habla de tus fondos: habla de tu capacidad de verlos.</strong></p>
+            <p class="dispara"><strong>Dispara:</strong> La conexión RPC falla.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Mientras esté activo, la vigilancia de gastos está <strong>ciega</strong>: no es que no haya problemas, es que no se pueden ver.</p>
+          </article>
+          <article class="card regla" id="BTC-NODE-002">
+            <p class="eyebrow"><code>BTC-NODE-002</code> · 🟡 Media</p>
+            <h3>Nodo todavía no sincronizado</h3>
+            <p>La observación de transacciones puede estar incompleta o atrasada.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>initialBlockDownload</code> verdadero <strong>o</strong> <code>verificationProgress &lt; 0,999</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Un nodo sincronizando no está roto: está trabajando. La regla evita que se confíe en sus respuestas mientras tanto.</p>
+          </article>
+          <article class="card regla" id="BTC-NODE-003">
+            <p class="eyebrow"><code>BTC-NODE-003</code> · 🟠 Alta</p>
+            <h3>Nodo sin peers</h3>
+            <p>La observación local está aislada de la red Bitcoin.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>connections === 0</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Es alta porque <strong>un nodo aislado puede mostrar una punta antigua</strong> y hacerte creer que no ha pasado nada.</p>
+          </article>
+          <article class="card regla" id="BTC-NODE-004">
+            <p class="eyebrow"><code>BTC-NODE-004</code> · 🟡 Media</p>
+            <h3>Presión elevada de mempool</h3>
+            <p>Transacciones de menor tarifa pueden ser expulsadas del mempool local.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>mempoolUsageBytes / mempoolMaxBytes &gt;= 0,9</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Una transacción que desaparece del mempool no está «perdida»: puede haber sido expulsada o reemplazada.</p>
+          </article>
+        </div>
+      </section>
+      <section class="familia">
+        <p class="eyebrow">👤 BTC-PRIVACY</p>
+        <h2>Datos personales</h2>
+        <p class="lead">La superficie de una wallet incluye a quien la usa.</p>
+        <div class="grid">
+          <article class="card regla" id="BTC-PRIVACY-001">
+            <p class="eyebrow"><code>BTC-PRIVACY-001</code> · 🔴 Crítica · 🟡 Media</p>
+            <h3>Acceso masivo a datos de clientes</h3>
+            <p>Un proveedor o usuario accedió a un volumen de información personal superior al patrón esperado.</p>
+            <p class="dispara"><strong>Dispara:</strong> Evento de tipo <code>bulk_customer_data_access</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Que no se filtre ni una clave no significa que no haya subido el riesgo: con nombre, teléfono y dirección, el phishing deja de ser genérico.</p>
+          </article>
+          <article class="card regla" id="BTC-PRIVACY-002">
+            <p class="eyebrow"><code>BTC-PRIVACY-002</code> · 🟠 Alta</p>
+            <h3>El proveedor filtrado fabrica tus firmantes</h3>
+            <p>Correlaciona la filtración con <strong>tu</strong> inventario: la diferencia entre «hubo una filtración en un fabricante» y «hubo una filtración en el fabricante de dos de tus firmantes».</p>
+            <p class="dispara"><strong>Dispara:</strong> El <code>vendor</code> de un evento de privacidad coincide, sin distinguir mayúsculas, con el fabricante de algún firmante del inventario.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No implica que tus claves estén comprometidas. Implica que quien te escriba puede saber qué dispositivo tienes.</p>
+          </article>
+        </div>
+      </section>
+      <section class="familia">
+        <p class="eyebrow">🗓️ BTC-INTEL</p>
+        <h2>La inteligencia tiene fecha</h2>
+        <p class="lead">Un verde sobre avisos sin revisar es una tranquilidad falsa.</p>
+        <div class="grid">
+          <article class="card regla" id="BTC-INTEL-001">
+            <p class="eyebrow"><code>BTC-INTEL-001</code> · 🟡 Media · 🟠 Alta</p>
+            <h3>Matriz de avisos sin verificar</h3>
+            <p>Un hallazgo ausente puede significar que la inteligencia está vieja, no que no haya problema.</p>
+            <p class="dispara"><strong>Dispara:</strong> El <code>verifiedAt</code> más reciente de <code>config/advisories.json</code> supera <code>advisoryMaxAgeDays</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No dice que exista un aviso nuevo que te afecte. Dice que <strong>nadie ha mirado</strong>, y que por tanto el verde no significa lo que parece.</p>
+          </article>
+          <article class="card regla" id="BTC-INTEL-002">
+            <p class="eyebrow"><code>BTC-INTEL-002</code> · 🟠 Alta</p>
+            <h3>Sin matriz de avisos cargada</h3>
+            <p>No hay nada con lo que contrastar la procedencia de las claves: la detección principal del producto queda desactivada.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>config/advisories.json</code> vacío o ilegible.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Un panel sin avisos no está «limpio»: está desarmado.</p>
+          </article>
+          <article class="card regla" id="BTC-INTEL-003">
+            <p class="eyebrow"><code>BTC-INTEL-003</code> · 🟡 Media</p>
+            <h3>Avisos sin fecha de verificación</h3>
+            <p>La matriz existe pero no registra su propia frescura, así que nadie puede saber si está al día.</p>
+            <p class="dispara"><strong>Dispara:</strong> Ninguna entrada declara <code>verifiedAt</code> ni <code>publishedAt</code> con formato de fecha válido.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No cuestiona el contenido de los avisos, sino la posibilidad de saber cuándo se comprobaron.</p>
+          </article>
+        </div>
+      </section>
+      <section class="familia">
+        <p class="eyebrow">🖥️ BTC-OPSEC</p>
+        <h2>Postura de la instalación</h2>
+        <p class="lead">La herramienta con la que miras tus claves también se audita.</p>
+        <div class="grid">
+          <article class="card regla" id="BTC-OPSEC-001">
+            <p class="eyebrow"><code>BTC-OPSEC-001</code> · 🔴 Crítica · 🟡 Media</p>
+            <h3>El panel escucha fuera de loopback</h3>
+            <p>La aplicación no tiene autenticación porque asume un único operador en <code>127.0.0.1</code>. Con el puerto abierto, cualquiera en la red ve el inventario de wallets y saldos.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>HOST</code> no es una dirección de loopback.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Dentro de un contenedor no es un fallo: quien decide la exposición real es el mapeo de puertos del host. Un detector que grita en el despliegue soportado enseña a ignorarlo.</p>
+          </article>
+          <article class="card regla" id="BTC-OPSEC-002">
+            <p class="eyebrow"><code>BTC-OPSEC-002</code> · 🟡 Media</p>
+            <h3>Inventario con saldo declarado en modo demostración</h3>
+            <p>El modo demostración mantiene todo en memoria: al cerrar la aplicación se pierde lo registrado.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>DEMO_MODE=true</code> mientras el inventario declara saldo mayor que cero.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No es un fallo de seguridad: es el aviso de que estás usando el modo equivocado para lo que quieres hacer.</p>
+          </article>
+          <article class="card regla" id="BTC-OPSEC-003">
+            <p class="eyebrow"><code>BTC-OPSEC-003</code> · 🟠 Alta · 🟡 Media</p>
+            <h3>Clave de datos por debajo del mínimo recomendado</h3>
+            <p>La entropía se estima por la longitud efectiva y el alfabeto realmente usado, de modo que una clave larga pero repetitiva no puntúa como larga.</p>
+            <p class="dispara"><strong>Dispara:</strong> En modo persistente, la entropía estimada de <code>ROOTCAUSE_DATA_KEY</code> es menor que 128 bits.</p>
+            <p class="nosignifica"><strong>No significa:</strong> La estimación no mide calidad criptográfica: detecta el caso real, que es alguien escribiendo <code>clave123</code> en un archivo de configuración.</p>
+          </article>
+          <article class="card regla" id="BTC-OPSEC-004">
+            <p class="eyebrow"><code>BTC-OPSEC-004</code> · 🟠 Alta</p>
+            <h3>RPC de Bitcoin Core remoto habilitado</h3>
+            <p>Se desactivó una defensa que existe por una razón documentada por el propio Bitcoin Core: el RPC concede control significativo sobre el nodo y no debe exponerse a la red.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>ALLOW_REMOTE_RPC=true</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> La allowlist de once métodos de lectura sigue vigente: esto amplía el canal, no los permisos.</p>
+          </article>
+          <article class="card regla" id="BTC-OPSEC-005">
+            <p class="eyebrow"><code>BTC-OPSEC-005</code> · 🟡 Media</p>
+            <h3>RPC autenticado con usuario y contraseña</h3>
+            <p>La cookie de Bitcoin Core rota sola y no hay que escribirla en ningún sitio. Una contraseña estática vive en un archivo o en una variable de entorno, que es donde acaban filtrándose las cosas.</p>
+            <p class="dispara"><strong>Dispara:</strong> Hay <code>BITCOIN_RPC_USER</code> o <code>BITCOIN_RPC_PASSWORD</code> y no hay <code>BITCOIN_RPC_COOKIE_FILE</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> No implica que la contraseña sea débil: implica que existe escrita en algún sitio.</p>
+          </article>
+          <article class="card regla" id="BTC-OPSEC-006">
+            <p class="eyebrow"><code>BTC-OPSEC-006</code> · 🟡 Media</p>
+            <h3>Watchtower apagado con wallets de alto valor</h3>
+            <p>Nadie está observando el nodo: un gasto fuera de política no se detectaría hasta el próximo análisis manual.</p>
+            <p class="dispara"><strong>Dispara:</strong> Existe al menos una wallet por encima del umbral de alto valor y <code>WATCHTOWER_ENABLED=false</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Encender el watchtower sin nodo disponible no vigila nada: comprueba también <code>BTC-NODE-001</code>.</p>
+          </article>
+          <article class="card regla" id="BTC-OPSEC-007">
+            <p class="eyebrow"><code>BTC-OPSEC-007</code> · ⚪ Baja</p>
+            <h3>Límites de petición por encima de lo razonable</h3>
+            <p>Amplía la superficie de abuso local sin aportar nada al uso normal del panel.</p>
+            <p class="dispara"><strong>Dispara:</strong> <code>RATE_LIMIT_PER_MINUTE &gt;= 5000</code> o <code>REQUEST_BODY_LIMIT_BYTES &gt;= 1 MiB</code>.</p>
+            <p class="nosignifica"><strong>No significa:</strong> Es baja a propósito: describe holgura innecesaria, no una puerta abierta.</p>
+          </article>
+          <article class="card regla" id="BTC-OPSEC-008">
+            <p class="eyebrow"><code>BTC-OPSEC-008</code> · 🔴 Crítica</p>
+            <h3>La cadena de auditoría no verifica</h3>
+            <p>El historial fue modificado después de escribirse, por manipulación del archivo de estado o por corrupción del almacenamiento.</p>
+            <p class="dispara"><strong>Dispara:</strong> Una entrada del registro no encadena con el hash de la anterior.</p>
+            <p class="nosignifica"><strong>No significa:</strong> La primera acción no es arreglar: es preservar. Un registro alterado es el indicio, no el problema.</p>
+          </article>
+        </div>
+      </section>
+  </div>
+
+  <footer>
+    <div class="inner">
+      <div>
+        <strong>RootCause Bitcoin Defense</strong> · MIT · Vladimir Acuña<br />
+        Generado desde <code>config/rules-catalog.json</code>: la misma fuente que la documentación.
+      </div>
+      <div>
+        <a href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/blob/main/docs/reglas/README.md">Fichas completas</a> ·
+        <a href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/blob/main/docs/HEURISTICAS.md">Especificación</a> ·
+        <a href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/blob/main/docs/LIMITACIONES.md">Limitaciones</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

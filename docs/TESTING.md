@@ -9,7 +9,7 @@ funcione, sino que algo sigue siendo imposible.
 
 ---
 
-## Las seis puertas
+## Las siete puertas
 
 | Puerta | Comando | Naturaleza |
 |---|---|---|
@@ -17,10 +17,12 @@ funcione, sino que algo sigue siendo imposible.
 | Claim solo-local | `node scripts/check-local-only.js` | Estructural |
 | Coherencia documental | `node scripts/check-docs.js` | Estructural |
 | Estilo visual de la documentación | `node scripts/check-doc-style.js` | Estructural |
+| Fichas de regla sincronizadas | `node scripts/generate-rule-docs.js --check` | Estructural |
+| Fichas de regla al día | `node scripts/generate-rule-docs.js --check` | Estructural |
 | Pruebas | `node --test` | Unitarias e integración |
 | Invariantes de seguridad | `node scripts/check-security-claims.js` | **Ejecuta la aplicación real** |
 
-Las seis, en orden, con un solo comando:
+Las siete, en orden, con un solo comando:
 
 ~~~bash
 pnpm check
@@ -30,7 +32,7 @@ pnpm check
 
 ## Pruebas automatizadas (`node --test`)
 
-44 pruebas, sin framework externo, repartidas así:
+50 pruebas, sin framework externo, repartidas así:
 
 | Archivo | Cubre |
 |---|---|
@@ -44,6 +46,8 @@ pnpm check
 | `test/desktop-launch.test.js` | El navegador no se abre sin petición explícita ni con bind no-loopback |
 | `test/posture.test.js` | Los ocho controles `BTC-OPSEC`: bind, modo demostración, clave débil, RPC remoto y estático, watchtower, auditoría rota, y el matiz del contenedor |
 | `test/attack-patterns.test.js` | Barrido, ráfaga, correlación proveedor↔inventario, frescura de la matriz y quorum N-de-N — cada uno con su caso que **no** debe activarse |
+| `test/rules-catalog.test.js` | Que el catálogo de reglas y el motor tengan **exactamente** los mismos códigos, y que ninguna ficha se publique sin umbral, evidencia, remediación ni la sección «qué NO significa» |
+| `test/rules-catalog.test.js` | Que el catálogo de reglas y el motor tengan **exactamente** los mismos códigos, y que ninguna ficha se quede sin umbral, evidencia, remediación ni «qué NO significa» |
 
 ### El patrón de las parejas
 

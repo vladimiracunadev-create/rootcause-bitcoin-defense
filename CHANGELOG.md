@@ -58,6 +58,34 @@ funcionalidad del propio producto.
 - `docs/AUDITORIA_14_ETAPAS.md`, `docs/AUDITORIA_CONTINUA.md`,
   `docs/AGENTE_Y_PLUGIN.md` y `docs/POSTURA_DE_DESPLIEGUE.md`.
 
+### Añade — una ficha por regla
+
+- `config/rules-catalog.json`: catálogo versionado de las 26 reglas, con umbral,
+  evidencia, remediación y la sección que más importa —**qué NO significa** cada
+  hallazgo cuando salta;
+- `docs/reglas/`: una ficha por regla más su índice, **generadas** desde el
+  catálogo con `scripts/generate-rule-docs.js`;
+- `landing/reglas.html`: la misma información publicada en GitHub Pages, con
+  el semáforo por severidad y enlazada desde la navegación del sitio;
+- `test/rules-catalog.test.js`: comprueba que el catálogo y el motor tienen
+  **exactamente** los mismos códigos. Añadir una regla sin documentarla, o
+  documentar una que no existe, rompe el build;
+- séptima puerta de calidad: `generate-rule-docs.js --check`, para que una ficha
+  editada a mano no sobreviva a un push.
+
+### Añade — una ficha por regla
+
+- `config/rules-catalog.json`: catálogo versionado con las 26 reglas —umbral,
+  evidencia, causa raíz, remediación, qué **no** significan y cómo comprobarlas—;
+- `docs/reglas/`: una ficha por regla más su índice, **generadas** desde el
+  catálogo con `scripts/generate-rule-docs.js`;
+- `landing/reglas.html`: la misma información publicada en GitHub Pages, con
+  tarjeta por regla y ancla por código, generada desde la misma fuente;
+- `test/rules-catalog.test.js`: seis pruebas que impiden la divergencia — toda
+  regla del motor tiene ficha, toda ficha corresponde a una regla real, y ninguna
+  se publica sin umbral, evidencia, remediación ni «qué NO significa»;
+- puerta `generate-rule-docs.js --check` en `pnpm check`, en CI y en el release.
+
 ### Añade — identidad visual de la familia
 
 - README con la firma de la familia RootCause: banner ASCII en caja doble, fila

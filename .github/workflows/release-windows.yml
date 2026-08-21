@@ -75,6 +75,15 @@ jobs:
       - name: Estilo visual de la documentación
         run: node scripts/check-doc-style.js
 
+      - name: Fichas de regla sincronizadas con el catálogo
+        run: node scripts/generate-rule-docs.js --check
+
+      # Las 26 fichas de regla y su página publicada se GENERAN del catálogo.
+      # Si alguien edita una ficha a mano, o añade una regla sin documentarla,
+      # aquí se ve.
+      - name: Las fichas de regla coinciden con el catálogo
+        run: node scripts/generate-rule-docs.js --check
+
       # ── La version del tag debe coincidir con package.json ────────────────
       - name: Comprobar coherencia de version
         id: version

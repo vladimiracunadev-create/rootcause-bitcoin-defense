@@ -19,13 +19,15 @@
     "check:secrets": "node scripts/check-history-secrets.js",
     "check:runtime": "node scripts/check-runtime-advisories.js",
     "check:style": "node scripts/check-doc-style.js",
-    "check": "node scripts/validate-repo.js && node scripts/check-local-only.js && node scripts/check-docs.js && node scripts/check-doc-style.js && node --test && node scripts/check-security-claims.js",
+    "check:rules": "node scripts/generate-rule-docs.js --check",
+    "check": "node scripts/validate-repo.js && node scripts/check-local-only.js && node scripts/check-docs.js && node scripts/check-doc-style.js && node scripts/generate-rule-docs.js --check && node --test && node scripts/check-security-claims.js",
     "generate:data-key": "node scripts/generate-key.js",
     "seed:demo": "node scripts/seed-demo.js",
     "package:windows": "powershell -NoProfile -ExecutionPolicy Bypass -File packaging/windows/make-icon.ps1 && powershell -NoProfile -ExecutionPolicy Bypass -File packaging/windows/build-portable.ps1",
     "audit:bitcoin": "node scripts/audit-bitcoin.js",
     "audit:bitcoin:report": "node scripts/audit-bitcoin.js --report",
-    "plugin:sync": "node scripts/sync-plugin.js"
+    "plugin:sync": "node scripts/sync-plugin.js",
+    "docs:rules": "node scripts/generate-rule-docs.js"
   },
   "keywords": [
     "bitcoin",

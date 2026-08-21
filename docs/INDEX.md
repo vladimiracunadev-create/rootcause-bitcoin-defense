@@ -28,7 +28,8 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 |---|---|
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Componentes, capas y flujo de datos |
 | [`API.md`](API.md) | Contrato HTTP completo |
-| [`HEURISTICAS.md`](HEURISTICAS.md) | Las 11 reglas: condición exacta, severidad, evidencia y qué **no** significan |
+| [`reglas/README.md`](reglas/README.md) | **Una ficha por regla**: las 26, con su umbral, su evidencia y qué **no** significan |
+| [`HEURISTICAS.md`](HEURISTICAS.md) | Especificación por familias: condición exacta, severidad y evidencia |
 | [`COMMANDS.md`](COMMANDS.md) | Referencia de comandos, variables de entorno y llamadas a la API |
 | [`REQUIREMENTS.md`](REQUIREMENTS.md) | Requisitos para usar y para desarrollar |
 | [`TESTING.md`](TESTING.md) | Estrategia de pruebas y las cinco puertas de calidad |

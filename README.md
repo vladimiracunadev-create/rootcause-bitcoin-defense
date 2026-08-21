@@ -147,7 +147,7 @@ examinar el caso COLDCARD, reconocer incidentes y simular un gasto no autorizado
 
 ## ✅ Verificación
 
-`pnpm check` encadena las seis puertas que también corren en CI:
+`pnpm check` encadena las siete puertas que también corren en CI:
 
 ~~~bash
 pnpm check
@@ -158,7 +158,8 @@ pnpm check
 | `node scripts/validate-repo.js` | Archivos obligatorios, JSON válido, sintaxis, versión sincronizada con `/api/health`, ausencia de material privado embebido |
 | `node scripts/check-local-only.js` | Cero dependencias, cero orígenes remotos en el panel, CSP `self` intacta |
 | `node scripts/check-docs.js` | Todo documento referenciado existe |
-| `node scripts/check-doc-style.js` | El lenguaje visual de la familia RootCause: un H1, tablas con cabecera, bloques con lenguaje y todo `docs/` en el índice |
+| `node scripts/check-doc-style.js` | El lenguaje visual de la familia RootCause: banner, badges, lema, un H1 por documento y todo `docs/` en el índice |
+| `node scripts/generate-rule-docs.js --check` | Las 26 fichas de regla y su página publicada coinciden con el catálogo |
 | `node --test` | Pruebas unitarias y de integración |
 | `node scripts/check-security-claims.js` | Arranca la aplicación real y comprueba que rechaza semillas, mnemónicos, passphrases, xprv, mutaciones sin cabecera local, peticiones cross-site y RPC remoto |
 
@@ -257,28 +258,40 @@ Y si aparece una palabra que no conoces, está en
 
 ## 🚦 Reglas incluidas
 
-| Código | Detección |
-| --- | --- |
-| BTC-KEY-001 | Firmante creado con firmware afectado |
-| BTC-KEY-002 | Firmware de creación desconocido |
-| BTC-KEY-003 | Origen de entropía desconocido |
-| BTC-CUSTODY-001 | Fondos de alto valor controlados por una sola clave |
-| BTC-CUSTODY-002 | Multisig sin diversidad de fabricantes |
-| BTC-TX-001 | Gasto observado sin aprobación conocida |
-| BTC-NODE-001 | Bitcoin Core no disponible |
-| BTC-NODE-002 | Nodo todavía no sincronizado |
-| BTC-NODE-003 | Nodo sin peers |
-| BTC-NODE-004 | Presión elevada de mempool |
-| BTC-PRIVACY-001 | Acceso masivo a datos de clientes |
-| BTC-CUSTODY-003 | Quorum N-de-N: perder un firmante congela los fondos |
-| BTC-TX-002 | Barrido: un gasto sin aprobar se lleva ≥ 90 % del saldo |
-| BTC-TX-003 | Ráfaga: varios gastos sin aprobar en menos de una hora |
-| BTC-PRIVACY-002 | La filtración afecta al fabricante de tus firmantes |
-| BTC-INTEL-001/2/3 | La matriz de avisos está vieja, vacía o sin fechar |
-| BTC-OPSEC-001…008 | Postura de la instalación: bind, cifrado, RPC, vigilancia, auditoría |
+Veintiséis reglas en siete familias. **Cada una tiene su ficha**: qué la dispara,
+con qué umbral, qué evidencia adjunta, cómo se remedia y —sobre todo— qué **no**
+significa cuando salta.
 
-Especificación de cada una en [docs/HEURISTICAS.md](docs/HEURISTICAS.md); la
-familia `BTC-OPSEC` en [docs/POSTURA_DE_DESPLIEGUE.md](docs/POSTURA_DE_DESPLIEGUE.md).
+| Código | Detección | Severidad |
+| --- | --- | --- |
+| [`BTC-KEY-001`](docs/reglas/BTC-KEY-001.md) | Semilla creada con firmware afectado | 🔴 |
+| [`BTC-KEY-002`](docs/reglas/BTC-KEY-002.md) | Firmware de creación desconocido | 🟠 · 🟡 |
+| [`BTC-KEY-003`](docs/reglas/BTC-KEY-003.md) | Origen de entropía desconocido | 🟡 |
+| [`BTC-CUSTODY-001`](docs/reglas/BTC-CUSTODY-001.md) | Fondos de alto valor dependen de una sola clave | 🔴 |
+| [`BTC-CUSTODY-002`](docs/reglas/BTC-CUSTODY-002.md) | Multisig sin diversidad de implementación | 🟠 · 🟡 |
+| [`BTC-CUSTODY-003`](docs/reglas/BTC-CUSTODY-003.md) | Quorum sin tolerancia a fallos (N-de-N) | 🟠 · 🟡 |
+| [`BTC-TX-001`](docs/reglas/BTC-TX-001.md) | Gasto observado sin aprobación conocida | 🔴 |
+| [`BTC-TX-002`](docs/reglas/BTC-TX-002.md) | Barrido del saldo de una wallet vigilada | 🔴 |
+| [`BTC-TX-003`](docs/reglas/BTC-TX-003.md) | Varios gastos sin aprobación en ventana corta | 🔴 |
+| [`BTC-NODE-001`](docs/reglas/BTC-NODE-001.md) | Bitcoin Core no disponible | 🟠 |
+| [`BTC-NODE-002`](docs/reglas/BTC-NODE-002.md) | Nodo todavía no sincronizado | 🟡 |
+| [`BTC-NODE-003`](docs/reglas/BTC-NODE-003.md) | Nodo sin peers | 🟠 |
+| [`BTC-NODE-004`](docs/reglas/BTC-NODE-004.md) | Presión elevada de mempool | 🟡 |
+| [`BTC-PRIVACY-001`](docs/reglas/BTC-PRIVACY-001.md) | Acceso masivo a datos de clientes | 🔴 · 🟡 |
+| [`BTC-PRIVACY-002`](docs/reglas/BTC-PRIVACY-002.md) | El proveedor filtrado fabrica tus firmantes | 🟠 |
+| [`BTC-INTEL-001`](docs/reglas/BTC-INTEL-001.md) | Matriz de avisos sin verificar | 🟡 · 🟠 |
+| [`BTC-INTEL-002`](docs/reglas/BTC-INTEL-002.md) | Sin matriz de avisos cargada | 🟠 |
+| [`BTC-INTEL-003`](docs/reglas/BTC-INTEL-003.md) | Avisos sin fecha de verificación | 🟡 |
+| [`BTC-OPSEC-001`](docs/reglas/BTC-OPSEC-001.md) | El panel escucha fuera de loopback | 🔴 · 🟡 |
+| [`BTC-OPSEC-002`](docs/reglas/BTC-OPSEC-002.md) | Inventario con saldo declarado en modo demostración | 🟡 |
+| [`BTC-OPSEC-003`](docs/reglas/BTC-OPSEC-003.md) | Clave de datos por debajo del mínimo recomendado | 🟠 · 🟡 |
+| [`BTC-OPSEC-004`](docs/reglas/BTC-OPSEC-004.md) | RPC de Bitcoin Core remoto habilitado | 🟠 |
+| [`BTC-OPSEC-005`](docs/reglas/BTC-OPSEC-005.md) | RPC autenticado con usuario y contraseña | 🟡 |
+| [`BTC-OPSEC-006`](docs/reglas/BTC-OPSEC-006.md) | Watchtower apagado con wallets de alto valor | 🟡 |
+| [`BTC-OPSEC-007`](docs/reglas/BTC-OPSEC-007.md) | Límites de petición por encima de lo razonable | ⚪ |
+| [`BTC-OPSEC-008`](docs/reglas/BTC-OPSEC-008.md) | La cadena de auditoría no verifica | 🔴 |
+
+📘 **[Fichas completas de las 26 reglas →](docs/reglas/README.md)**  ·  🌐 **[Versión publicada →](https://vladimiracunadev-create.github.io/rootcause-bitcoin-defense/reglas.html)**  ·  🔬 **[Especificación por familias →](docs/HEURISTICAS.md)**
 
 ## 🔬 Auditoría de custodia en 14 etapas
 

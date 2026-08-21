@@ -47,6 +47,19 @@ const indexContent = await fs
   .readFile(path.join(PROJECT_ROOT, "docs", "INDEX.md"), "utf8")
   .catch(() => "");
 
+// Índices de subdirectorio, cargados una vez.
+const subIndexes = new Map();
+for (const file of files) {
+  const relative = path.relative(PROJECT_ROOT, file).split(path.sep).join("/");
+  const partes = relative.split("/");
+  if (partes[0] === "docs" && partes.length > 2 && partes.at(-1) === "README.md") {
+    subIndexes.set(
+      partes.slice(1, -1).join("/"),
+      await fs.readFile(file, "utf8")
+    );
+  }
+}
+
 for (const file of files) {
   const relative = path.relative(PROJECT_ROOT, file).split(path.sep).join("/");
   if (EXENTOS.has(relative)) continue;
@@ -119,11 +132,28 @@ for (const file of files) {
     }
   });
 
-  // ── Los documentos de docs/ viven en el índice ─────────────────────────────
+  // ── Los documentos de docs/ viven en un índice ─────────────────────────────
+  //
+  // En la raíz de docs/, ese índice es INDEX.md. En un subdirectorio —las 26
+  // fichas de regla, por ejemplo— es el README.md del propio subdirectorio, que
+  // a su vez tiene que aparecer en INDEX.md. Así ninguna cadena queda suelta.
   if (relative.startsWith("docs/") && relative !== "docs/INDEX.md") {
     const name = relative.slice("docs/".length);
-    if (indexContent && !indexContent.includes(name)) {
-      report(1, "no aparece en docs/INDEX.md: un documento que nadie enlaza no existe");
+    const partes = name.split("/");
+    if (partes.length === 1) {
+      if (indexContent && !indexContent.includes(name)) {
+        report(1, "no aparece en docs/INDEX.md: un documento que nadie enlaza no existe");
+      }
+    } else if (partes.at(-1) !== "README.md") {
+      const indiceLocal = subIndexes.get(partes.slice(0, -1).join("/")) || "";
+      if (!indiceLocal.includes(partes.at(-1))) {
+        report(
+          1,
+          "no aparece en docs/" + partes.slice(0, -1).join("/") + "/README.md"
+        );
+      }
+    } else if (indexContent && !indexContent.includes(name)) {
+      report(1, "el índice del subdirectorio no aparece en docs/INDEX.md");
     }
   }
 

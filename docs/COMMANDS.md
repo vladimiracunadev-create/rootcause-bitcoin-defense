@@ -13,11 +13,15 @@ usarlo. Nada aquí necesita instalar dependencias: no hay ninguna.
 | `pnpm dev` | Igual, con recarga automática al cambiar el código |
 | `pnpm test` | Las pruebas (`node --test`) |
 | `pnpm lint` | Validación del repositorio |
-| `pnpm check` | **Las seis puertas de calidad, en orden** |
+| `pnpm check` | **Las siete puertas de calidad, en orden** |
 | `pnpm check:local-only` | Solo la puerta de cero dependencias y cero orígenes remotos |
 | `pnpm check:security` | Solo los invariantes de seguridad, con la app en marcha |
 | `pnpm check:docs` | Solo la coherencia de la documentación |
 | `pnpm check:style` | Solo el estilo visual de la documentación |
+| `pnpm check:rules` | Solo que las fichas de regla coincidan con el catálogo |
+| `pnpm docs:rules` | Regenera las 26 fichas, su índice y la página publicada |
+| `pnpm check:rules` | Que las fichas de regla coincidan con el catálogo |
+| `pnpm docs:rules` | Regenera las 26 fichas, su índice y la página publicada |
 | `pnpm generate:data-key` | Genera una clave AES-256 para la persistencia cifrada |
 | `pnpm seed:demo` | Vuelca el estado de demostración por stdout |
 | `pnpm package:windows` | Genera el icono y empaqueta la edición portable |
@@ -40,14 +44,15 @@ node scripts/check-docs.js
 
 ---
 
-## Las seis puertas, una por una
+## Las siete puertas, una por una
 
 | Script | Qué comprueba | Falla cuando |
 |---|---|---|
 | `scripts/validate-repo.js` | Archivos obligatorios, JSON válido, sintaxis de cada `.js`, versión sincronizada entre `package.json` y `/api/health`, ausencia de claves privadas embebidas, tests enfocados (`.only`) | Alguien deja un `it.only`, rompe un JSON o desincroniza la versión |
 | `scripts/check-local-only.js` | Cero dependencias declaradas o instaladas, ningún import externo, ninguna referencia remota en el panel, CSP `self` intacta | Alguien añade una dependencia npm o un CDN |
 | `scripts/check-docs.js` | Toda ruta y enlace citado en un `.md` existe | Se renombra un documento sin actualizar quien lo cita |
-| `scripts/check-doc-style.js` | Un H1, tablas con cabecera, bloques con lenguaje, todo `docs/` indexado | Un documento nuevo no entra en `INDEX.md` o rompe el formato de la casa |
+| `scripts/check-doc-style.js` | Un H1, tablas con cabecera, bloques con lenguaje, todo `docs/` indexado, la firma visual del README | Un documento nuevo no entra en `INDEX.md` o el README pierde el banner, los badges o el lema |
+| `scripts/generate-rule-docs.js --check` | Las 26 fichas de regla y la página publicada coinciden con `config/rules-catalog.json` | Alguien edita una ficha a mano o añade una regla sin documentarla |
 | `node --test` | Las pruebas unitarias y de integración | Lo de siempre |
 | `scripts/check-security-claims.js` | **Arranca la aplicación** y comprueba 20 invariantes: rechazo de material secreto, cabecera de mutación, cross-site, CSP servida, allowlist RPC, RPC remoto, valores por defecto | Cualquier promesa del README deja de ser cierta |
 
