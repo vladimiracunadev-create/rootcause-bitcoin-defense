@@ -44,7 +44,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Sin credenciales persistidas en .git/config: nada de lo que
           # corre después necesita empujar al repositorio.
@@ -71,7 +71,7 @@ jobs:
 
       - name: Publicar el informe
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: auditoria-custodia-${{ github.run_number }}
           path: SECURITY_AUDIT_BITCOIN_*.md
@@ -84,7 +84,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Sin credenciales persistidas en .git/config: nada de lo que
           # corre después necesita empujar al repositorio.
@@ -124,7 +124,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Sin credenciales persistidas en .git/config: nada de lo que
           # corre después necesita empujar al repositorio.
@@ -149,10 +149,13 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}"
-          curl -sSfL "$BASE/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" -o gitleaks.tar.gz
+          ARCHIVE="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          # El archivo conserva su nombre original: `sha256sum -c` compara contra
+          # el nombre que figura en checksums.txt, no contra el que le pongamos.
+          curl -sSfL "$BASE/$ARCHIVE" -o "$ARCHIVE"
           curl -sSfL "$BASE/gitleaks_${GITLEAKS_VERSION}_checksums.txt" -o checksums.txt
-          grep "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" checksums.txt | sha256sum -c -
-          tar -xzf gitleaks.tar.gz gitleaks
+          grep "$ARCHIVE" checksums.txt | sha256sum -c -
+          tar -xzf "$ARCHIVE" gitleaks
           ./gitleaks git --no-banner --redact --exit-code 1 .
 
   workflows:
@@ -161,7 +164,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Sin credenciales persistidas en .git/config: nada de lo que
           # corre después necesita empujar al repositorio.
@@ -173,7 +176,7 @@ jobs:
         run: |
           set -euo pipefail
           pipx install "zizmor==1.29.0"
-          zizmor --persona regular .github/workflows/
+          zizmor --config .github/zizmor.yml --persona regular .github/workflows/
 
       - name: hadolint sobre el Dockerfile
         env:
@@ -190,7 +193,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Sin credenciales persistidas en .git/config: nada de lo que
           # corre después necesita empujar al repositorio.
@@ -235,7 +238,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Sin credenciales persistidas en .git/config: nada de lo que
           # corre después necesita empujar al repositorio.

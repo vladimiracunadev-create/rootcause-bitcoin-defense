@@ -1,0 +1,15 @@
+# Configuración de zizmor.
+#
+# Una supresión sin motivo escrito es una vulnerabilidad con permiso. Aquí solo
+# se silencia lo que se ha entendido, y el motivo queda al lado.
+rules:
+  cache-poisoning:
+    ignore:
+      # El aviso es correcto en general: un workflow que publica artefactos no
+      # debe restaurar caché, porque un atacante con acceso a la caché podría
+      # envenenar lo que se publica.
+      #
+      # Aquí no se restaura ninguna: `actions/setup-node` se usa SIN la opción
+      # `cache`, y el proyecto no tiene dependencias que cachear —esa ausencia
+      # la verifica en cada push el trabajo `solo-local`—.
+      - release-windows.yml

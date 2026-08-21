@@ -69,6 +69,13 @@ funcionalidad del propio producto.
 - tablas de resumen en los documentos que no las tenían: arquitectura, roadmap,
   runbook, checklist, contribución, principios y política de seguridad.
 
+### Actualiza
+
+- GitHub Actions al día, con cada SHA verificado antes de fijarlo:
+  `actions/checkout` v7.0.1, `actions/upload-artifact` v7.0.1,
+  `actions/configure-pages` v6.0.0, `actions/deploy-pages` v5.0.0,
+  `actions/upload-pages-artifact` v5.0.0 y `github/codeql-action` v4.37.7.
+
 ### Corrige
 
 - `BUILD-INFO.json` se escribía con BOM y `JSON.parse` no podía leerlo: la

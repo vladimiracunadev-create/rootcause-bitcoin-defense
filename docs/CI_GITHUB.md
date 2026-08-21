@@ -123,11 +123,14 @@ action puede cambiar a qué apunta. Un SHA es inmutable. El comentario al lado
 conserva la legibilidad:
 
 ~~~yaml
-uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 ~~~
 
 Dependabot propone las subidas semanalmente, agrupadas, y CI las valida antes de
-que nadie las mezcle.
+que nadie las mezcle. Cuando la rama de Dependabot entra en conflicto con
+cambios recientes, la subida se aplica directamente en `main` con los mismos
+SHA verificados y el PR se cierra: **todo entra por `main`, y no se quedan
+ramas abiertas esperando.**
 
 ---
 
