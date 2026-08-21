@@ -1,5 +1,71 @@
 # Changelog
 
+## 0.3.0 - 2026-08-20
+
+Seguridad en cuatro niveles: auditoría continua, skill de dominio, agente y
+funcionalidad del propio producto.
+
+### Añade — detección
+
+- `BTC-TX-002`: barrido, un gasto sin aprobación que se lleva el 90 % o más del
+  saldo declarado de una wallet;
+- `BTC-TX-003`: ráfaga, varios gastos sin aprobación de la misma wallet en menos
+  de una hora;
+- `BTC-PRIVACY-002`: correlación entre una filtración de datos y el fabricante de
+  los firmantes que tienes registrados;
+- `BTC-CUSTODY-003`: quorum N-de-N, donde perder un solo firmante deja los fondos
+  irrecuperables;
+- `BTC-INTEL-001/002/003`: la matriz de avisos está vieja, vacía o sin fechas de
+  verificación — un panel en verde sobre inteligencia vieja es una tranquilidad
+  falsa;
+- familia `BTC-OPSEC-001…008`: la aplicación se audita a sí misma (bind fuera de
+  loopback, inventario en modo demostración, clave de datos débil, RPC remoto,
+  credenciales estáticas, watchtower apagado con alto valor, límites relajados y
+  cadena de auditoría rota);
+- campo opcional `valueSats` en las transacciones observadas, sin el cual no se
+  puede distinguir un pago de un vaciado.
+
+### Añade — reevaluación al cambiar
+
+- Registrar una wallet vuelve a disparar el análisis completo, como ya hacían la
+  observación de transacciones y de eventos de privacidad;
+- cada reevaluación automática deja una entrada `auto_rescan` en la auditoría con
+  el motivo y el recuento de hallazgos.
+
+### Añade — auditoría continua
+
+- `scripts/check-runtime-advisories.js`: audita el motor Node que se distribuye
+  dentro del instalador contra la base del Node.js Security WG, distinguiendo el
+  runtime que se distribuye del que ejecuta la comprobación;
+- `scripts/check-history-secrets.js`: secretos en todo el histórico de git, con
+  patrones del dominio, evidencia enmascarada y exenciones declaradas;
+- workflow `security-audit.yml` con seis trabajos, también los lunes: custodia,
+  runtime, secretos (más gitleaks verificado por checksum), workflows (zizmor y
+  hadolint), inteligencia y sincronía del plugin.
+
+### Añade — skill, agente y plugin
+
+- Skill `bitcoin-custody-audit` con 14 etapas y ejecutable
+  `scripts/audit-bitcoin.js`, que produce informe Markdown y plan de remediación;
+- agente `bitcoin-security-auditor`, especializado en custodia Bitcoin, con
+  prohibición explícita de pedir o aceptar material secreto;
+- comando `/auditar-bitcoin`;
+- `plugin/`, copia generada y verificada en CI desde `.claude/`.
+
+### Añade — API y documentación
+
+- `GET /api/posture`, postura de la instalación calculada en el momento;
+- `docs/AUDITORIA_14_ETAPAS.md`, `docs/AUDITORIA_CONTINUA.md`,
+  `docs/AGENTE_Y_PLUGIN.md` y `docs/POSTURA_DE_DESPLIEGUE.md`.
+
+### Corrige
+
+- `BUILD-INFO.json` se escribía con BOM y `JSON.parse` no podía leerlo: la
+  procedencia del artefacto era ilegible por máquina;
+- la regla de bind abierto distingue ahora un contenedor —donde `0.0.0.0` es lo
+  normal y quien decide la exposición es el mapeo de puertos— de una instalación
+  de escritorio expuesta.
+
 ## 0.2.0 - 2026-08-20
 
 Edición de escritorio para Windows y verificación ejecutable de las promesas

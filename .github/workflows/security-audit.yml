@@ -1,0 +1,231 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Auditoría de seguridad — RootCause Bitcoin Defense
+#
+# Traslada al CI el criterio del skill de auditoría en 12 capas, adaptado a un
+# repositorio sin dependencias:
+#
+#   1. custodia   → las 14 etapas del skill bitcoin-custody-audit
+#   2. runtime    → avisos abiertos del Node que SE DISTRIBUYE dentro del .exe
+#   3. secretos   → histórico completo de git, con patrones del dominio
+#   4. workflows  → zizmor sobre los propios workflows
+#   5. dockerfile → hadolint
+#   6. inteligencia → la matriz de avisos no puede envejecer en silencio
+#
+# Corre en cada push, en cada PR y —lo importante— cada lunes, porque el mundo
+# cambia aunque el repositorio no: un aviso nuevo de Node o de un fabricante no
+# espera a que alguien haga commit.
+#
+# Regla heredada: una capa que no puede ejecutarse falla o se declara omitida,
+# nunca se presenta como verde.
+# ─────────────────────────────────────────────────────────────────────────────
+name: Auditoría de seguridad
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Lunes 07:23 UTC, antes de la semana laboral en América.
+    - cron: "23 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  custodia:
+    name: Auditoría de custodia (14 etapas)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          # El histórico completo hace falta para la etapa de secretos.
+          fetch-depth: 0
+
+      - name: Node LTS
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+
+      - name: Las 14 etapas
+        run: node scripts/audit-bitcoin.js --report
+
+      - name: Resumen en el job
+        if: always()
+        run: |
+          {
+            echo "## Auditoría de custodia Bitcoin"
+            echo ""
+            cat SECURITY_AUDIT_BITCOIN_*.md 2>/dev/null || echo "Sin informe generado."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publicar el informe
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: auditoria-custodia-${{ github.run_number }}
+          path: SECURITY_AUDIT_BITCOIN_*.md
+          if-no-files-found: warn
+          retention-days: 90
+
+  runtime:
+    name: Cadena de suministro del runtime distribuido
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Node LTS
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+
+      # Se audita la versión que el empaquetador incluiría hoy, no la del
+      # runner: el Node del runner no viaja dentro de ningún artefacto.
+      - name: Resolver el Node que se distribuiría
+        id: lts
+        run: |
+          VERSION=$(curl -sSf --max-time 20 https://nodejs.org/dist/index.json \
+            | node -e "
+              let raw='';
+              process.stdin.on('data', (chunk) => { raw += chunk; });
+              process.stdin.on('end', () => {
+                const entry = JSON.parse(raw).find((item) => item.lts !== false && item.version.startsWith('v22.'));
+                if (!entry) { console.error('sin LTS de la rama 22'); process.exit(1); }
+                process.stdout.write(entry.version.replace(/^v/, ''));
+              });
+            ")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Node que se empaquetaría hoy: $VERSION"
+
+      - name: Avisos abiertos del runtime
+        env:
+          NODE_TARGET: ${{ steps.lts.outputs.version }}
+        run: node scripts/check-runtime-advisories.js --version="$NODE_TARGET"
+
+  secretos:
+    name: Secretos en el histórico
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+          fetch-depth: 0
+
+      - name: Node LTS
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+
+      - name: Patrones del dominio sobre todo el histórico
+        run: node scripts/check-history-secrets.js
+
+      # gitleaks aporta cientos de patrones genéricos que este repositorio no
+      # va a reimplementar. Se instala desde el binario oficial y se verifica su
+      # checksum: un escáner de secretos que se descarga sin verificar sería
+      # justo el tipo de cosa que este workflow existe para detectar.
+      - name: gitleaks (capa genérica)
+        env:
+          GITLEAKS_VERSION: "8.30.1"
+        run: |
+          set -euo pipefail
+          BASE="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}"
+          curl -sSfL "$BASE/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" -o gitleaks.tar.gz
+          curl -sSfL "$BASE/gitleaks_${GITLEAKS_VERSION}_checksums.txt" -o checksums.txt
+          grep "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" checksums.txt | sha256sum -c -
+          tar -xzf gitleaks.tar.gz gitleaks
+          ./gitleaks git --no-banner --redact --exit-code 1 .
+
+  workflows:
+    name: Workflows y Dockerfile
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      # zizmor busca lo que un ojo humano no ve en YAML: inyección por
+      # interpolación de datos de evento, permisos excesivos, actions sin pinnear.
+      - name: zizmor sobre los workflows
+        run: |
+          set -euo pipefail
+          pipx install "zizmor==1.29.0"
+          zizmor --persona regular .github/workflows/
+
+      - name: hadolint sobre el Dockerfile
+        env:
+          HADOLINT_VERSION: "2.15.1"
+        run: |
+          set -euo pipefail
+          curl -sSfL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64" -o hadolint
+          chmod +x hadolint
+          ./hadolint Dockerfile
+
+  inteligencia:
+    name: La matriz de avisos no puede envejecer en silencio
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Node LTS
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+
+      # Etapa 2 aislada. Si la matriz lleva más del plazo sin verificarse, el
+      # job avisa en el resumen del run: el hallazgo es del producto, no del
+      # código, así que no tumba el build de nadie que solo pasaba por aquí.
+      - name: Frescura de los avisos
+        id: intel
+        continue-on-error: true
+        run: node scripts/audit-bitcoin.js --stages=2 --fail-on-attention
+
+      - name: Avisar si la inteligencia está vieja
+        if: always()
+        env:
+          # Por variable de entorno y no interpolado dentro del script: es la
+          # forma de que ningún dato de evento pueda acabar ejecutándose.
+          INTEL_OUTCOME: ${{ steps.intel.outcome }}
+        run: |
+          {
+            echo "## Frescura de la matriz de avisos"
+            echo ""
+            if [ "$INTEL_OUTCOME" = "success" ]; then
+              echo "La matriz está dentro del plazo de verificación."
+            else
+              echo "⚠️ La matriz de avisos necesita revisión contra las fuentes oficiales."
+              echo ""
+              echo "Un panel en verde sobre inteligencia vieja es una tranquilidad falsa."
+              echo "Revisa \`config/advisories.json\` y actualiza \`verifiedAt\` de cada entrada contrastada."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  plugin:
+    name: El plugin coincide con su fuente
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Node LTS
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+
+      # El skill y el agente que se distribuyen tienen que ser EXACTAMENTE los
+      # que este repositorio usa. Un plugin que promete algo que el proyecto no
+      # practica es peor que no publicarlo.
+      - name: plugin/ sincronizado con .claude/
+        run: node scripts/sync-plugin.js --check

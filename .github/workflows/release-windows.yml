@@ -94,8 +94,10 @@ jobs:
 
       - name: Compilar instalador
         shell: powershell
+        env:
+          APP_VERSION: ${{ steps.version.outputs.version }}
         run: |
-          $version = "${{ steps.version.outputs.version }}"
+          $version = $env:APP_VERSION
           $iscc = Join-Path ${env:ProgramFiles(x86)} "Inno Setup 6\ISCC.exe"
           if (-not (Test-Path $iscc)) {
             $iscc = Join-Path $env:ProgramFiles "Inno Setup 6\ISCC.exe"
@@ -109,8 +111,9 @@ jobs:
         shell: powershell
         env:
           ROOTCAUSE_OPEN_BROWSER: "0"
+          APP_VERSION: ${{ steps.version.outputs.version }}
         run: |
-          $version = "${{ steps.version.outputs.version }}"
+          $version = $env:APP_VERSION
           $setup = "build\installer\RootCause-Bitcoin-Defense-$version-win-x64-setup.exe"
           if (-not (Test-Path $setup)) { throw "No se genero el instalador: $setup" }
 
@@ -146,8 +149,10 @@ jobs:
 
       - name: Generar SHA256SUMS.txt
         shell: powershell
+        env:
+          APP_VERSION: ${{ steps.version.outputs.version }}
         run: |
-          $version = "${{ steps.version.outputs.version }}"
+          $version = $env:APP_VERSION
           $artifacts = @(
             "build\RootCause-Bitcoin-Defense-$version-win-x64-portable.zip",
             "build\installer\RootCause-Bitcoin-Defense-$version-win-x64-setup.exe"
@@ -178,8 +183,9 @@ jobs:
         shell: powershell
         env:
           GH_TOKEN: ${{ github.token }}
+          APP_VERSION: ${{ steps.version.outputs.version }}
         run: |
-          $version = "${{ steps.version.outputs.version }}"
+          $version = $env:APP_VERSION
           $tag = $env:GITHUB_REF_NAME
           $portable = "RootCause-Bitcoin-Defense-$version-win-x64-portable.zip"
           $setup = "RootCause-Bitcoin-Defense-$version-win-x64-setup.exe"

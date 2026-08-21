@@ -19,6 +19,7 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 | [`RUNBOOK-MIGRATION.md`](RUNBOOK-MIGRATION.md) | Migrar fondos de una wallet comprometida, paso a paso |
 | [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) | Problemas comunes, con el comando que confirma cada causa |
 | [`POLITICA_DE_PRIVACIDAD_LOCAL.md`](POLITICA_DE_PRIVACIDAD_LOCAL.md) | Qué datos toca el producto, dónde quedan y cómo verificarlo |
+| [`POSTURA_DE_DESPLIEGUE.md`](POSTURA_DE_DESPLIEGUE.md) | Los ocho controles con los que la aplicación se audita a sí misma |
 | [`SECURITY-CHECKLIST.md`](SECURITY-CHECKLIST.md) | Comprobaciones antes de usarlo con información real |
 
 ## Para desarrolladores
@@ -33,6 +34,9 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 | [`TESTING.md`](TESTING.md) | Estrategia de pruebas y las cinco puertas de calidad |
 | [`CI_GITHUB.md`](CI_GITHUB.md) | Los tres workflows y cómo replicarlos en local |
 | [`RELEASE_CHECKLIST.md`](RELEASE_CHECKLIST.md) | Publicar un release, con la verificación de cada paso |
+| [`AUDITORIA_14_ETAPAS.md`](AUDITORIA_14_ETAPAS.md) | El skill de auditoría de custodia Bitcoin, etapa por etapa |
+| [`AUDITORIA_CONTINUA.md`](AUDITORIA_CONTINUA.md) | Cómo se mantiene el sistema al día: reevaluación al cambiar, CI y auditoría semanal |
+| [`AGENTE_Y_PLUGIN.md`](AGENTE_Y_PLUGIN.md) | El agente especializado, el comando y el plugin distribuible |
 | [`JAVASCRIPT_PARA_ROOTCAUSE.md`](JAVASCRIPT_PARA_ROOTCAUSE.md) | Por qué JavaScript sin dependencias, sin TypeScript y sin framework |
 
 ## Seguridad y alcance

@@ -20,6 +20,11 @@ usarlo. Nada aquí necesita instalar dependencias: no hay ninguna.
 | `pnpm generate:data-key` | Genera una clave AES-256 para la persistencia cifrada |
 | `pnpm seed:demo` | Vuelca el estado de demostración por stdout |
 | `pnpm package:windows` | Genera el icono y empaqueta la edición portable |
+| `pnpm audit:bitcoin` | Las 14 etapas de auditoría de custodia |
+| `pnpm audit:bitcoin:report` | Igual, dejando informe Markdown fechado |
+| `pnpm check:secrets` | Secretos en el histórico completo de git |
+| `pnpm check:runtime` | Avisos abiertos del runtime que se distribuye |
+| `pnpm plugin:sync` | Regenera `plugin/` desde `.claude/` |
 
 Si Corepack no está disponible, todo funciona igual con `node` directo:
 
@@ -81,6 +86,22 @@ Plantilla completa en [`../.env.example`](../.env.example).
 
 ---
 
+## Auditoría de custodia (14 etapas)
+
+~~~bash
+node scripts/audit-bitcoin.js                 # todas las etapas
+node scripts/audit-bitcoin.js --report        # + informe Markdown fechado
+node scripts/audit-bitcoin.js --stages=1,2,9  # solo algunas
+node scripts/audit-bitcoin.js --json          # salida procesable
+
+# Capas sueltas
+node scripts/check-history-secrets.js --staged
+node scripts/check-runtime-advisories.js --version=22.23.2
+node scripts/sync-plugin.js --check
+~~~
+
+Detalle de cada etapa en [`AUDITORIA_14_ETAPAS.md`](AUDITORIA_14_ETAPAS.md).
+
 ## API HTTP
 
 Contrato completo en [`API.md`](API.md). Las mutaciones exigen la cabecera
@@ -95,6 +116,7 @@ curl http://127.0.0.1:8787/api/incidents
 curl http://127.0.0.1:8787/api/advisories
 curl http://127.0.0.1:8787/api/policies
 curl http://127.0.0.1:8787/api/audit
+curl http://127.0.0.1:8787/api/posture
 
 # Re-analizar
 curl -X POST http://127.0.0.1:8787/api/scan \
@@ -139,7 +161,7 @@ powershell -File packaging/windows/build-portable.ps1
 powershell -File packaging/windows/build-portable.ps1 -NodeVersion 22.23.2
 
 # Instalador (requiere Inno Setup 6)
-iscc /DAppVersion=0.2.0 packaging/windows/RootCause-Bitcoin-Defense.iss
+iscc /DAppVersion=$(node -p "require('./package.json').version") packaging/windows/RootCause-Bitcoin-Defense.iss
 ~~~
 
 Detalles en [`WINDOWS-APP.md`](WINDOWS-APP.md).
@@ -178,7 +200,7 @@ gh run list --limit 5
 gh workflow run release-windows.yml --ref main
 
 # Publicar un release (el workflow hace todo lo demás)
-git tag v0.2.0 && git push origin v0.2.0
+git tag "v$(node -p "require('./package.json').version")" && git push origin --tags
 
 # Ver los artefactos de un run
 gh run view <RUN_ID> --log | grep "instalada y funcionando"

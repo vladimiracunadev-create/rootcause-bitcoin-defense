@@ -3,6 +3,7 @@
 [![CI](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/ci.yml/badge.svg)](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/codeql.yml/badge.svg)](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/codeql.yml)
 [![Release Windows](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/release-windows.yml/badge.svg)](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/release-windows.yml)
+[![Auditoría de seguridad](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/security-audit.yml/badge.svg)](https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/actions/workflows/security-audit.yml)
 [![Licencia MIT](https://img.shields.io/badge/licencia-MIT-informational)](LICENSE)
 [![Dependencias](https://img.shields.io/badge/dependencias-cero-success)](docs/ARCHITECTURE.md)
 
@@ -117,6 +118,13 @@ pnpm check
 | `node --test` | Pruebas unitarias y de integración |
 | `node scripts/check-security-claims.js` | Arranca la aplicación real y comprueba que rechaza semillas, mnemónicos, passphrases, xprv, mutaciones sin cabecera local, peticiones cross-site y RPC remoto |
 
+Y dos capas más, que corren en la auditoría continua:
+
+| Capa | Qué comprueba |
+| --- | --- |
+| `node scripts/check-history-secrets.js` | Secretos en **todo** el histórico de git, con patrones del dominio (`xprv`, WIF, mnemónicos, clave de datos) |
+| `node scripts/check-runtime-advisories.js` | Avisos abiertos del motor Node que viaja dentro del instalador, contra la base del Node.js Security WG |
+
 La última merece el énfasis: no lee el código, lo ejecuta. Las promesas del
 README son afirmaciones verificables, no notas de intención.
 
@@ -218,6 +226,40 @@ Y si aparece una palabra que no conoces, está en
 | BTC-NODE-003 | Nodo sin peers |
 | BTC-NODE-004 | Presión elevada de mempool |
 | BTC-PRIVACY-001 | Acceso masivo a datos de clientes |
+| BTC-CUSTODY-003 | Quorum N-de-N: perder un firmante congela los fondos |
+| BTC-TX-002 | Barrido: un gasto sin aprobar se lleva ≥ 90 % del saldo |
+| BTC-TX-003 | Ráfaga: varios gastos sin aprobar en menos de una hora |
+| BTC-PRIVACY-002 | La filtración afecta al fabricante de tus firmantes |
+| BTC-INTEL-001/2/3 | La matriz de avisos está vieja, vacía o sin fechar |
+| BTC-OPSEC-001…008 | Postura de la instalación: bind, cifrado, RPC, vigilancia, auditoría |
+
+Especificación de cada una en [docs/HEURISTICAS.md](docs/HEURISTICAS.md); la
+familia `BTC-OPSEC` en [docs/POSTURA_DE_DESPLIEGUE.md](docs/POSTURA_DE_DESPLIEGUE.md).
+
+## Auditoría de custodia en 14 etapas
+
+El repositorio trae su propia auditoría de dominio, ejecutable en un comando:
+
+~~~bash
+node scripts/audit-bitcoin.js --report
+~~~
+
+Recorre procedencia de claves, frescura de la inteligencia, arquitectura de
+custodia, rechazo de material secreto, secretos en el histórico de git, avisos
+abiertos del runtime que viaja dentro del instalador, dependencias, integridad
+del repositorio, postura de la instalación, aislamiento del nodo, cifrado,
+workflows, verificación del artefacto y proceso humano de respuesta.
+
+Cada etapa **declara su cobertura**, y una etapa que no puede ejecutarse sale
+como omitida, nunca como aprobada. Detalle en
+[docs/AUDITORIA_14_ETAPAS.md](docs/AUDITORIA_14_ETAPAS.md).
+
+Lo mismo existe como skill, agente y comando para Claude Code —y como plugin
+instalable en `plugin/`— documentado en
+[docs/AGENTE_Y_PLUGIN.md](docs/AGENTE_Y_PLUGIN.md). El workflow
+`security-audit.yml` lo corre en cada push y **cada lunes**, porque un aviso
+nuevo no espera a que alguien haga commit:
+[docs/AUDITORIA_CONTINUA.md](docs/AUDITORIA_CONTINUA.md).
 
 ## API mínima
 
@@ -237,7 +279,10 @@ La API completa está descrita en docs/API.md.
 ## Estructura
 
 ~~~text
-.github/workflows/       CI, CodeQL y publicación de la aplicación de Windows
+.claude/                 Skill, agente y comando de auditoría de custodia
+.github/workflows/       CI, CodeQL, auditoría de seguridad, landing y release
+landing/                 Página pública, estática y sin recursos de terceros
+plugin/                  Copia distribuible del skill, el agente y el comando
 config/                  Avisos y políticas versionadas
 docs/                    Arquitectura, amenazas, decisiones, runbooks e integración
 examples/                Eventos públicos ficticios

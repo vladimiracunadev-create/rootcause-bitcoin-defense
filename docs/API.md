@@ -151,3 +151,39 @@ Los errores internos no devuelven stack ni credenciales.
 - dumpwallet;
 - backup upload;
 - PSBT raw storage.
+
+## `GET /api/posture`
+
+Postura de seguridad de la propia instalación, calculada en el momento con la
+configuración del proceso en marcha. No se persiste: describe el arranque, no el
+estado guardado.
+
+~~~bash
+curl http://127.0.0.1:8787/api/posture
+~~~
+
+~~~json
+{
+  "generatedAt": "2026-08-20T22:10:00.000Z",
+  "deployment": {
+    "mode": "persistent",
+    "host": "127.0.0.1",
+    "port": 8787,
+    "watchtowerEnabled": true,
+    "remoteRpcAllowed": false,
+    "rpcAuth": "cookie"
+  },
+  "risk": { "score": 0, "level": "clear", "counts": { "critical": 0, "high": 0 } },
+  "findings": []
+}
+~~~
+
+Los hallazgos son de la familia `BTC-OPSEC` y llevan la misma forma que
+cualquier otro: código, severidad, explicación, causa raíz, evidencia y
+remediación. Están descritos en
+[POSTURA_DE_DESPLIEGUE.md](POSTURA_DE_DESPLIEGUE.md).
+
+### Campo opcional en `POST /api/observe/transaction`
+
+`valueSats` (entero, opcional). Sin él, la regla de barrido `BTC-TX-002` no puede
+distinguir un pago de un vaciado y no se activa.

@@ -29,7 +29,7 @@ pnpm check
 
 ## Pruebas automatizadas (`node --test`)
 
-24 pruebas, sin framework externo, repartidas así:
+44 pruebas, sin framework externo, repartidas así:
 
 | Archivo | Cubre |
 |---|---|
@@ -41,6 +41,8 @@ pnpm check
 | `test/audit-log.test.js` | Cadena de hashes íntegra y detección de una entrada modificada |
 | `test/bitcoin-rpc.test.js` | Rechazo de RPC remoto, rechazo de métodos fuera de la allowlist, normalización del snapshot |
 | `test/desktop-launch.test.js` | El navegador no se abre sin petición explícita ni con bind no-loopback |
+| `test/posture.test.js` | Los ocho controles `BTC-OPSEC`: bind, modo demostración, clave débil, RPC remoto y estático, watchtower, auditoría rota, y el matiz del contenedor |
+| `test/attack-patterns.test.js` | Barrido, ráfaga, correlación proveedor↔inventario, frescura de la matriz y quorum N-de-N — cada uno con su caso que **no** debe activarse |
 
 ### El patrón de las parejas
 

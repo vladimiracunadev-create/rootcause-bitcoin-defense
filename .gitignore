@@ -12,3 +12,4 @@ rootcause-bitcoin-defense.zip
 # Artefactos de empaquetado de Windows: se generan, no se versionan.
 build/
 packaging/windows/rootcause.ico
+SECURITY_AUDIT_BITCOIN_*.md

@@ -127,7 +127,12 @@ try {
         runtimeSource = "$baseUrl/$archiveName"
         dependencies  = "ninguna: la aplicacion no instala paquetes de terceros"
     }
-    $buildInfo | ConvertTo-Json -Depth 3 | Set-Content -Path (Join-Path $appDir "BUILD-INFO.json") -Encoding utf8
+    # Sin BOM: BUILD-INFO.json es procedencia legible por máquina y
+    # JSON.parse falla ante un BOM. PowerShell 5.1 lo añade con -Encoding utf8,
+    # así que se escribe con .NET indicando explícitamente UTF8 sin marca.
+    $buildInfoJson = $buildInfo | ConvertTo-Json -Depth 3
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText((Join-Path $appDir "BUILD-INFO.json"), $buildInfoJson, $utf8NoBom)
 
     # -- 4. Verificar que el paquete es utilizable ----------------------------
     #

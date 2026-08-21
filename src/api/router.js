@@ -24,7 +24,7 @@ export function createApiRouter({ service, readJson }) {
       return jsonResponse(response, 200, {
         status: "ok",
         service: "rootcause-bitcoin-defense",
-        version: "0.2.0",
+        version: "0.3.0",
         time: new Date().toISOString()
       });
     }
@@ -69,6 +69,12 @@ export function createApiRouter({ service, readJson }) {
 
     if (method === "GET" && path === "/api/policies") {
       return jsonResponse(response, 200, await service.policiesDocument());
+    }
+
+    // Postura de seguridad de la propia instalación: qué hallazgos produce la
+    // aplicación al auditarse a sí misma, con la configuración viva.
+    if (method === "GET" && path === "/api/posture") {
+      return jsonResponse(response, 200, await service.posture());
     }
 
     if (method === "GET" && path === "/api/audit") {

@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -19,8 +20,17 @@ export function loadConfig(env = process.env) {
   const demoMode = parseBoolean(env.DEMO_MODE, true);
   const dataDir = path.resolve(env.DATA_DIR || path.join(PROJECT_ROOT, "data"));
 
+  // Dentro de un contenedor, escuchar en 0.0.0.0 es lo normal: quien decide la
+  // exposición real es el mapeo de puertos del host. La postura tiene que
+  // saberlo para no dar por abierta una instalación que no lo está.
+  const containerized = parseBoolean(
+    env.ROOTCAUSE_CONTAINERIZED,
+    fs.existsSync("/.dockerenv") || fs.existsSync("/run/.containerenv")
+  );
+
   return Object.freeze({
     host: env.HOST || "127.0.0.1",
+    containerized,
     port: parseInteger(env.PORT, 8787, 0, 65535),
     demoMode,
     dataDir,

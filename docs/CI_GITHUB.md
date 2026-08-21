@@ -1,6 +1,6 @@
 # CI/CD en GitHub
 
-Los tres workflows del repositorio, qué garantiza cada uno y cómo replicarlos en
+Los cinco workflows del repositorio, qué garantiza cada uno y cómo replicarlos en
 local. Todos los actions están pinneados a commit SHA, no a etiquetas móviles.
 
 ---
@@ -12,6 +12,8 @@ local. Todos los actions están pinneados a commit SHA, no a etiquetas móviles.
 | **CI** | `ci.yml` | push a `main`, PR, manual | Que el código funciona en tres sistemas y que las promesas del producto siguen siendo ciertas |
 | **CodeQL** | `codeql.yml` | push, PR, lunes 06:17 UTC, manual | Análisis estático de seguridad sobre el código propio |
 | **Release Windows** | `release-windows.yml` | tag `v*`, manual | Que el artefacto publicado se instala y arranca de verdad |
+| **Auditoría de seguridad** | `security-audit.yml` | push, PR, **lunes**, manual | Que la custodia, el runtime distribuido, los secretos y los workflows siguen sanos |
+| **Deploy Landing** | `deploy-landing.yml` | cambios en `landing/` | Publica la landing sin recursos de terceros |
 
 Reglas comunes: `permissions` mínimos, `concurrency` con cancelación, timeouts
 explícitos y **cero instalación de dependencias** —no hay registro de paquetes
@@ -101,6 +103,18 @@ No se usa ningún action de terceros para publicar: la release la crea `gh` con
 el token del propio workflow. Menos superficie, menos permisos.
 
 ---
+
+## Auditoría de seguridad
+
+Seis trabajos, descritos en [`AUDITORIA_CONTINUA.md`](AUDITORIA_CONTINUA.md):
+`custodia` (las 14 etapas, con informe como artefacto), `runtime` (avisos del
+Node que se distribuye, no el del runner), `secretos` (patrones del dominio más
+gitleaks verificado por checksum), `workflows` (zizmor y hadolint),
+`inteligencia` (frescura de la matriz de avisos) y `plugin` (que lo distribuido
+coincida con lo practicado).
+
+Corre también **los lunes**: un aviso nuevo de Node o de un fabricante no espera
+a que alguien haga commit.
 
 ## Por qué pinnear a SHA
 

@@ -1,6 +1,6 @@
 # Heurísticas: especificación de las reglas
 
-Las once reglas del motor, con su condición exacta, su severidad, la evidencia
+Las reglas del motor, con su condición exacta, su severidad, la evidencia
 que adjuntan y —lo más importante— **qué no significan**. Fuente:
 [`src/domain/rule-engine.js`](../src/domain/rule-engine.js).
 
@@ -200,6 +200,98 @@ viendo la realidad o está ciega.
 - **Remediación:** revocar sesión, preservar registros, revisar minimización y
   vencimiento, y **no guardar identidad personal y titularidad de wallet en el
   mismo dominio de confianza**.
+
+---
+
+---
+
+## Familia BTC-CUSTODY (continuación)
+
+### `BTC-CUSTODY-003` · Quorum sin tolerancia a fallos (N-de-N)
+
+- **Severidad:** `high` si es de alto valor; `medium` si no.
+- **Condición:** `walletType === "multisig"`, `quorum.total > 1` y
+  `quorum.required === quorum.total`.
+- **Por qué importa:** un 3-de-3 no reparte el riesgo, lo multiplica. Sigue
+  haciendo falta comprometer todas las claves para robar, pero basta **perder
+  una** para que los fondos queden irrecuperables. Es la configuración que más
+  fondos ha congelado para siempre.
+
+---
+
+## Familia BTC-TX (continuación) — patrones de robo en curso
+
+Estas dos cruzan varias entidades a la vez, así que viven en
+`evaluateCorrelations` y no en la evaluación por entidad.
+
+### `BTC-TX-002` · Barrido del saldo de una wallet vigilada
+
+- **Severidad:** `critical`.
+- **Condición:** un gasto sin aprobación cuyo `valueSats` es **≥ 90 % del saldo
+  declarado** de la wallet.
+- **Por qué es distinto de `BTC-TX-001`:** un gasto no aprobado puede ser un pago
+  legítimo que nadie registró. Un movimiento que se lleva el 98 % del saldo tiene
+  la forma de un vaciado, no la de un pago, y merece otra urgencia.
+- **Requisito:** el evento debe traer `valueSats`. Sin importe no se puede
+  distinguir un pago de un vaciado, y la regla no se activa.
+
+### `BTC-TX-003` · Varios gastos sin aprobación en ventana corta
+
+- **Severidad:** `critical`.
+- **Condición:** dos o más gastos sin aprobación de la **misma wallet** dentro de
+  una ventana de 60 minutos.
+- **Por qué:** un gasto sin registrar es un error de proceso; una ráfaga es
+  extracción activa. No hay que esperar a que termine para actuar.
+
+---
+
+## Familia BTC-PRIVACY (continuación)
+
+### `BTC-PRIVACY-002` · El proveedor filtrado fabrica tus firmantes
+
+- **Severidad:** `high`.
+- **Condición:** el `vendor` de un evento de privacidad coincide (sin distinguir
+  mayúsculas) con el fabricante de algún firmante del inventario.
+- **Qué añade sobre `BTC-PRIVACY-001`:** correlaciona la filtración con **tu**
+  inventario. Es la diferencia entre «hubo una filtración en un fabricante» y
+  «hubo una filtración en el fabricante de dos de tus firmantes»: el phishing
+  deja de ser genérico y quien escribe puede saber qué dispositivo tienes.
+
+---
+
+## Familia BTC-INTEL — la inteligencia tiene fecha
+
+### `BTC-INTEL-001` · Matriz de avisos sin verificar
+
+- **Severidad:** `medium` pasado el plazo; `high` pasado el triple.
+- **Condición:** el `verifiedAt` más reciente de `config/advisories.json` supera
+  `advisoryMaxAgeDays` (30 por defecto, configurable en `config/policies.json`).
+- **Por qué existe:** un panel en verde sobre inteligencia vieja es una
+  tranquilidad falsa, que es peor que no tener panel. Esta regla convierte «no
+  hemos revisado los avisos» en un hallazgo visible en vez de en un silencio.
+- **Discriminante:** los meses transcurridos, de modo que el incidente se
+  actualiza en vez de duplicarse cada día.
+
+### `BTC-INTEL-002` · Sin matriz de avisos cargada
+
+`high`. No hay nada con lo que contrastar la procedencia.
+
+### `BTC-INTEL-003` · Avisos sin fecha de verificación
+
+`medium`. La matriz existe pero no registra su propia frescura.
+
+---
+
+## Familia BTC-OPSEC — la instalación
+
+Ocho controles sobre el propio despliegue, documentados en
+[`POSTURA_DE_DESPLIEGUE.md`](POSTURA_DE_DESPLIEGUE.md): bind fuera de loopback,
+inventario en modo demostración, clave de datos débil, RPC remoto, credenciales
+RPC estáticas, watchtower apagado con alto valor, límites relajados y cadena de
+auditoría rota.
+
+Se evalúan con la configuración viva del proceso y **no se persisten**: describen
+el arranque, no el estado.
 
 ---
 

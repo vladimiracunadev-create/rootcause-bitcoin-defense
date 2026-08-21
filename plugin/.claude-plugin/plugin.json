@@ -1,0 +1,20 @@
+{
+  "name": "rootcause-bitcoin-defense",
+  "description": "Auditoría de custodia Bitcoin en 14 etapas: procedencia de claves contra avisos de fabricante, arquitectura de custodia, postura del despliegue y cadena de suministro del artefacto. Nunca pide semillas ni claves privadas.",
+  "version": "0.3.0",
+  "author": {
+    "name": "Vladimir Acuña",
+    "url": "https://github.com/vladimiracunadev-create"
+  },
+  "homepage": "https://vladimiracunadev-create.github.io/rootcause-bitcoin-defense/",
+  "repository": "https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense",
+  "license": "MIT",
+  "keywords": [
+    "bitcoin",
+    "custody",
+    "security",
+    "audit",
+    "watch-only",
+    "incident-response"
+  ]
+}

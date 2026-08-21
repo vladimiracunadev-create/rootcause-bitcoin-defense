@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import { appendAuditEntry, verifyAuditChain } from "../infrastructure/audit-log.js";
 import { assertNoSecretMaterial } from "../domain/secret-guard.js";
 import { evaluateState } from "../domain/rule-engine.js";
+import { evaluatePosture } from "../domain/posture.js";
 import { countBySeverity, riskLevel, riskScore } from "../domain/risk.js";
 
 const NETWORKS = new Set(["mainnet", "signet", "regtest", "testnet4"]);
@@ -184,11 +185,38 @@ export class DefenseService {
     await this.store.save(state);
   }
 
-  evaluate(state) {
+  evaluate(state, now = new Date().toISOString()) {
     return evaluateState(state, {
       advisories: this.advisories,
-      highValueThresholdSats: this.config.highValueThresholdSats
+      highValueThresholdSats: this.config.highValueThresholdSats,
+      // La postura de despliegue necesita la configuración viva y el estado de
+      // la cadena de auditoría: la aplicación también se audita a sí misma.
+      config: this.config,
+      auditVerification: verifyAuditChain(state.audit || []),
+      advisoryMaxAgeDays: this.policies?.advisoryMaxAgeDays || 30,
+      now
     });
+  }
+
+  // Reevaluar después de CADA cambio, no solo cuando alguien pulsa «Analizar».
+  // Un inventario que cambia y un panel que no se entera es un panel que miente
+  // hasta el próximo análisis manual.
+  rescanAfterChange(state, actor, reason) {
+    const now = new Date().toISOString();
+    const findings = this.evaluate(state, now);
+    const before = state.incidents.length;
+    state.incidents = mergeIncidents(state.incidents, findings, now);
+    state.audit = appendAuditEntry(state.audit, {
+      actor,
+      action: "auto_rescan",
+      metadata: {
+        reason,
+        findings: findings.length,
+        incidentsBefore: before,
+        incidentsAfter: state.incidents.length
+      }
+    });
+    return findings;
   }
 
   async mutate(mutator) {
@@ -237,6 +265,37 @@ export class DefenseService {
     };
   }
 
+  // La postura se calcula en el momento: depende de la configuración con la que
+  // corre el proceso, no de lo que se guardó en disco.
+  async posture() {
+    const state = await this.store.load();
+    const now = new Date().toISOString();
+    const findings = evaluatePosture(state, {
+      config: this.config,
+      highValueThresholdSats: this.config.highValueThresholdSats,
+      auditVerification: verifyAuditChain(state.audit || []),
+      now
+    });
+    const score = riskScore(findings);
+    return {
+      generatedAt: now,
+      deployment: {
+        mode: this.config.demoMode ? "demo" : "persistent",
+        host: this.config.host,
+        port: this.config.port,
+        watchtowerEnabled: this.config.watchtower.enabled,
+        remoteRpcAllowed: this.config.bitcoin.allowRemote,
+        rpcAuth: this.config.bitcoin.cookieFile
+          ? "cookie"
+          : this.config.bitcoin.user || this.config.bitcoin.password
+            ? "password"
+            : "sin credenciales"
+      },
+      risk: { score, level: riskLevel(score), counts: countBySeverity(findings) },
+      findings
+    };
+  }
+
   async wallets() {
     return (await this.store.load()).wallets;
   }
@@ -261,6 +320,7 @@ export class DefenseService {
           signerCount: wallet.signers.length
         }
       });
+      this.rescanAfterChange(state, actor, "wallet_registered");
       return wallet;
     });
   }
@@ -353,6 +413,8 @@ export class DefenseService {
       txid: txHash(input.txid, "txid"),
       walletId: text(input.walletId, "walletId", 80),
       spendsWatchedWallet: input.spendsWatchedWallet !== false,
+      // Opcional: sin importe no se puede distinguir un pago de un vaciado.
+      valueSats: input.valueSats === undefined ? null : integer(input.valueSats, "valueSats", 0),
       approvalHash: input.approvalHash
         ? txHash(input.approvalHash, "approvalHash")
         : null,

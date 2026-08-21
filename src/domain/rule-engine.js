@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 import { matchingAdvisories } from "./firmware.js";
+import { evaluatePosture } from "./posture.js";
 
 function findingId(code, entityId, discriminator = "") {
   return crypto
@@ -167,6 +168,41 @@ export function evaluateWallet(wallet, context) {
     );
   }
 
+  // Un quorum N-de-N no reparte el riesgo: lo multiplica. Sigue haciendo falta
+  // comprometer todas las claves para robar, pero basta perder UNA para que los
+  // fondos queden irrecuperables. Es la configuración que más fondos ha
+  // congelado para siempre.
+  const required = Number(wallet.quorum?.required || 0);
+  const total = Number(wallet.quorum?.total || 0);
+  if (wallet.walletType === "multisig" && total > 1 && required === total) {
+    findings.push(
+      makeFinding({
+        code: "BTC-CUSTODY-003",
+        entityType: "wallet",
+        entityId: wallet.id,
+        severity: highValue ? "high" : "medium",
+        title: "Quorum sin tolerancia a fallos (N-de-N)",
+        explanation:
+          wallet.name +
+          " exige las " +
+          total +
+          " firmas de sus " +
+          total +
+          " firmantes: perder o dañar uno solo deja los fondos irrecuperables.",
+        rootCause:
+          "El quorum no reserva margen para la pérdida de un firmante, que es el incidente más frecuente en custodia propia.",
+        evidence: {
+          walletFingerprint: wallet.fingerprint,
+          quorum: wallet.quorum
+        },
+        remediation: [
+          "Migrar a un quorum con margen, por ejemplo 2 de 3.",
+          "Verificar que existe copia de seguridad verificada de cada descriptor y de cada firmante."
+        ]
+      })
+    );
+  }
+
   return findings;
 }
 
@@ -324,13 +360,247 @@ export function evaluatePrivacyEvent(event) {
   ];
 }
 
-export function evaluateState(state, context) {
+// ── Inteligencia con fecha ───────────────────────────────────────────────────
+//
+// Un panel en verde sobre una matriz de avisos sin revisar desde hace meses es
+// una tranquilidad falsa, que es peor que no tener panel. La antigüedad de la
+// inteligencia es, por tanto, un hallazgo del propio producto.
+export function evaluateIntel(advisories, context = {}) {
+  if (!Array.isArray(advisories) || !advisories.length) {
+    return [
+      makeFinding({
+        code: "BTC-INTEL-002",
+        entityType: "advisory-matrix",
+        entityId: "config/advisories.json",
+        detectedAt: context.now,
+        severity: "high",
+        title: "Sin matriz de avisos cargada",
+        explanation:
+          "La aplicación no tiene ningún aviso con el que contrastar la procedencia de las claves.",
+        rootCause: "El archivo de avisos está vacío o no se pudo leer.",
+        evidence: { advisories: 0 },
+        remediation: [
+          "Restaurar config/advisories.json desde el repositorio.",
+          "Verificar cada entrada contra la fuente oficial del fabricante."
+        ]
+      })
+    ];
+  }
+
+  const now = context.now ? new Date(context.now) : new Date();
+  const maxAgeDays = context.advisoryMaxAgeDays || 30;
+  const timestamps = advisories
+    .map((advisory) => Date.parse(advisory.verifiedAt || advisory.publishedAt || ""))
+    .filter((value) => Number.isFinite(value));
+
+  if (!timestamps.length) {
+    return [
+      makeFinding({
+        code: "BTC-INTEL-003",
+        entityType: "advisory-matrix",
+        entityId: "config/advisories.json",
+        detectedAt: context.now,
+        severity: "medium",
+        title: "Avisos sin fecha de verificación",
+        explanation:
+          "Ninguna entrada declara cuándo se contrastó por última vez con la fuente oficial.",
+        rootCause: "La matriz no registra su propia frescura.",
+        evidence: { advisories: advisories.length },
+        remediation: ["Añadir verifiedAt a cada aviso al revisarlo."]
+      })
+    ];
+  }
+
+  const newest = Math.max(...timestamps);
+  const ageDays = Math.floor((now.getTime() - newest) / 86400000);
+  if (ageDays <= maxAgeDays) return [];
+
   return [
-    ...state.wallets.flatMap((wallet) => evaluateWallet(wallet, context)),
+    makeFinding({
+      code: "BTC-INTEL-001",
+      entityType: "advisory-matrix",
+      entityId: "config/advisories.json",
+      discriminator: String(Math.floor(ageDays / 30)),
+      detectedAt: context.now,
+      severity: ageDays > maxAgeDays * 3 ? "high" : "medium",
+      title: "Matriz de avisos sin verificar",
+      explanation:
+        "Han pasado " +
+        ageDays +
+        " días desde la última verificación de un aviso. Un hallazgo ausente puede significar que la inteligencia está vieja, no que no haya problema.",
+      rootCause:
+        "La matriz de avisos se mantiene a mano y no se ha contrastado con las fuentes oficiales dentro del plazo definido.",
+      evidence: {
+        lastVerifiedAt: new Date(newest).toISOString(),
+        ageDays,
+        maxAgeDays
+      },
+      remediation: [
+        "Revisar los avisos de seguridad de cada fabricante presente en el inventario.",
+        "Actualizar verifiedAt de cada entrada contrastada en config/advisories.json.",
+        "Registrar los avisos nuevos antes de dar por bueno un panel en verde."
+      ]
+    })
+  ];
+}
+
+// ── Correlaciones entre entidades ────────────────────────────────────────────
+//
+// Las reglas anteriores miran una entidad cada una. Estas cruzan varias, que es
+// donde aparecen los patrones de robo en curso.
+export function evaluateCorrelations(state, context = {}) {
+  const findings = [];
+  const now = context.now || new Date().toISOString();
+  const wallets = state.wallets || [];
+  const approvals = state.approvals || [];
+  const walletsById = new Map(wallets.map((wallet) => [wallet.id, wallet]));
+
+  const unapproved = (state.observedTransactions || []).filter(
+    (event) =>
+      event.spendsWatchedWallet &&
+      !(event.approvalHash && approvals.some((entry) => entry.hash === event.approvalHash))
+  );
+
+  // BTC-TX-002 · barrido: un gasto que se lleva casi todo el saldo vigilado.
+  for (const event of unapproved) {
+    const wallet = walletsById.get(event.walletId);
+    const balance = Number(wallet?.balanceSats || 0);
+    const value = Number(event.valueSats || 0);
+    if (!wallet || balance <= 0 || value <= 0) continue;
+    if (value < balance * 0.9) continue;
+    findings.push(
+      makeFinding({
+        code: "BTC-TX-002",
+        entityType: "transaction",
+        entityId: event.txid,
+        detectedAt: now,
+        severity: "critical",
+        title: "Barrido del saldo de una wallet vigilada",
+        explanation:
+          "Una transacción sin aprobación mueve el " +
+          Math.round((value / balance) * 100) +
+          " % del saldo de " +
+          wallet.name +
+          ". Ese patrón es el de un vaciado, no el de un pago.",
+        rootCause:
+          "Quien firmó controla la clave y está retirando el saldo completo, no gastando una parte.",
+        evidence: {
+          txid: event.txid,
+          walletFingerprint: wallet.fingerprint,
+          valueSats: value,
+          balanceSats: balance
+        },
+        remediation: [
+          "Asumir clave comprometida y preservar evidencia antes de tocar nada.",
+          "Migrar de inmediato los UTXO que todavía no se han gastado.",
+          "Verificar el txid en un segundo nodo independiente."
+        ]
+      })
+    );
+  }
+
+  // BTC-TX-003 · ráfaga: varios gastos sin aprobar de la misma wallet, seguidos.
+  const windowMs = context.burstWindowMs || 3600000;
+  const byWallet = new Map();
+  for (const event of unapproved) {
+    if (!byWallet.has(event.walletId)) byWallet.set(event.walletId, []);
+    byWallet.get(event.walletId).push(event);
+  }
+  for (const [walletId, events] of byWallet) {
+    if (events.length < 2) continue;
+    const times = events
+      .map((event) => Date.parse(event.observedAt || ""))
+      .filter((value) => Number.isFinite(value))
+      .sort((a, b) => a - b);
+    if (times.length < 2 || times.at(-1) - times[0] > windowMs) continue;
+    const wallet = walletsById.get(walletId);
+    findings.push(
+      makeFinding({
+        code: "BTC-TX-003",
+        entityType: "wallet",
+        entityId: walletId,
+        discriminator: String(events.length),
+        detectedAt: now,
+        severity: "critical",
+        title: "Varios gastos sin aprobación en una ventana corta",
+        explanation:
+          events.length +
+          " transacciones sin aprobación desde " +
+          (wallet?.name || walletId) +
+          " en menos de " +
+          Math.round(windowMs / 60000) +
+          " minutos.",
+        rootCause:
+          "Una ráfaga de gastos no autorizados indica extracción activa, no un error de registro puntual.",
+        evidence: {
+          walletFingerprint: wallet?.fingerprint,
+          events: events.length,
+          firstObservedAt: new Date(times[0]).toISOString(),
+          lastObservedAt: new Date(times.at(-1)).toISOString()
+        },
+        remediation: [
+          "Cortar cualquier autorización automática ahora.",
+          "Preservar evidencia y activar el runbook de migración.",
+          "No esperar a que termine la ráfaga para actuar."
+        ]
+      })
+    );
+  }
+
+  // BTC-PRIVACY-002 · el proveedor filtrado es fabricante de tus firmantes.
+  const vendorsInInventory = new Set(
+    wallets.flatMap((wallet) =>
+      (wallet.signers || []).map((signer) => String(signer.vendor || "").toLowerCase())
+    )
+  );
+  for (const event of state.privacyEvents || []) {
+    const vendor = String(event.vendor || "").toLowerCase();
+    if (!vendor || !vendorsInInventory.has(vendor)) continue;
+    findings.push(
+      makeFinding({
+        code: "BTC-PRIVACY-002",
+        entityType: "vendor-event",
+        entityId: event.id,
+        detectedAt: now,
+        severity: "high",
+        title: "Datos expuestos de un fabricante presente en tu inventario",
+        explanation:
+          "El evento afecta a " +
+          event.vendor +
+          ", que fabrica firmantes que tienes registrados. El phishing dirigido deja de ser genérico: quien escribe puede saber qué dispositivo tienes.",
+        rootCause:
+          "La identidad del titular y la titularidad del dispositivo quedaron en el mismo dominio de confianza de un tercero.",
+        evidence: {
+          vendor: event.vendor,
+          recordCount: event.recordCount,
+          signersFromVendor: wallets
+            .flatMap((wallet) => wallet.signers || [])
+            .filter((signer) => String(signer.vendor || "").toLowerCase() === vendor).length
+        },
+        remediation: [
+          "Tratar como fraude cualquier comunicación urgente que mencione tu dispositivo.",
+          "Verificar siempre por un canal oficial abierto por ti, nunca por un enlace recibido.",
+          "Recordar que ningún fabricante pide la frase de recuperación."
+        ]
+      })
+    );
+  }
+
+  return findings;
+}
+
+export function evaluateState(state, context) {
+  const now = context?.now || new Date().toISOString();
+  const enriched = { ...context, now };
+  return [
+    ...state.wallets.flatMap((wallet) => evaluateWallet(wallet, enriched)),
     ...state.observedTransactions.flatMap((event) =>
       evaluateTransaction(event, state.approvals)
     ),
     ...state.privacyEvents.flatMap(evaluatePrivacyEvent),
-    ...(state.node ? evaluateNode(state.node) : [])
+    ...(state.node ? evaluateNode(state.node) : []),
+    ...evaluateCorrelations(state, enriched),
+    ...evaluateIntel(context?.advisories, enriched),
+    ...evaluatePosture(state, enriched)
   ];
 }
