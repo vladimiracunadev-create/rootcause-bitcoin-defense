@@ -1,5 +1,47 @@
 # Changelog
 
+## Sin publicar
+
+Documentación de sistema completa, y las dos correcciones que ese análisis
+identificó como prioritarias.
+
+### Corrige
+
+- `DefenseService.initialize()` repara ahora **las seis colecciones** del estado
+  —`wallets`, `incidents`, `approvals`, `observedTransactions`, `privacyEvents` y
+  `audit`— y no solo dos. El motor de reglas las recorre sin comprobarlas, así
+  que un estado al que le faltara alguna hacía lanzar un `TypeError` y la
+  aplicación **no arrancaba**. Ahora arranca vacía, que es lo que describe la
+  situación. Hallazgo R-03 de la documentación de sistema.
+
+### Añade — pruebas
+
+- `test/incident-lifecycle.test.js`, 14 casos sobre el ciclo de vida del
+  incidente: conservación de `createdAt`, supervivencia de `acknowledged` entre
+  reanálisis, resolución automática, no re-resolución de lo ya resuelto,
+  reapertura de un problema que vuelve, orden por `lastSeenAt`, ausencia de
+  mutación de la entrada y reparación de un estado incompleto. `mergeIncidents`
+  gobierna el historial de todo incidente y no tenía **ninguna** prueba directa:
+  una regresión ahí habría resuelto incidentes solos sin que nadie se enterara.
+  Hallazgo R-09.
+- La suite pasa de 50 a **64 pruebas**.
+
+### Añade — documentación
+
+- `docs/system-documentation/`: 20 documentos y su versión en PDF, con el mapa
+  del código archivo a archivo, la referencia de cada función con su riesgo al
+  modificarla, la explicación profunda del código, el modelo de datos, la matriz
+  de trazabilidad de 89 filas y el registro clasificado de 25 hallazgos.
+- `scripts/build-docs-pdf.py`: generador reproducible de los PDF desde los
+  Markdown, que son la fuente única.
+- Cabeceras de módulo en los 16 archivos de `src/` que no las tenían.
+
+### Cambia
+
+- `mergeIncidents` se exporta desde `src/services/defense-service.js` para poder
+  probarla directamente. Es lógica pura: exportarla no amplía la superficie de
+  nada.
+
 ## 0.3.0 - 2026-08-20
 
 Seguridad en cuatro niveles: auditoría continua, skill de dominio, agente y

@@ -1,3 +1,19 @@
+// Panel del navegador: estado en memoria, render por plantillas y fetch.
+//
+// Sin framework y sin build. Es una decision de producto, no una limitacion:
+// esta aplicacion sirve su propio panel desde un proceso local, y anadir una
+// cadena de compilacion significaria anadir arbol de dependencias -justo lo que
+// `scripts/check-local-only.js` tumba en cada build-.
+//
+// Dos cosas que no se pueden relajar al tocar este archivo:
+//
+//   - TODO lo que llega del servidor pasa por `escapeHtml` antes de ir al DOM,
+//     y toda URL de aviso por `safeUrl`, que solo deja pasar http y https;
+//   - toda mutacion manda la cabecera `x-rootcause-request: 1`, que es la
+//     comprobacion de origen local del servidor. Sin ella, 403.
+//
+// La CSP servida prohibe scripts inline, asi que nada de este panel puede
+// ejecutarse desde un atributo del HTML.
 const state = {
   summary: null,
   advisories: [],

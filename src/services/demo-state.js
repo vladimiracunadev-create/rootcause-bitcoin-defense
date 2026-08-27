@@ -1,3 +1,21 @@
+// Estado inicial: el vacio real y el de demostracion.
+//
+// El estado de demostracion no es relleno bonito. Esta construido para que la
+// aplicacion arranque MOSTRANDO hallazgos verdaderos de su propio motor:
+//
+//   - una single-sig COLDCARD Mk3 con firmware 4.1.9, que cae dentro del rango
+//     del aviso BTC-ADV-2026-COLDCARD-ENTROPY (dispara BTC-KEY-001) y ademas
+//     concentra alto valor en una sola clave (dispara BTC-CUSTODY-001);
+//   - una 2-de-3 con tres fabricantes distintos, que es como se ve una custodia
+//     correcta y no dispara nada.
+//
+// Asi la primera pantalla ensena a la vez el problema y su forma sana. Las
+// huellas son ficticias y legibles a proposito (`C01DC4AD`, `A11CE123`): nadie
+// debe confundirlas con una wallet real.
+//
+// La verificacion del release comprueba que `totals.wallets >= 1` al arrancar
+// el artefacto instalado: es asi como se detecta el fallo clasico de empaquetar
+// una aplicacion que abre vacia.
 export function createEmptyState() {
   const now = new Date().toISOString();
   return {

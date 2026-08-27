@@ -1,3 +1,12 @@
+// Enrutado de /api: una funcion, sin framework y sin tabla de rutas.
+//
+// Cada endpoint se resuelve comparando metodo y ruta literalmente. Es
+// deliberado: un router de cien lineas se lee entero de una sentada y no puede
+// tener sorpresas de precedencia ni de coincidencia parcial, que es justo lo
+// que no se quiere en la frontera de una aplicacion que vigila custodia.
+//
+// El router no valida dominio ni toca el estado: normaliza el actor, delega en
+// `DefenseService` y serializa. Toda regla de negocio vive detras.
 function actorFrom(request) {
   const value = String(request.headers["x-rootcause-actor"] || "local-user");
   return /^[a-z0-9._@-]{1,80}$/i.test(value) ? value : "local-user";

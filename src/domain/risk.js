@@ -1,3 +1,12 @@
+// Agregacion de riesgo: de una lista de hallazgos a un solo numero.
+//
+// El criterio es "el peor hallazgo manda". La puntuacion parte de la severidad
+// maxima presente y los demas hallazgos solo suman un 8 % de su peso cada uno.
+//
+// La alternativa habitual -sumar severidades- produce el efecto perverso de que
+// veinte avisos de baja severidad tapen un critico, o de que un critico aislado
+// parezca menos grave que un monton de ruido. Aqui un critico siempre pinta de
+// rojo el panel, tenga al lado lo que tenga.
 export const SEVERITY_WEIGHT = Object.freeze({
   critical: 100,
   high: 75,

@@ -354,6 +354,33 @@ src/web/static/          Dashboard responsive y PWA
 test/                    Pruebas unitarias y de integración
 ~~~
 
+## 📖 Documentación del sistema
+
+La documentación técnica, funcional, arquitectónica y operativa del proyecto se
+encuentra en [`docs/system-documentation/`](docs/system-documentation/README.md):
+un estudio del repositorio hecho desde cero, con el mapa de código archivo a
+archivo, la referencia de cada función y la trazabilidad de cada funcionalidad
+desde la interfaz hasta el disco y su prueba.
+
+- [Índice general de documentación](docs/system-documentation/README.md)
+- [Descripción general](docs/system-documentation/01-system-overview.md) — incluye la explicación para una persona no técnica
+- [Instalación y ejecución](docs/system-documentation/02-installation-and-execution.md)
+- [Arquitectura](docs/system-documentation/03-architecture.md)
+- [Mapa completo del código](docs/system-documentation/04-code-map.md)
+- [Referencia técnica](docs/system-documentation/05-technical-reference.md)
+- [Explicación profunda del código](docs/system-documentation/06-deep-code-explanation.md)
+- [Base de datos y persistencia](docs/system-documentation/07-database.md)
+- [Seguridad](docs/system-documentation/11-security.md)
+- [Riesgos y deuda técnica](docs/system-documentation/15-risks-and-technical-debt.md)
+- [Resumen ejecutivo](docs/system-documentation/17-executive-summary.md)
+- [Guía para nuevos desarrolladores](docs/system-documentation/18-new-developer-guide.md)
+- [Matriz de trazabilidad](docs/system-documentation/19-traceability-matrix.md)
+- [Documentos en PDF](docs/system-documentation/pdf/README.md)
+
+El resto de la documentación —producto, operación, reglas, amenazas y
+decisiones— sigue donde estaba, indexada en
+[`docs/INDEX.md`](docs/INDEX.md).
+
 ## ⚖️ Limitaciones honestas
 
 - No puede determinar la entropía real de una semilla mirando una dirección.

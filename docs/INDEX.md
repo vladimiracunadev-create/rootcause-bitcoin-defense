@@ -22,6 +22,21 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 | [`POSTURA_DE_DESPLIEGUE.md`](POSTURA_DE_DESPLIEGUE.md) | Los ocho controles con los que la aplicación se audita a sí misma |
 | [`SECURITY-CHECKLIST.md`](SECURITY-CHECKLIST.md) | Comprobaciones antes de usarlo con información real |
 
+## 📖 Documentación de sistema
+
+Estudio completo del repositorio hecho desde cero: qué hace cada archivo, cada
+función y cada regla, cómo se sigue una funcionalidad de la interfaz al disco, y
+qué queda sin verificar.
+
+| Documento | Contenido |
+|---|---|
+| [`system-documentation/README.md`](system-documentation/README.md) | **Índice de los 20 documentos**, datos del análisis y convenciones |
+| [`system-documentation/04-code-map.md`](system-documentation/04-code-map.md) | Inventario de todo el árbol: qué es cada cosa y quién la usa |
+| [`system-documentation/05-technical-reference.md`](system-documentation/05-technical-reference.md) | Catálogo de constantes, endpoints, errores y fichas de función |
+| [`system-documentation/06-deep-code-explanation.md`](system-documentation/06-deep-code-explanation.md) | Cómo funciona el código por dentro, bloque a bloque |
+| [`system-documentation/19-traceability-matrix.md`](system-documentation/19-traceability-matrix.md) | Cada funcionalidad, de la interfaz al disco y a su prueba |
+| [`system-documentation/pdf/README.md`](system-documentation/pdf/README.md) | Los mismos documentos en PDF, para leer fuera del navegador |
+
 ## 🛠️ Para desarrolladores
 
 | Documento | Contenido |

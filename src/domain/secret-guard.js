@@ -1,3 +1,21 @@
+// La frontera que define el producto: aqui NO entra material secreto.
+//
+// Este modulo convierte "prometemos no pedir tu semilla" en algo comprobable.
+// Todo cuerpo de peticion que vaya a tocar el estado pasa por
+// `assertNoSecretMaterial`, y toda metadata que vaya al registro de auditoria
+// pasa por `redactForAudit`.
+//
+// Dos coberturas distintas y complementarias:
+//
+//   - por NOMBRE de campo (`seed`, `mnemonic`, `passphrase`, `wif`...), que
+//     ataja el caso comun de alguien mandando lo que no debe;
+//   - por FORMA del valor (xprv/tprv, WIF), que ataja el caso de mandarlo
+//     dentro de un campo con nombre inocente.
+//
+// `PUBLIC_PROVENANCE_FIELDS` existe porque el guard no puede bloquear el uso
+// legitimo: `seedOrigin`, `seedCreatedAt` y `firmwareAtSeedCreation` contienen
+// la palabra "seed" y son justo los metadatos publicos que el producto necesita
+// para trabajar.
 const EXTENDED_PRIVATE_KEY = /\b(?:xprv|tprv)[1-9A-HJ-NP-Za-km-z]{40,}\b/;
 const WIF_PRIVATE_KEY = /\b[5KL][1-9A-HJ-NP-Za-km-z]{50,51}\b/;
 const PUBLIC_PROVENANCE_FIELDS = new Set([

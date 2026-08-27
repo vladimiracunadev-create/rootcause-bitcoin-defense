@@ -1,3 +1,17 @@
+// Persistencia: en memoria para la demostracion, cifrada en disco para lo real.
+//
+// Ambas implementaciones exponen el mismo par `load()` / `save()`, asi que el
+// servicio de defensa no sabe -ni le importa- cual esta usando. Quien lo decide
+// es `server.js` al arrancar, en funcion de DEMO_MODE.
+//
+// El cifrado es AES-256-GCM con IV aleatorio por escritura. GCM y no CBC porque
+// AUTENTICA: si alguien altera un byte del archivo, el descifrado falla en vez
+// de devolver basura que la aplicacion interpretaria como estado.
+//
+// La escritura es atomica -archivo temporal y `rename`- para que un corte de
+// corriente a mitad de guardado no deje un estado truncado e ilegible. Y los
+// permisos son 0700 en el directorio y 0600 en el archivo: en un sistema
+// multiusuario, el estado no lo lee nadie mas.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

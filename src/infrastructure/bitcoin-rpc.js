@@ -1,3 +1,20 @@
+// Cliente RPC de Bitcoin Core, deliberadamente incapaz de mover fondos.
+//
+// Dos defensas independientes, y ninguna es opcional:
+//
+//   1. `READ_ONLY_METHODS` es una allowlist, no una lista negra: lo que no
+//      figura, no se llama. Un metodo capaz de firmar o enviar no puede
+//      colarse por olvido, tendria que anadirlo alguien a mano.
+//   2. `validateRpcUrl` rechaza destinos que no sean loopback salvo que se
+//      habilite ALLOW_REMOTE_RPC explicitamente, y rechaza siempre las
+//      credenciales incrustadas en la URL, que acaban en logs e historiales.
+//
+// `scripts/check-security-claims.js` lee esta allowlist en cada build y falla
+// si aparece cualquier metodo capaz de mutar estado. Es el mismo control que un
+// grep del workflow de CI, por duplicado y a proposito.
+//
+// `snapshot()` nunca lanza: un nodo caido es un dato del sistema -lo recoge la
+// regla BTC-NODE-001-, no una excepcion que deba tumbar el analisis.
 import fs from "node:fs/promises";
 import net from "node:net";
 

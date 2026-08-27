@@ -13,3 +13,7 @@ rootcause-bitcoin-defense.zip
 build/
 packaging/windows/rootcause.ico
 SECURITY_AUDIT_BITCOIN_*.md
+
+# El generador de PDF de la documentacion es Python: su cache no se versiona.
+__pycache__/
+*.pyc

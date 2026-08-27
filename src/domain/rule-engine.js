@@ -1,3 +1,19 @@
+// Motor de reglas: de estado observado a hallazgos con causa raiz.
+//
+// Cada regla es una afirmacion causal que tiene que poder defenderse con la
+// evidencia que adjunta. Por eso todo hallazgo lleva siempre los mismos campos:
+// codigo, severidad, explicacion, `rootCause`, `evidence` y `remediation`. Una
+// alerta sin siguiente paso entrena a la gente a ignorar alertas.
+//
+// El identificador de cada hallazgo es DETERMINISTA -hash de codigo, entidad y
+// discriminador-, y eso es lo que permite que `mergeIncidents` reconozca el
+// mismo problema entre analisis sucesivos en vez de crear un incidente nuevo
+// cada vez que alguien pulsa "Analizar".
+//
+// Las siete familias estan documentadas una a una en `docs/reglas/`, generadas
+// desde `config/rules-catalog.json`. Una prueba comprueba que los codigos de
+// este archivo y los del catalogo coinciden exactamente: anadir una regla aqui
+// sin documentarla rompe el build.
 import crypto from "node:crypto";
 import { matchingAdvisories } from "./firmware.js";
 import { evaluatePosture } from "./posture.js";

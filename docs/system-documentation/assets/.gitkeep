@@ -1,0 +1,5 @@
+Reservado para imágenes y recursos de la documentación de sistema.
+
+Hoy está vacío a propósito: todos los diagramas de esta documentación son
+Mermaid embebido en los propios Markdown, así que no hay ningún binario que
+versionar. Cuando haga falta una captura o un esquema exportado, va aquí.

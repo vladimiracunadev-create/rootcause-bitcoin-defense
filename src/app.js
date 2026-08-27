@@ -1,3 +1,13 @@
+// Capa HTTP: cabeceras de seguridad, limites, estaticos y despacho a la API.
+//
+// Este archivo es la frontera del proceso, y su trabajo es rechazar antes de
+// entender. Todo lo que cruza pasa, en este orden, por: cabeceras de seguridad,
+// limite de tasa, comprobacion de mutacion local y solo entonces el router.
+//
+// La CSP de aqui abajo NO es decorativa: `scripts/check-local-only.js` la lee
+// en cada build y tumba el pipeline si pierde una directiva o admite un origen
+// externo. El claim "esta aplicacion no habla con terceros" se sostiene en esa
+// linea, asi que no se toca sin entender que se esta prometiendo.
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";

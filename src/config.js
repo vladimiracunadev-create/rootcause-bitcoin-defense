@@ -1,3 +1,15 @@
+// Configuracion del proceso: una sola lectura del entorno, congelada.
+//
+// Todo el resto del programa recibe este objeto y no vuelve a mirar
+// `process.env`. Eso importa por dos motivos: la postura de despliegue
+// (`domain/posture.js`) audita la configuracion VIVA, y si media aplicacion
+// leyera variables por su cuenta esa auditoria estaria mirando otra cosa que la
+// que de verdad gobierna el proceso.
+//
+// Los valores por defecto son deliberadamente conservadores -loopback, modo
+// demostracion, sin RPC remoto, sin vigilancia- y `check-security-claims.js`
+// los verifica en cada build: abrir el producto tiene que ser siempre un acto
+// explicito de quien lo despliega, nunca un descuido.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

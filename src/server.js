@@ -1,3 +1,13 @@
+// Punto de entrada del proceso y ensamblaje de la aplicacion.
+//
+// Aqui se decide, una sola vez y en un solo sitio, con que piezas concretas
+// corre el sistema: almacen en memoria o cifrado en disco, estado de
+// demostracion o vacio, cliente RPC, servicio de defensa y watchtower. El resto
+// del codigo recibe esas piezas ya construidas y no sabe de cual se trata.
+//
+// `buildRuntime` existe separado de `startServer` porque las pruebas y el
+// verificador de invariantes necesitan la aplicacion montada sin abrir un
+// puerto ni instalar manejadores de senal.
 import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import http from "node:http";

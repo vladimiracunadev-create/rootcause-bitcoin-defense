@@ -1,3 +1,17 @@
+// Comparacion de versiones de firmware y coincidencia contra avisos.
+//
+// El corazon del producto es una pregunta muy concreta: la semilla de este
+// firmante, nacio dentro del rango de firmware que declara un aviso? Para
+// responderla hace falta ordenar versiones que los fabricantes escriben a su
+// manera: `5.6.0`, `6.6.0X`, `1.5.0Q`, `v4.1.9`.
+//
+// No se usa semver: los fabricantes de hardware wallets no lo siguen. Se
+// comparan los tres numeros y despues el sufijo como texto, que es lo que de
+// verdad distingue un canal `edge` de uno `standard` en las series COLDCARD.
+//
+// Ante cualquier duda -version ilegible, rango imposible- se devuelve "no
+// coincide". Inventar una coincidencia produciria una alarma falsa sobre unos
+// fondos, y ese es el fallo mas caro que puede cometer este modulo.
 function canonical(value) {
   return String(value || "").trim().toLowerCase();
 }

@@ -1,3 +1,12 @@
+// Service worker: la aplicacion sigue abriendose sin proceso servidor.
+//
+// Estrategia red primero, cache despues. Al reves de lo habitual, y a
+// proposito: un panel de seguridad que sirviera datos de custodia desde una
+// cache vieja seria peor que uno que no abre.
+//
+// Por eso `/api/` esta excluido explicitamente: se cachea la cascara -HTML,
+// CSS, JS, icono-, nunca el estado. Lo que se ve siempre viene del proceso
+// local o no se ve.
 const CACHE = "rootcause-bitcoin-defense-v1";
 const ASSETS = ["/", "/styles.css", "/app.js", "/icon.svg", "/manifest.webmanifest"];
 

@@ -32,10 +32,11 @@ pnpm check
 
 ## Pruebas automatizadas (`node --test`)
 
-50 pruebas, sin framework externo, repartidas así:
+64 pruebas, sin framework externo, repartidas así:
 
 | Archivo | Cubre |
 |---|---|
+| `test/incident-lifecycle.test.js` | El ciclo de vida completo de un incidente —conservación del historial, supervivencia del reconocimiento, resolución automática y reapertura— y la reparación de un estado al que le falten colecciones |
 | `test/api.test.js` | Salud y resumen, cabecera de mutación obligatoria, rechazo de campos secretos, registro de procedencia pública y re-análisis |
 | `test/rule-engine.test.js` | Firmware vulnerable y concentración single-sig en el estado demo; gasto no aprobado; gasto con aprobación conocida (**el caso que NO debe saltar**); nodo no disponible |
 | `test/firmware.test.js` | Parseo de versiones con sufijos de fabricante, comparación numérica, coincidencia por modelo y canal |

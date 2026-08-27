@@ -1,3 +1,19 @@
+// Registro de auditoria encadenado por hash.
+//
+// Cada entrada incluye el hash de la anterior, asi que modificar una entrada
+// pasada invalida todas las siguientes. No impide que alguien con acceso al
+// archivo lo reescriba entero, pero si hace imposible editar un solo evento sin
+// que se note, que es el caso realista: alguien borrando la linea que registra
+// lo que hizo.
+//
+// La verificacion no es decorativa: su resultado alimenta la regla
+// `BTC-OPSEC-008`, que marca la cadena rota como hallazgo critico del propio
+// producto.
+//
+// El hash se calcula sobre una forma CANONICA del objeto -claves ordenadas
+// recursivamente-, porque el orden de insercion de un objeto JavaScript no es
+// estable entre rutas de codigo, y un hash que dependiera de el daria falsos
+// positivos de manipulacion.
 import crypto from "node:crypto";
 import { redactForAudit } from "../domain/secret-guard.js";
 
