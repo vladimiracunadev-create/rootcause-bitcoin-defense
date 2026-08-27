@@ -1,3 +1,21 @@
+// Caso de uso central: valida, normaliza, persiste, reevalua y audita.
+//
+// Todo cambio de estado pasa por aqui y sigue siempre la misma secuencia:
+//
+//   1. rechazar material secreto (`assertNoSecretMaterial`);
+//   2. normalizar y validar la entrada, con errores que llevan `statusCode`;
+//   3. escribir dentro de `mutate()`, que serializa las escrituras;
+//   4. anotar la accion en el registro encadenado de auditoria;
+//   5. REEVALUAR las reglas y refundir los incidentes.
+//
+// El paso 5 es el que hace que el panel no mienta. Un inventario que cambia y
+// un tablero que no se entera hasta el proximo analisis manual es un tablero
+// que afirma "sin hallazgos" sobre datos viejos.
+//
+// `mutate()` encadena las operaciones en una unica cola de escritura. Node es
+// monohilo, pero `load()` y `save()` son asincronos: sin la cola, dos
+// peticiones concurrentes leerian el mismo estado y la segunda escritura
+// perderia la primera.
 import crypto from "node:crypto";
 import { appendAuditEntry, verifyAuditChain } from "../infrastructure/audit-log.js";
 import { assertNoSecretMaterial } from "../domain/secret-guard.js";
@@ -134,7 +152,12 @@ function normalizeWallet(input) {
   };
 }
 
-function mergeIncidents(existing, findings, now) {
+// Se exporta para poder probarla directamente. Gobierna el ciclo de vida de
+// TODO incidente -desde cuando existe, si alguien lo reconocio, cuando se da por
+// resuelto y que pasa si reaparece- y una regresion aqui no la notaria nadie
+// hasta que un incidente real se resolviera solo. Es logica pura: exportarla no
+// amplia la superficie de nada.
+export function mergeIncidents(existing, findings, now) {
   const byId = new Map(existing.map((incident) => [incident.id, incident]));
   const activeIds = new Set(findings.map((finding) => finding.id));
 
@@ -171,8 +194,21 @@ export class DefenseService {
 
   async initialize() {
     const state = await this.store.load();
-    if (!Array.isArray(state.incidents)) state.incidents = [];
-    if (!Array.isArray(state.audit)) state.audit = [];
+    // El motor de reglas recorre estas colecciones sin comprobarlas: un estado
+    // al que le falte una -escrito a mano, migrado de otra version, truncado-
+    // haria lanzar un TypeError y la aplicacion no arrancaria. Repararlas aqui
+    // cuesta cinco lineas y convierte un fallo de arranque en un estado vacio,
+    // que es lo que de verdad describe la situacion.
+    for (const collection of [
+      "wallets",
+      "incidents",
+      "approvals",
+      "observedTransactions",
+      "privacyEvents",
+      "audit"
+    ]) {
+      if (!Array.isArray(state[collection])) state[collection] = [];
+    }
     if (!state.audit.length) {
       state.audit = appendAuditEntry(state.audit, {
         action: "application_initialized",
