@@ -257,7 +257,7 @@ Las cuatro están **apagadas o en el valor conservador por defecto**, y
 | --- | --- |
 | `.env`, `data/*` y `SECURITY_AUDIT_BITCOIN_*.md` en `.gitignore` | Raíz |
 | Detección de `xprv`/PEM en todo archivo de texto | `scripts/validate-repo.js` |
-| 10 patrones de secreto sobre **todo el histórico de git** | `scripts/check-history-secrets.js` |
+| 11 patrones de secreto sobre **todo el histórico de git** | `scripts/check-history-secrets.js` |
 | `gitleaks` como capa genérica | `security-audit.yml` |
 | Rutas prohibidas (`.env`, `.cookie`, `id_rsa`, `.p12`…) | `check-history-secrets.js` |
 | El paquete de Windows rechaza incluir `data`, `.env` o `.git` | `build-portable.ps1` |

@@ -7,6 +7,17 @@ identificó como prioritarias.
 
 ### Corrige
 
+- `scripts/check-history-secrets.js` inspecciona el **contenido** solo de los
+  archivos de texto. Un escáner de secretos aplicado a los bytes de un PDF, una
+  imagen o un ZIP encuentra coincidencias por azar: un stream comprimido acaba
+  conteniendo algo con la forma de `esquema://usuario:clave@`. Pasó de verdad con
+  los PDF de la documentación y tumbó la auditoría de CI con un hallazgo falso.
+  La **ruta** de los binarios se sigue comprobando —un `.p12` no debe estar en el
+  repositorio aunque nadie lea sus bytes— y el informe declara cuántos omitió.
+  Un detector que grita cada vez que se regenera un PDF enseña a ignorarlo.
+- `.gitattributes` declara `*.pdf binary`. Es la causa raíz del punto anterior:
+  sin declararlo, `text=auto` deja a una heurística si git vuelca los bytes del
+  PDF en el diff.
 - `DefenseService.initialize()` repara ahora **las seis colecciones** del estado
   —`wallets`, `incidents`, `approvals`, `observedTransactions`, `privacyEvents` y
   `audit`— y no solo dos. El motor de reglas las recorre sin comprobarlas, así

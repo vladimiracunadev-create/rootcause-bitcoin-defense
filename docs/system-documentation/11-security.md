@@ -184,7 +184,7 @@ código de producción.**
 | --- | --- |
 | `.env` y `data/*` ignorados por git | `.gitignore` |
 | Detección de PEM y `xprv` en todo archivo de texto | `scripts/validate-repo.js` |
-| 10 patrones de secreto sobre todo el histórico | `scripts/check-history-secrets.js` |
+| 11 patrones de secreto sobre todo el histórico | `scripts/check-history-secrets.js` |
 | Rutas prohibidas: `.env`, `.cookie`, `id_rsa`, `id_ed25519`, `.pfx`, `.p12`, `.keystore`, `data/state.enc.json` | Ídem |
 | `gitleaks` verificado por checksum | `security-audit.yml` |
 | El paquete rechaza incluir `data`, `.env`, `.git` o `node_modules` | `build-portable.ps1` |
@@ -317,10 +317,11 @@ Ejecutados sobre el commit `acdf4dd` durante este análisis:
 | Campo | Resultado |
 | --- | --- |
 | Alcance | Histórico completo, `git log --all -p` |
+| Binarios | **Revisados solo por su ruta, no por su contenido** — ver el aviso de abajo |
 | Commits revisados | 9 |
 | Líneas añadidas revisadas | 20 207 |
 | Patrones aplicados | 11 |
-| Cobertura declarada | 100 % de las líneas añadidas visibles en git |
+| Cobertura declarada | 100 % de las **líneas de texto** añadidas visibles en git |
 | **Hallazgos** | **Ninguno** |
 | Exenciones en línea | 2, marcadas con `secret-scan: allow` |
 | Exenciones declaradas usadas | 1 — la wordlist BIP-39 del propio detector, 30 coincidencias |
@@ -331,6 +332,24 @@ Ejecutados sobre el commit `acdf4dd` durante este análisis:
 > BIP-39, el detector no reconocería un mnemónico real, y con ella se detecta a
 > sí mismo. El informe la cuenta, que es lo que impide que una exención se
 > vuelva invisible.
+
+**Por qué los binarios quedan fuera del escaneo de contenido.** Un escáner de
+secretos busca patrones de texto. Aplicado a los bytes de un PDF, una imagen o
+un ZIP, encuentra coincidencias por azar: un stream comprimido acaba conteniendo,
+antes o después, algo con la forma de `esquema://usuario:clave@`. Ocurrió de
+verdad con los PDF de esta documentación, y tumbó el trabajo de auditoría de CI
+con un hallazgo falso.
+
+| Decisión | Motivo |
+| --- | --- |
+| El **contenido** de un binario no se inspecciona | Un detector que grita cada vez que se regenera un PDF enseña a ignorarlo |
+| Su **ruta** sí se comprueba | Un `.p12` o un `.pfx` no deben estar en el repositorio aunque nadie lea sus bytes |
+| El informe declara cuántos se omitieron | La cobertura se declara siempre, y eso incluye lo que se deja fuera a propósito |
+| `.gitattributes` marca `*.pdf binary` | Ataja la causa: sin declararlo, `text=auto` deja a una heurística si git vuelca los bytes en el diff |
+
+> Es la aplicación al propio detector de la regla que gobierna el proyecto: un
+> falso positivo recurrente no es un control estricto, es un control que la gente
+> aprende a saltarse.
 
 ### 12.2 · Cadena de suministro del runtime
 

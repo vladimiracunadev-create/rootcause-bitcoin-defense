@@ -191,6 +191,20 @@ const BIP39_SAMPLE = new Set(
 );
 // secret-scan: allow-end
 
+// Archivos binarios: se comprueba su RUTA, nunca su contenido.
+//
+// Un escáner de secretos busca patrones de texto. Aplicarlo a los bytes de un
+// PDF, una imagen o un ZIP produce coincidencias por puro azar —un stream
+// comprimido acaba conteniendo, antes o después, algo con la forma de
+// `esquema://usuario:clave@`—. Y un detector que grita cada vez que se
+// regenera un binario enseña a ignorarlo, que es justo lo que este proyecto
+// pasa el día evitando.
+//
+// Las rutas de FORBIDDEN_PATHS se siguen comprobando: un `.p12` no debe estar
+// en el repositorio aunque su contenido no se lea.
+const BINARY_EXTENSIONS =
+  /\.(?:pdf|png|jpe?g|gif|webp|ico|svgz|zip|gz|tar|7z|exe|dll|so|dylib|woff2?|ttf|otf|eot|mp4|webm|mp3|wav|class|jar|wasm)$/i;
+
 // Rutas cuya presencia en el histórico ya es sospechosa por sí misma.
 const FORBIDDEN_PATHS = [
   /(^|\/)\.env$/,
@@ -245,6 +259,8 @@ let currentFile = "";
 let linesScanned = 0;
 let allowedLines = 0;
 let inAllowedRange = false;
+let binaryFile = false;
+let binaryFiles = 0;
 
 for (const line of diffText.split("\n")) {
   if (line.startsWith("commit ")) {
@@ -254,6 +270,8 @@ for (const line of diffText.split("\n")) {
   if (line.startsWith("+++ b/")) {
     currentFile = line.slice(6);
     inAllowedRange = false;
+    binaryFile = BINARY_EXTENSIONS.test(currentFile);
+    if (binaryFile) binaryFiles += 1;
     for (const forbidden of FORBIDDEN_PATHS) {
       if (forbidden.test(currentFile)) {
         findings.push({
@@ -270,6 +288,8 @@ for (const line of diffText.split("\n")) {
   }
   // Solo líneas añadidas: lo que se quitó ya está cubierto por el commit que lo metió.
   if (!line.startsWith("+") || line.startsWith("+++")) continue;
+  // De un binario se comprueba la ruta, nunca el contenido.
+  if (binaryFile) continue;
 
   const content = line.slice(1);
   linesScanned += 1;
@@ -328,6 +348,7 @@ if (flag("json")) {
         commitCount,
         linesScanned,
         allowedLines,
+        binaryFilesSkipped: binaryFiles,
         findings: unique
       },
       null,
@@ -340,9 +361,17 @@ if (flag("json")) {
   if (!staged) console.log("  commits en el repositorio: " + commitCount);
   console.log("  líneas añadidas revisadas: " + linesScanned);
   console.log(
-    "  COBERTURA: 100 % de las líneas añadidas visibles en git; " +
+    "  COBERTURA: 100 % de las líneas de texto añadidas visibles en git; " +
       "no cubre objetos colgantes ni ramas ya borradas del remoto."
   );
+  if (binaryFiles) {
+    // La cobertura se declara siempre, y eso incluye lo que se deja fuera.
+    console.log(
+      "  BINARIOS OMITIDOS: " +
+        binaryFiles +
+        " archivo(s) revisados solo por su ruta, no por su contenido."
+    );
+  }
   if (allowedLines) {
     console.log(
       "  EXENCIONES EN LÍNEA: " + allowedLines + " marcadas con `secret-scan: allow`."

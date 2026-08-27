@@ -2,6 +2,11 @@
 *.png binary
 *.ico binary
 *.zip binary
+# Los PDF de la documentacion se generan. Sin declararlos, `text=auto` deja su
+# tratamiento a una heuristica: git puede volcar sus bytes en el diff, y ahi el
+# escaner de secretos encuentra patrones por azar dentro de un stream
+# comprimido. Declararlo es mas barato que explicar el falso positivo.
+*.pdf binary
 
 # Los lanzadores de Windows deben conservar CRLF: cmd.exe interpreta mal los
 # bloques multilinea si el archivo llega con finales de linea Unix.

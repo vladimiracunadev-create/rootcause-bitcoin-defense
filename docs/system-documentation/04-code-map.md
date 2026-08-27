@@ -179,7 +179,7 @@ que no hay superficie de path traversal.
 | Archivo | Líneas | Qué hace | ¿Puerta de CI? |
 | --- | ---: | --- | --- |
 | `scripts/audit-bitcoin.js` | 704 | Las 14 etapas de auditoría de custodia y su informe | Sí, `security-audit.yml` |
-| `scripts/check-history-secrets.js` | 385 | 10 patrones de secreto sobre **todo el histórico de git** | Sí |
+| `scripts/check-history-secrets.js` | 403 | 11 patrones de secreto sobre **todo el histórico de git**, saltando el contenido de los binarios | Sí |
 | `scripts/generate-rule-docs.js` | 356 | Genera las 26 fichas, su índice y `landing/reglas.html` | Sí, en modo `--check` |
 | `scripts/check-runtime-advisories.js` | 314 | Avisos del Node que se distribuye, contra el Security WG | Sí |
 | `scripts/check-security-claims.js` | 222 | 20 invariantes **contra la aplicación en marcha** | Sí |
