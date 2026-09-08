@@ -251,7 +251,7 @@ cinco directivas clave y que no admite `http:`, `*` ni `unsafe-inline`.
 | Puerto 8787 | **Solo loopback** | Bind, límite de tasa, guardia de mutación |
 | 15 endpoints de API | Loopback | Validación en 7 capas |
 | 7 rutas estáticas | Loopback | Allowlist; sin construcción de rutas |
-| Salida RPC hacia Bitcoin Core | Solo si se configura | Allowlist de 11 métodos, loopback, sin redirecciones, 2 MiB, timeout |
+| Salida RPC hacia Bitcoin Core | Solo si se configura | Allowlist de 14 métodos, loopback, sin redirecciones, 2 MiB, timeout |
 | Archivo de estado en disco | Perfil del usuario | AES-256-GCM, `0600`, escritura atómica |
 | Panel en el navegador | Local | CSP, escape en todo render |
 | Cadena de suministro | **Cero dependencias npm** | Verificado en cada build |

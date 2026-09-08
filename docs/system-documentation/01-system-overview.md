@@ -95,7 +95,7 @@ local**. El modelo de seguridad depende de eso (ver
 - **Watchtower** opcional que consulta el nodo y reevalúa periódicamente.
 - **Registro de auditoría encadenado por hash**, con verificación de integridad.
 - **Persistencia cifrada** AES-256-GCM con escritura atómica.
-- **Cliente RPC de solo lectura** con allowlist de 11 métodos.
+- **Cliente RPC de solo lectura** con allowlist de 14 métodos.
 
 ---
 

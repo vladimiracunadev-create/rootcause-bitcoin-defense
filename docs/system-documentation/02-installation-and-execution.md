@@ -20,7 +20,7 @@ cada uno verifica.
 | Ejecutar en contenedor | Docker con soporte de `compose.yaml` |
 | Conectar con Bitcoin Core | Un nodo local con RPC habilitado |
 
-**No hace falta `npm install` ni `pnpm install`.** El proyecto no tiene
+**No hace falta `pnpm install`.** El proyecto no tiene
 dependencias, y crear `node_modules` haría fallar la puerta `solo-local` en CI.
 
 | Versión declarada | Dónde |

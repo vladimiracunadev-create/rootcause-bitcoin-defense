@@ -34,7 +34,7 @@ secreto** — pasa por `redactForAudit` antes de escribirse en la auditoría.
 
 ## ⚠️ Qué NO significa
 
-- La allowlist de once métodos de lectura sigue vigente: esto amplía el canal, no los permisos.
+- La allowlist de catorce métodos de lectura sigue vigente: esto amplía el canal, no los permisos.
 
 ## 🔍 Cómo comprobarlo
 

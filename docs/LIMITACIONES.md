@@ -49,7 +49,7 @@ transmisión a la red. No es una carencia: es la propiedad de seguridad
 principal, y está verificada en cada build por
 `scripts/check-security-claims.js`.
 
-### Solo lee del nodo, y solo 11 métodos
+### Solo lee del nodo, y solo 14 métodos
 
 La allowlist RPC contiene únicamente métodos de consulta. Cualquier método de
 firma, envío, importación, exportación o desbloqueo se rechaza **antes** de

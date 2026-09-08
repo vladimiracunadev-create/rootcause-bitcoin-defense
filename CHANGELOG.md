@@ -22,6 +22,11 @@ sistema y las correcciones identificadas por ese análisis.
 
 ### Corrige
 
+- Todos los comandos de usuario y CI usan `pnpm`; la comprobación independiente
+  de cero dependencias inspecciona directamente el manifest y `node_modules`,
+  permitiendo solo los dos metadatos que pnpm 11 crea al ejecutar scripts.
+- La documentación y GitHub Pages reflejan los **14 métodos RPC** de lectura que
+  realmente contiene `READ_ONLY_METHODS`.
 - `scripts/check-history-secrets.js` inspecciona el **contenido** solo de los
   archivos de texto. Un escáner de secretos aplicado a los bytes de un PDF, una
   imagen o un ZIP encuentra coincidencias por azar: un stream comprimido acaba

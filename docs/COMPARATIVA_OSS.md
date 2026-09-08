@@ -50,7 +50,7 @@ Y por tanto lo que **no** deberías pedirle a esta aplicación:
   hardware, gestionar UTXO y descriptores. Es la herramienta correcta para
   ejecutar la migración que este producto te dice que hace falta.
 - **Bitcoin Core** como fuente de verdad. Esta aplicación solo lo lee, y con
-  once métodos.
+  catorce métodos.
 - **Specter o Caravan** para diseñar y coordinar un multisig.
 - **HWI** para cualquier cosa que implique tocar un dispositivo por USB.
 

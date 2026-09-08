@@ -7,8 +7,8 @@ Defensa watch-only y laboratorio forense que entiende Bitcoin como un conjunto d
 El caso integrador declara **100 BTC** en el libro interno. El software genera o carga transacciones controladas, reconstruye el saldo desde UTXOs no gastados y calcula la diferencia; la respuesta no está hardcodeada.
 
 ```powershell
-npm run forensics:demo   # fixture determinista, sin Docker
-npm run lab:regtest      # Bitcoin Core real desde un volumen regtest vacío
+pnpm forensics:demo   # fixture determinista, sin Docker
+pnpm lab:regtest      # Bitcoin Core real desde un volumen regtest vacío
 ```
 
 Cada ejecución produce `bitcoin-summary.md`, `utxo-analysis.csv`, `transaction-graph.graphml`, `reconciliation.csv` y `timeline.md`. El laboratorio real usa únicamente monedas regtest sin valor; la aplicación mantiene RPC de solo lectura y nunca recibe semillas, firma ni transmite fondos. Consulta [`docs/BITCOIN_FORENSICS_LAB.md`](docs/BITCOIN_FORENSICS_LAB.md) para el modelo de custodia, multisig, PSBT, selección de monedas y controles operativos.

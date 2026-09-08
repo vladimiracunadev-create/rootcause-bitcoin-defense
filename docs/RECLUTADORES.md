@@ -98,7 +98,7 @@ cd rootcause-bitcoin-defense
 node scripts/check-security-claims.js
 ~~~
 
-No hay `npm install` porque no hay nada que instalar. En unos segundos verás las
+No hace falta `pnpm install` porque no hay nada que instalar. En unos segundos verás las
 veinte comprobaciones, incluidos los cinco intentos de colarle material secreto
 a la aplicación y su rechazo.
 

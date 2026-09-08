@@ -281,7 +281,7 @@ const STAGES = [
       if (dangerous) problems.push("Método de escritura en la allowlist: " + dangerous[0]);
       return {
         status: problems.length ? "atencion" : "ok",
-        coverage: "URL, autenticación y allowlist de 11 métodos de lectura",
+        coverage: "URL, autenticación y allowlist de 14 métodos de lectura",
         details: problems,
         actions: problems.length
           ? ["Volver a cookie local y loopback; no exponer RPC a la red."]

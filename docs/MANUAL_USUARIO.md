@@ -193,7 +193,7 @@ set "BITCOIN_RPC_COOKIE_FILE=C:\Users\tu-usuario\AppData\Roaming\Bitcoin\.cookie
 set "WATCHTOWER_ENABLED=true"
 ~~~
 
-La aplicación solo puede invocar 11 métodos de lectura. Cualquier método de
+La aplicación solo puede invocar 14 métodos de lectura. Cualquier método de
 firma, envío o desbloqueo se rechaza **antes** de hacer la petición. El
 watchtower está apagado por defecto: no consulta nada hasta que tú lo enciendes.
 

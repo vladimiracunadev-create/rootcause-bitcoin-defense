@@ -65,7 +65,7 @@ completa antes de entrar en vocabulario.
 |---|---|---|
 | **Bitcoin Core** | La implementación de referencia del nodo Bitcoin. | Fuente de verdad local, consultada en **solo lectura**. |
 | **Nodo** | Programa que valida por sí mismo toda la cadena. | Si confías en el nodo de un tercero, confías en su versión de la realidad. |
-| **RPC** | La interfaz de comandos de Bitcoin Core (`getblockchaininfo`, etc.). | Se usa con una **allowlist** de 11 métodos de lectura; el resto se rechaza antes de salir. |
+| **RPC** | La interfaz de comandos de Bitcoin Core (`getblockchaininfo`, etc.). | Se usa con una **allowlist** de 14 métodos de lectura; el resto se rechaza antes de salir. |
 | **Cookie de autenticación** | Archivo `.cookie` que Bitcoin Core genera para autenticar RPC local. | Forma preferida de conectar: evita escribir contraseñas en archivos. |
 | **UTXO** | Una porción de bitcoin no gastada, la unidad que se mueve realmente. | El runbook de migración razona en UTXO, no en «saldo». |
 | **Mempool** | La sala de espera de transacciones aún no confirmadas. | Su presión afecta a qué transacciones sobreviven. Regla `BTC-NODE-004`. |

@@ -18,7 +18,7 @@ parámetros, retorno, excepciones, efectos secundarios y riesgo al modificarlo.
 | `PUBLIC_PROVENANCE_FIELDS` | `src/domain/secret-guard.js` | `seedorigin`, `seedcreatedat`, `firmwareatseedcreation` | Excepciones al bloqueo por nombre de campo |
 | `EXTENDED_PRIVATE_KEY` | `src/domain/secret-guard.js` | Regex `xprv`/`tprv` | Detección por forma del valor |
 | `WIF_PRIVATE_KEY` | `src/domain/secret-guard.js` | Regex `[5KL]` + base58 | Detección por forma del valor |
-| `READ_ONLY_METHODS` | `src/infrastructure/bitcoin-rpc.js` | 11 métodos | **Allowlist RPC** |
+| `READ_ONLY_METHODS` | `src/infrastructure/bitcoin-rpc.js` | 14 métodos | **Allowlist RPC** |
 | `ALGORITHM` | `src/infrastructure/encrypted-store.js` | `aes-256-gcm` | Cifrado del estado |
 | `STATIC_FILES` | `src/app.js` | 7 rutas → archivo y MIME | **Allowlist de estáticos** |
 | `NETWORKS` | `src/services/defense-service.js` | `mainnet`, `signet`, `regtest`, `testnet4` | Validación |

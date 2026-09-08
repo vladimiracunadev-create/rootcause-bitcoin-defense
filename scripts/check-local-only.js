@@ -2,7 +2,7 @@
 // entera en la máquina del usuario, sin árbol de dependencias y sin pedir
 // nada a un tercero en tiempo de ejecución.
 //
-// Si alguien añade una dependencia npm, un CDN en el dashboard o un destino
+// Si alguien añade una dependencia, un CDN en el dashboard o un destino
 // de red que no sea el nodo Bitcoin local, este script tumba el build.
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -54,9 +54,22 @@ for (const field of [
   }
 }
 
-// 2. Cero árbol instalado y cero lockfiles de otros gestores.
-for (const forbidden of ["node_modules", "package-lock.json", "yarn.lock", "npm-shrinkwrap.json"]) {
+// 2. Cero paquetes instalados y cero lockfiles de otros gestores. pnpm 11 puede
+// crear dos archivos de metadatos al preparar un script, incluso con el árbol
+// vacío; cualquier otra entrada dentro de node_modules sigue siendo un fallo.
+for (const forbidden of ["package-lock.json", "yarn.lock", "npm-shrinkwrap.json"]) {
   if (await exists(forbidden)) fail("Artefacto de dependencias presente: " + forbidden);
+}
+
+if (await exists("node_modules")) {
+  const allowedPnpmMetadata = new Set([".package-map.json", ".pnpm-workspace-state-v1.json"]);
+  const entries = await fs.readdir(path.join(PROJECT_ROOT, "node_modules"), { withFileTypes: true });
+  const installedEntries = entries.filter(
+    (entry) => entry.isDirectory() || !allowedPnpmMetadata.has(entry.name)
+  );
+  if (installedEntries.length > 0) {
+    fail("Paquetes presentes en node_modules: " + installedEntries.map((entry) => entry.name).join(", "));
+  }
 }
 
 if (await exists("pnpm-lock.yaml")) {

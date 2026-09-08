@@ -138,7 +138,7 @@ Seis en CI, seis en la auditoría y uno en cada workflow de CodeQL, release y Pa
 | --- | --- | --- |
 | Calidad | `calidad` | Validación y pruebas en **3 sistemas operativos × 2 versiones de Node** |
 | CI | `regtest-forensics` | Bitcoin Core real, transacciones controladas y cinco informes UTXO |
-| Solo local | `solo-local` | Cero dependencias, cero orígenes remotos, CSP intacta, `npm ls` vacío |
+| Solo local | `solo-local` | Cero dependencias, cero orígenes remotos, CSP intacta, manifest vacío y ningún paquete en `node_modules` |
 | Invariantes | `invariantes` | **Arranca la aplicación real** y la ataca; más un `grep` contra métodos RPC de gasto |
 | App de Windows | `app-windows` | Empaqueta, **arranca el `.cmd` real** y comprueba `/api/health`, el panel y **que el inventario no esté vacío** |
 | Documentación | `documentacion` | Enlaces, estilo y fichas sincronizadas |

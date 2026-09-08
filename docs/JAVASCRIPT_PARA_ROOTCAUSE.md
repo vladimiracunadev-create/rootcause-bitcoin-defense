@@ -28,7 +28,7 @@ Lo que ganamos:
 |---|---|
 | Auditoría posible | Todo el código que corre está en este repositorio |
 | Sin CVEs heredados | No hay que vigilar 400 paquetes transitivos |
-| Instalación instantánea | `git clone` y ejecuta. No hay `npm install` |
+| Instalación instantánea | `git clone` y ejecuta. No hace falta `pnpm install` |
 | Empaquetado trivial | Copiar `src/` y `config/` junto a `node.exe` |
 | Envejecimiento lento | Nada se rompe porque un paquete cambió su API |
 

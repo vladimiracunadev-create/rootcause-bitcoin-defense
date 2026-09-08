@@ -49,7 +49,7 @@ node scripts/check-docs.js
 | Script | Qué comprueba | Falla cuando |
 |---|---|---|
 | `scripts/validate-repo.js` | Archivos obligatorios, JSON válido, sintaxis de cada `.js`, versión sincronizada entre `package.json` y `/api/health`, ausencia de claves privadas embebidas, tests enfocados (`.only`) | Alguien deja un `it.only`, rompe un JSON o desincroniza la versión |
-| `scripts/check-local-only.js` | Cero dependencias declaradas o instaladas, ningún import externo, ninguna referencia remota en el panel, CSP `self` intacta | Alguien añade una dependencia npm o un CDN |
+| `scripts/check-local-only.js` | Cero dependencias declaradas o instaladas, ningún import externo, ninguna referencia remota en el panel, CSP `self` intacta | Alguien añade una dependencia o un CDN |
 | `scripts/check-docs.js` | Toda ruta y enlace citado en un `.md` existe | Se renombra un documento sin actualizar quien lo cita |
 | `scripts/check-doc-style.js` | Un H1, tablas con cabecera, bloques con lenguaje, todo `docs/` indexado, la firma visual del README | Un documento nuevo no entra en `INDEX.md` o el README pierde el banner, los badges o el lema |
 | `scripts/generate-rule-docs.js --check` | Las 26 fichas de regla y la página publicada coinciden con `config/rules-catalog.json` | Alguien edita una ficha a mano o añade una regla sin documentarla |
@@ -59,7 +59,7 @@ node scripts/check-docs.js
 Salida esperada de la última:
 
 ~~~text
-  ok  allowlist RPC solo de lectura (11 métodos)
+  ok  allowlist RPC solo de lectura (14 métodos)
   ok  material secreto rechazado (seed)
   ...
 Invariantes de seguridad verificados: 20 comprobaciones.

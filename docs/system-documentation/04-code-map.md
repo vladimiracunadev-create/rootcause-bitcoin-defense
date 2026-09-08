@@ -144,7 +144,7 @@ qué depende, quién la usa y en qué flujo participa.
 | `encryptJson(value, key)` / `decryptJson(envelope, key)` | `encrypted-store.js` | Sobre versionado `version: 1` |
 | `MemoryStore` / `EncryptedFileStore` | `encrypted-store.js` | Mismo contrato `load()` / `save()` |
 | `validateRpcUrl(value, allowRemote)` | `bitcoin-rpc.js` | Rechaza remoto y credenciales en la URL |
-| `BitcoinRpcClient` | `bitcoin-rpc.js` | `READ_ONLY_METHODS` con 11 métodos |
+| `BitcoinRpcClient` | `bitcoin-rpc.js` | `READ_ONLY_METHODS` con 14 métodos |
 | `appendAuditEntry(audit, input)` | `audit-log.js` | Redacta la metadata antes de encadenar |
 | `verifyAuditChain(audit)` | `audit-log.js` | Alimenta `BTC-OPSEC-008` |
 

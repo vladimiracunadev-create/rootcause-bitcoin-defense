@@ -4,7 +4,7 @@
 | --- | --- |
 | Nunca recibe material secreto | `src/domain/secret-guard.js` rechaza por nombre y por patrón, a cualquier profundidad |
 | No firma ni transmite | La capacidad no está desactivada: no existe el código |
-| RPC de solo lectura | Allowlist de 11 métodos en `src/infrastructure/bitcoin-rpc.js` |
+| RPC de solo lectura | Allowlist de 14 métodos en `src/infrastructure/bitcoin-rpc.js` |
 | Todo local | Bind en loopback y CSP `self`, verificado en cada push |
 | La IA nunca decide | Las reglas son deterministas y auditables |
 | Verificación humana para mover fondos | `config/policies.json` → `humanApprovalRequired` |

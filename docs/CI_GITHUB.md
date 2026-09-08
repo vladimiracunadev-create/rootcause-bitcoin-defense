@@ -39,8 +39,9 @@ Dos redes de seguridad independientes:
 - `check-local-only.js`: cero dependencias declaradas, cero árbol instalado,
   ningún import que no sea `node:` o relativo, ninguna referencia remota en el
   panel, CSP `self` intacta.
-- Una comprobación aparte con `npm ls --all --json`, que delataría un
-  `node_modules` real aunque el script anterior tuviera un fallo.
+- Una comprobación aparte inspecciona el manifest y `node_modules`, permite solo
+  los metadatos vacíos que crea pnpm y delata cualquier paquete declarado o
+  instalado aunque el script anterior tuviera un fallo.
 
 ### 3. `invariantes` — el claim del producto
 

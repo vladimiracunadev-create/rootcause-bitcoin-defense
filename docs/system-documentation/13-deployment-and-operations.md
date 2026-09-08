@@ -39,7 +39,7 @@ producto es local por diseño: alojarlo invalidaría su modelo de seguridad.
 | `persist-credentials: false` en cada checkout | Nada de lo que corre después necesita empujar |
 | `concurrency` con cancelación | Salvo en el release, donde `cancel-in-progress: false` |
 | `timeout-minutes` explícito | Entre 10 y 30 |
-| **Sin `npm ci` ni `pnpm install`** | El proyecto no tiene dependencias: CI nunca toca un registro de paquetes |
+| **Sin `pnpm install`** | El proyecto no tiene dependencias: CI nunca toca un registro de paquetes |
 
 > Los dos trabajos programados corren en **minutos poco redondos** (07:23 y
 > 06:17) para repartir la carga de los runners. Y corren **cada lunes** porque el

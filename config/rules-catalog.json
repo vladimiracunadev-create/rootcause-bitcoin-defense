@@ -381,7 +381,7 @@
       "rootCause": "La defensa por defecto contra destinos remotos está desactivada explícitamente.",
       "evidence": ["URL configurada", "Estado de la bandera"],
       "remediation": ["Usar un túnel hacia `127.0.0.1` y volver a `ALLOW_REMOTE_RPC=false`.", "Confirmar que el nodo no acepta RPC desde Internet."],
-      "notMeaning": ["La allowlist de once métodos de lectura sigue vigente: esto amplía el canal, no los permisos."],
+      "notMeaning": ["La allowlist de catorce métodos de lectura sigue vigente: esto amplía el canal, no los permisos."],
       "verify": "node --test test/posture.test.js",
       "source": "src/domain/posture.js",
       "related": ["BTC-OPSEC-005", "BTC-NODE-001"]

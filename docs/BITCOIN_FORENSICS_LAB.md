@@ -21,7 +21,7 @@ Este laboratorio convierte a **DigitalCustody Labs** en un caso contable reprodu
 Requiere Node.js 22.12 o posterior y no instala dependencias.
 
 ```powershell
-npm run forensics:demo
+pnpm forensics:demo
 ```
 
 Lee `examples/digital-custody-labs/scenario.json` y escribe en `build/bitcoin-forensics/`:
@@ -39,7 +39,7 @@ El escenario contiene depósitos, un retiro, una salida de cambio, bloques y ant
 Requiere Docker Desktop o Docker Engine con Compose. El comando elimina únicamente el volumen `bitcoin-regtest` declarado por este laboratorio, arranca Bitcoin Core 28.1, crea wallets desechables, mina saldo sin valor económico y produce depósitos y un retiro controlado.
 
 ```powershell
-npm run lab:regtest
+pnpm lab:regtest
 ```
 
 El script comprueba `getblockchaininfo.chain === "regtest"` antes de crear wallets. Si la red no es `regtest`, se detiene. Los resultados quedan en `build/bitcoin-forensics-regtest/`, incluido `scenario.json` con la evidencia pública que alimentó el cálculo.

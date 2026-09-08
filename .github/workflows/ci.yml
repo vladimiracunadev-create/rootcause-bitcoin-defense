@@ -20,8 +20,8 @@
 #                       siendo el de la familia RootCause.
 #
 # Robustez: actions oficiales pinneadas a commit SHA, permisos minimos,
-# concurrency con cancelacion y timeouts explicitos. No se ejecuta `npm ci`
-# ni `pnpm install`: este repositorio no tiene dependencias a proposito, asi
+# concurrency con cancelacion y timeouts explicitos. No se ejecuta
+# `pnpm install`: este repositorio no tiene dependencias a proposito, asi
 # que CI nunca toca la red de un registro de paquetes.
 # ─────────────────────────────────────────────────────────────────────────────
 name: CI
@@ -88,7 +88,7 @@ jobs:
         with:
           node-version: "22"
 
-      # Si alguien introduce una dependencia npm, un CDN en el dashboard o
+      # Si alguien introduce una dependencia, un CDN en el dashboard o
       # abre la CSP, este paso tumba el build.
       - name: Verificar el claim "solo local"
         run: node scripts/check-local-only.js
@@ -97,19 +97,7 @@ jobs:
       - name: Verificar que no hay arbol de dependencias
         run: |
           test ! -f package-lock.json || (echo "package-lock.json no deberia existir" && exit 1)
-          test ! -d node_modules || (echo "node_modules no deberia existir" && exit 1)
-          npm ls --all --json | node -e "
-            let raw = '';
-            process.stdin.on('data', (chunk) => { raw += chunk; });
-            process.stdin.on('end', () => {
-              const deps = JSON.parse(raw).dependencies ?? {};
-              if (Object.keys(deps).length > 0) {
-                console.error('Dependencias instaladas:', Object.keys(deps).join(', '));
-                process.exit(1);
-              }
-              process.stderr.write('  arbol de dependencias vacio\n');
-            });
-          "
+          node -e "const fs = require('node:fs'); const p = require('./package.json'); const fields = ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies']; const declared = fields.flatMap((field) => Object.keys(p[field] || {})); const allowed = new Set(['.package-map.json', '.pnpm-workspace-state-v1.json']); const installed = fs.existsSync('node_modules') ? fs.readdirSync('node_modules', { withFileTypes: true }).filter((entry) => entry.isDirectory() || !allowed.has(entry.name)).map((entry) => entry.name) : []; if (declared.length || installed.length) { console.error('Dependencias detectadas:', [...declared, ...installed].join(', ')); process.exit(1); } process.stderr.write('  arbol de dependencias vacio\n');"
 
   invariantes:
     name: Invariantes de seguridad (aplicacion en marcha)

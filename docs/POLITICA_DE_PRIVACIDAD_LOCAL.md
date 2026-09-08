@@ -79,7 +79,7 @@ carpeta a mano.
 
 | Destino | Cuándo | Control |
 |---|---|---|
-| `127.0.0.1:8332` (tu nodo) | Solo si lo configuras | 11 métodos de lectura, allowlist |
+| `127.0.0.1:8332` (tu nodo) | Solo si lo configuras | 14 métodos de lectura, allowlist |
 | Un nodo remoto | Solo con `ALLOW_REMOTE_RPC=true` explícito | Desactivado por defecto |
 | Cualquier otro destino | **Nunca** | No existe el código |
 

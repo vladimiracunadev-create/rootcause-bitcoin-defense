@@ -76,7 +76,7 @@ podado). Esta aplicación no cambia esos requisitos: solo lee.
 |---|---|---|
 | Node.js | 22.12 → 24.x | Matriz de CI: 22 y 24, en Windows, Linux y macOS |
 | Windows | 10 y 11 x64 | Job `app-windows`, que empaqueta y arranca la aplicación |
-| Bitcoin Core | 26.x → 29.x | Los 11 métodos RPC usados son estables desde hace años |
+| Bitcoin Core | 26.x → 29.x | Los 14 métodos RPC usados son estables desde hace años |
 | Navegadores | Cualquiera con soporte de módulos ES y CSS Grid | El panel no usa dependencias ni transpilación |
 
 Si funciona fuera de esos rangos, bien; pero no está comprobado, y este
