@@ -62,7 +62,13 @@ try {
 
   for (const wallet of ["miner", "digital-hot", "digital-cold"]) cli(["createwallet", wallet]);
   const minerAddress = cli(["getnewaddress", "mining"], "miner");
-  cli(["generatetoaddress", "101", minerAddress]);
+  // Tres coinbases deben superar las 100 confirmaciones antes de financiar
+  // los depósitos de 60 y 45 BTC. Con 101 bloques solo madura la primera.
+  cli(["generatetoaddress", "103", minerAddress]);
+  const spendableMiningBalance = Number(cli(["getbalance"], "miner"));
+  if (spendableMiningBalance < 105) {
+    throw new Error("Expected at least 105 mature regtest BTC, got " + spendableMiningBalance + ".");
+  }
 
   const hotReceive = cli(["getnewaddress", "customer-deposits"], "digital-hot");
   const coldReserve = cli(["getnewaddress", "cold-reserve"], "digital-cold");

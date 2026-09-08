@@ -194,7 +194,7 @@ que no hay superficie de path traversal.
 | `scripts/seed-demo.js` | 23 | Siembra el estado cifrado con el inventario de demostración | No |
 | `scripts/generate-key.js` | 7 | Genera 32 bytes en base64 | No |
 | `scripts/analyze-bitcoin-scenario.js` | 24 | Genera los cinco informes desde evidencia pública | No |
-| `scripts/run-regtest-lab.js` | 122 | Construye DigitalCustody Labs en Bitcoin Core regtest | Sí, solo al nodo desechable |
+| `scripts/run-regtest-lab.js` | 128 | Construye DigitalCustody Labs en Bitcoin Core regtest | Sí, solo al nodo desechable |
 
 **Dependencia común:** los catorce importan `PROJECT_ROOT` de `src/config.js`. Eso
 los ata al árbol del repositorio: **no funcionan como herramienta global**.

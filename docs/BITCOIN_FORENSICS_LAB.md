@@ -32,7 +32,7 @@ Lee `examples/digital-custody-labs/scenario.json` y escribe en `build/bitcoin-fo
 - `reconciliation.csv`
 - `timeline.md`
 
-El escenario contiene depósitos, un retiro, una salida de cambio, bloques y antecesores. Cambiar `ledger.balanceBtc`, cualquier output o cualquier input cambia automáticamente la conciliación.
+El escenario contiene depósitos, un retiro, una salida de cambio, bloques y antecesores. Cambiar `ledger.balanceBtc`, cualquier output o cualquier input cambia automáticamente la conciliación. El generador mina 103 bloques antes de financiar el caso para que tres recompensas hayan superado la madurez de coinbase de regtest.
 
 ## Levantar Bitcoin Core desde cero
 
