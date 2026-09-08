@@ -93,7 +93,7 @@ src/api/ src/app.js  La frontera HTTP
 src/web/static/      El panel, sin framework y sin build
 config/              Avisos, politica y el catalogo de reglas
 scripts/             Las puertas de calidad y las utilidades
-test/                64 pruebas con node:test
+test/                69 pruebas con node:test
 docs/                La documentacion, gobernada por un validador de estilo
 packaging/windows/   Empaquetador, instalador y lanzadores
 ```

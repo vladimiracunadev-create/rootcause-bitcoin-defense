@@ -94,8 +94,8 @@ no hay cómputo pesado. Ese perfil no exige un lenguaje de sistemas.
 
 ### 3.2 Por qué hoy se queda en Node.js
 
-- Funciona, está probado y se puede empaquetar hoy: 2.400 líneas, cero
-  dependencias, 24 pruebas en verde, y una edición de Windows que arranca y
+- Funciona, está probado y se puede empaquetar hoy: código auditable, cero
+  dependencias, 69 pruebas en verde, y una edición de Windows que arranca y
   sirve el panel. Reescribirlo no añadiría una sola capacidad al producto.
 - Cero dependencias significa que el argumento habitual contra Node —el árbol
   de `node_modules` como superficie de suministro— aquí no aplica: no hay árbol,

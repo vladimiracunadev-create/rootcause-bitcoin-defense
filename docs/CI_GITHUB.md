@@ -21,7 +21,7 @@ en juego porque no hay dependencias.
 
 ---
 
-## CI — cinco trabajos
+## CI — seis trabajos
 
 ### 1. `calidad` — matriz de 6
 
@@ -50,7 +50,14 @@ Dos redes de seguridad independientes:
   redundante con la allowlist a propósito: dos mecanismos distintos tienen que
   fallar a la vez para que un método peligroso llegue a `main`.
 
-### 4. `app-windows` — la aplicación, de verdad
+### 4. `regtest-forensics` — UTXOs reales sin valor
+
+Levanta Bitcoin Core desde un volumen regtest vacío, crea wallets desechables,
+mina fondos sin valor, genera depósitos y un retiro, y publica los cinco
+informes de DigitalCustody Labs como artefacto de CI. Esta prueba protege el
+flujo completo que el fixture unitario no puede demostrar.
+
+### 5. `app-windows` — la aplicación, de verdad
 
 En `windows-latest`: genera el icono desde código, empaqueta la edición portable
 —descargando el `node.exe` oficial y verificando su SHA-256— y después **ejecuta
@@ -63,7 +70,7 @@ el lanzador `.cmd` real**, el mismo que usa una persona, comprobando:
 Esa última es la que caza el fallo clásico: aplicación que instala, abre y sale
 vacía. El ZIP se sube como artefacto de CI con 7 días de retención.
 
-### 5. `documentacion`
+### 6. `documentacion`
 
 Tres comprobaciones encadenadas:
 

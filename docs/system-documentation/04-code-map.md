@@ -12,9 +12,9 @@ qué depende, quién la usa y en qué flujo participa.
 
 | Directorio | Qué contiene | Estado |
 | --- | --- | --- |
-| `src/` | El sistema. 29 archivos, 2726 líneas de JavaScript | 🟢 |
-| `scripts/` | 12 utilidades y puertas de calidad, 2698 líneas | 🟢 |
-| `test/` | 11 archivos de pruebas, 1100 líneas, 64 casos | 🟢 |
+| `src/` | El sistema. 22 archivos, 3356 líneas de JavaScript | 🟢 |
+| `scripts/` | 14 utilidades y puertas de calidad | 🟢 |
+| `test/` | 13 archivos de pruebas, 69 casos | 🟢 |
 | `config/` | Avisos, política, catálogo de reglas y exenciones del escáner | 🟢 |
 | `docs/` | 33 documentos + 27 fichas de regla + este directorio | 🟢 / ⚪ |
 | `landing/` | Página pública para GitHub Pages | 🟢 / ⚪ |
@@ -81,6 +81,7 @@ qué depende, quién la usa y en qué flujo participa.
 | `src/domain/firmware.js` | 104 | Parseo, comparación y coincidencia de versiones de firmware | — |
 | `src/domain/secret-guard.js` | 100 | Rechazo y redacción de material secreto | — |
 | `src/domain/risk.js` | 46 | Agregar hallazgos a una puntuación y un nivel | — |
+| `src/domain/bitcoin-forensics.js` | 203 | Parser UTXO, fees, change, historia, selección conceptual, reconciliación y cinco informes | — |
 
 | Símbolo | Archivo | Familia de reglas que emite |
 | --- | --- | --- |
@@ -102,6 +103,8 @@ qué depende, quién la usa y en qué flujo participa.
 | `SecretMaterialError` | `secret-guard.js` | Clase de error |
 | `riskScore(findings)`, `riskLevel(score)`, `countBySeverity(findings)` | `risk.js` | — |
 | `SEVERITY_WEIGHT` | `risk.js` | Constante: critical 100, high 75, medium 45, low 20, info 5 |
+| `analyzeBitcoinScenario`, `renderForensicReports` | `bitcoin-forensics.js` | Calculan el caso y sus artefactos desde transacciones públicas |
+| `btcToSats`, `satsToBtc`, `selectCoins` | `bitcoin-forensics.js` | Aritmética exacta y selección conceptual sin firma |
 
 ### 2.4 · `src/services/` — casos de uso
 
@@ -190,13 +193,15 @@ que no hay superficie de path traversal.
 | `scripts/check-docs.js` | 91 | Todo enlace y ruta citada existe | Sí |
 | `scripts/seed-demo.js` | 23 | Siembra el estado cifrado con el inventario de demostración | No |
 | `scripts/generate-key.js` | 7 | Genera 32 bytes en base64 | No |
+| `scripts/analyze-bitcoin-scenario.js` | 24 | Genera los cinco informes desde evidencia pública | No |
+| `scripts/run-regtest-lab.js` | 122 | Construye DigitalCustody Labs en Bitcoin Core regtest | Sí, solo al nodo desechable |
 
-**Dependencia común:** los doce importan `PROJECT_ROOT` de `src/config.js`. Eso
+**Dependencia común:** los catorce importan `PROJECT_ROOT` de `src/config.js`. Eso
 los ata al árbol del repositorio: **no funcionan como herramienta global**.
 
 ---
 
-## 4 · `test/` — 64 casos en 11 archivos
+## 4 · `test/` — 69 casos en 13 archivos
 
 | Archivo | Casos | Qué cubre | Módulo bajo prueba |
 | --- | ---: | --- | --- |
@@ -207,6 +212,7 @@ los ata al árbol del repositorio: **no funcionan como herramienta global**.
 | `test/api.test.js` | 4 | Endpoints, cabecera de mutación, rechazo de secretos, alta | `app.js`, `router.js`, `DefenseService` |
 | `test/rule-engine.test.js` | 4 | Firmware afectado, concentración, aprobaciones, nodo caído | `rule-engine.js` |
 | `test/bitcoin-rpc.test.js` | 3 | RPC remoto, allowlist, normalización del snapshot | `bitcoin-rpc.js` |
+| `test/bitcoin-forensics.test.js` | 5 | UTXOs, fees, change, reconciliación e informes | `bitcoin-forensics.js` |
 | `test/encrypted-store.test.js` | 3 | Cifrado, clave incorrecta, escritura atómica | `encrypted-store.js` |
 | `test/secret-guard.test.js` | 3 | Campos prohibidos a cualquier profundidad, redacción | `secret-guard.js` |
 | `test/firmware.test.js` | 3 | Parseo, comparación, coincidencia de modelo y canal | `firmware.js` |
@@ -253,7 +259,7 @@ interpreta mal los bloques multilínea con finales Unix.
 
 | Workflow | Trabajos | Disparadores |
 | --- | ---: | --- |
-| `ci.yml` | 5: calidad, solo-local, invariantes, app-windows, documentacion | push, PR, manual |
+| `ci.yml` | 6: calidad, solo-local, invariantes, regtest, app-windows, documentación | push, PR, manual |
 | `security-audit.yml` | 6: custodia, runtime, secretos, workflows, inteligencia, plugin | push, PR, lunes 07:23 UTC, manual |
 | `codeql.yml` | 1: análisis JavaScript con `security-extended` | push, PR, lunes 06:17 UTC, manual |
 | `release-windows.yml` | 1: empaquetar, verificar y publicar | tag `v*`, manual |

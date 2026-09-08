@@ -74,7 +74,7 @@ Cómo se compensa la falta de tipos:
   `normalizeWallet`, `enumValue`, `integer` y el guardia de secretos. Los tipos
   no habrían protegido de una petición malformada; la validación sí.
 - **Objetos congelados.** La configuración se devuelve con `Object.freeze`.
-- **24 pruebas** sobre el comportamiento observable.
+- **69 pruebas** sobre el comportamiento observable.
 - **JSDoc donde el tipo no es evidente** por el nombre.
 
 Si el proyecto creciera un orden de magnitud, la respuesta correcta no sería

@@ -1,4 +1,6 @@
-# Laboratorio regtest
+# Laboratorio regtest de DigitalCustody Labs
+
+La implementación ejecutable se explica en [`../../docs/BITCOIN_FORENSICS_LAB.md`](../../docs/BITCOIN_FORENSICS_LAB.md). Desde la raíz del repositorio ejecuta `npm run lab:regtest`. El comando crea wallets desechables, mina fondos sin valor, genera depósitos y un retiro con change, comprueba que la red sea exactamente `regtest` y escribe los cinco informes en `build/bitcoin-forensics-regtest/`.
 
 Regtest permite probar incidentes sin valor real ni dependencia de mainnet.
 

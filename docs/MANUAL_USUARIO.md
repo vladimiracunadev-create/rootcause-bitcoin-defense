@@ -24,7 +24,7 @@ máquina. Si no conoces el vocabulario, ten a mano el
 2. **Verifica el hash** contra `SHA256SUMS.txt` antes de ejecutar nada:
 
    ~~~powershell
-   Get-FileHash .\RootCause-Bitcoin-Defense-0.2.0-win-x64-setup.exe -Algorithm SHA256
+   Get-FileHash .\RootCause-Bitcoin-Defense-0.3.0-win-x64-setup.exe -Algorithm SHA256
    ~~~
 
 3. Instálalo (no pide permisos de administrador) o descomprime el ZIP.

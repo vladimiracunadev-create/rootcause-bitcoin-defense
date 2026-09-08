@@ -20,6 +20,8 @@ import net from "node:net";
 
 const READ_ONLY_METHODS = new Set([
   "getbestblockhash",
+  "getblock",
+  "getblockheader",
   "getblockchaininfo",
   "getblockcount",
   "getmempoolentry",
@@ -27,6 +29,7 @@ const READ_ONLY_METHODS = new Set([
   "getnetworkinfo",
   "getpeerinfo",
   "getrawmempool",
+  "getrawtransaction",
   "gettxout",
   "getwalletinfo",
   "estimatesmartfee"

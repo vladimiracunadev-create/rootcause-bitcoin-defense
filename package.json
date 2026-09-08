@@ -26,6 +26,8 @@
     "package:windows": "powershell -NoProfile -ExecutionPolicy Bypass -File packaging/windows/make-icon.ps1 && powershell -NoProfile -ExecutionPolicy Bypass -File packaging/windows/build-portable.ps1",
     "audit:bitcoin": "node scripts/audit-bitcoin.js",
     "audit:bitcoin:report": "node scripts/audit-bitcoin.js --report",
+    "forensics:demo": "node scripts/analyze-bitcoin-scenario.js",
+    "lab:regtest": "node scripts/run-regtest-lab.js",
     "plugin:sync": "node scripts/sync-plugin.js",
     "docs:rules": "node scripts/generate-rule-docs.js"
   },

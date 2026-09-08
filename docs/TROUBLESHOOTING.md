@@ -13,7 +13,7 @@ comando que lo confirma.
 Antes de saltarte el aviso, verifica el hash:
 
 ~~~powershell
-Get-FileHash .\RootCause-Bitcoin-Defense-0.2.0-win-x64-setup.exe -Algorithm SHA256
+Get-FileHash .\RootCause-Bitcoin-Defense-0.3.0-win-x64-setup.exe -Algorithm SHA256
 ~~~
 
 Compáralo con `SHA256SUMS.txt` del release. **Si no coincide, no lo ejecutes** y

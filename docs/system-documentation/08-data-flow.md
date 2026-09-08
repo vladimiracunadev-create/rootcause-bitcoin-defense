@@ -135,7 +135,7 @@ serialización de ese objeto, nunca un acceso directo.
 
 **Todo el dominio es de solo lectura.** Ninguna función de `src/domain/` muta su
 entrada ni escribe nada. Es lo que hace que las reglas sean comprobables sin
-montar infraestructura, y lo que permite que las 64 pruebas corran en segundos.
+montar infraestructura, y lo que permite que las 69 pruebas corran en segundos.
 
 ---
 

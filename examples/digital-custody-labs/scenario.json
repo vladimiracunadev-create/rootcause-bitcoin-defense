@@ -1,0 +1,65 @@
+{
+  "company": "DigitalCustody Labs",
+  "network": "regtest",
+  "tipHeight": 106,
+  "ledger": { "balanceBtc": "100.00000000", "asOf": "2026-09-07T12:00:00Z" },
+  "controlledAddresses": ["bcrt1qdclhotreceive", "bcrt1qdclcoldreserve", "bcrt1qdclhotchange"],
+  "addressRoles": {
+    "bcrt1qdclhotreceive": "hot-receive",
+    "bcrt1qdclcoldreserve": "cold-reserve",
+    "bcrt1qdclhotchange": "change"
+  },
+  "controls": {
+    "singleKeyWeakness": false,
+    "multisig": "2-de-3 en reserva fría",
+    "roleSeparation": true,
+    "withdrawalLimitBtc": "5.00000000",
+    "addressAllowlisting": true,
+    "approvalWorkflow": "operador → aprobador → firmantes",
+    "immutableAudit": true
+  },
+  "transactions": [
+    {
+      "txid": "0000000000000000000000000000000000000000000000000000000000000001",
+      "vin": [{ "coinbase": "01" }],
+      "vout": [{ "n": 0, "value": "50.00000000", "scriptPubKey": { "address": "bcrt1qminerone", "type": "witness_v0_keyhash" } }],
+      "blockhash": "1000000000000000000000000000000000000000000000000000000000000001",
+      "blockheight": 101, "blocktime": 1788782400, "confirmations": 6
+    },
+    {
+      "txid": "0000000000000000000000000000000000000000000000000000000000000002",
+      "vin": [{ "coinbase": "02" }],
+      "vout": [{ "n": 0, "value": "50.00000000", "scriptPubKey": { "address": "bcrt1qminertwo", "type": "witness_v0_keyhash" } }],
+      "blockhash": "1000000000000000000000000000000000000000000000000000000000000002",
+      "blockheight": 101, "blocktime": 1788782400, "confirmations": 6
+    },
+    {
+      "txid": "0000000000000000000000000000000000000000000000000000000000000003",
+      "vin": [{ "coinbase": "03" }],
+      "vout": [{ "n": 0, "value": "50.00000000", "scriptPubKey": { "address": "bcrt1qminerthree", "type": "witness_v0_keyhash" } }],
+      "blockhash": "1000000000000000000000000000000000000000000000000000000000000003",
+      "blockheight": 101, "blocktime": 1788782400, "confirmations": 6
+    },
+    {
+      "txid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "vin": [{ "txid": "0000000000000000000000000000000000000000000000000000000000000001", "vout": 0 }, { "txid": "0000000000000000000000000000000000000000000000000000000000000002", "vout": 0 }],
+      "vout": [{ "n": 0, "value": "60.00000000", "scriptPubKey": { "address": "bcrt1qdclhotreceive", "type": "witness_v0_keyhash" } }, { "n": 1, "value": "39.99990000", "scriptPubKey": { "address": "bcrt1qminerchange", "type": "witness_v0_keyhash" } }],
+      "blockhash": "2000000000000000000000000000000000000000000000000000000000000001",
+      "blockheight": 102, "blocktime": 1788783000, "confirmations": 5
+    },
+    {
+      "txid": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "vin": [{ "txid": "0000000000000000000000000000000000000000000000000000000000000003", "vout": 0 }],
+      "vout": [{ "n": 0, "value": "45.00000000", "scriptPubKey": { "address": "bcrt1qdclcoldreserve", "type": "witness_v0_keyhash" } }, { "n": 1, "value": "4.99995000", "scriptPubKey": { "address": "bcrt1qminerchange2", "type": "witness_v0_keyhash" } }],
+      "blockhash": "2000000000000000000000000000000000000000000000000000000000000002",
+      "blockheight": 103, "blocktime": 1788783600, "confirmations": 4
+    },
+    {
+      "txid": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "vin": [{ "txid": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "vout": 0 }],
+      "vout": [{ "n": 0, "value": "8.00000000", "scriptPubKey": { "address": "bcrt1qapprovedvendor", "type": "witness_v0_keyhash" } }, { "n": 1, "value": "51.99990000", "scriptPubKey": { "address": "bcrt1qdclhotchange", "type": "witness_v0_keyhash" } }],
+      "blockhash": "2000000000000000000000000000000000000000000000000000000000000003",
+      "blockheight": 104, "blocktime": 1788784200, "confirmations": 3
+    }
+  ]
+}

@@ -296,7 +296,7 @@ Ejecutados sobre el commit `acdf4dd` durante este análisis:
 
 | Control | Resultado |
 | --- | --- |
-| `node --test` | 🟢 64 de 64 |
+| `node --test` | 🟢 69 de 69 |
 | `node scripts/validate-repo.js` | 🟢 156 archivos, sin material privado embebido |
 | `node scripts/check-local-only.js` | 🟢 Cero dependencias, cero orígenes remotos, CSP intacta |
 | `node scripts/check-security-claims.js` | 🟢 **20 invariantes verificados contra la aplicación en marcha** |

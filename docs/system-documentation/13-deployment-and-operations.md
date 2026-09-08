@@ -24,7 +24,7 @@ producto es local por diseño: alojarlo invalidaría su modelo de seguridad.
 
 | Workflow | Cuándo | Qué hace |
 | --- | --- | --- |
-| `ci.yml` | push a `main`, PR, manual | 5 trabajos de validación |
+| `ci.yml` | push a `main`, PR, manual | 6 trabajos de validación, incluido Bitcoin Core regtest |
 | `security-audit.yml` | push, PR, **lunes 07:23 UTC**, manual | 6 trabajos de auditoría |
 | `codeql.yml` | push, PR, **lunes 06:17 UTC**, manual | Análisis estático `security-extended` |
 | `release-windows.yml` | **tag `v*`**, manual | Empaquetar, verificar y publicar |

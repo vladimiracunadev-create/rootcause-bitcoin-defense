@@ -260,8 +260,8 @@ node --test
 Resultado sobre el commit analizado:
 
 ```text
-ℹ tests 64
-ℹ pass 64
+ℹ tests 69
+ℹ pass 69
 ℹ fail 0
 ```
 
@@ -274,7 +274,7 @@ Las siete puertas de calidad, en el orden en que las encadena `pnpm check`:
 | 3 | `node scripts/check-docs.js` | Todo enlace y ruta citada en la documentación existe |
 | 4 | `node scripts/check-doc-style.js` | Estilo visual de la documentación |
 | 5 | `node scripts/generate-rule-docs.js --check` | Las 26 fichas coinciden con el catálogo |
-| 6 | `node --test` | Las 64 pruebas |
+| 6 | `node --test` | Las 69 pruebas |
 | 7 | `node scripts/check-security-claims.js` | 20 invariantes contra la aplicación en marcha |
 
 Todo de una vez:

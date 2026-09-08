@@ -457,7 +457,7 @@ efectos · quién la llama · qué llama · riesgo al modificarla.**
 | --- | --- | --- |
 | `pnpm start` | Arranca el servidor | El puerto está ocupado o falta la clave |
 | `pnpm dev` | Arranca con `--watch` | Ídem |
-| `pnpm test` | Ejecuta las 64 pruebas | Alguna falla |
+| `pnpm test` | Ejecuta las 69 pruebas | Alguna falla |
 | `pnpm lint` | `validate-repo.js` | Falta un archivo, JSON inválido, sintaxis rota, versión desincronizada |
 | `pnpm check` | Encadena 7 puertas | Cualquiera falla |
 | `pnpm check:local-only` | Cero dependencias y orígenes | Hay dependencias, CDN o CSP relajada |

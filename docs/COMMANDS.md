@@ -20,8 +20,8 @@ usarlo. Nada aquí necesita instalar dependencias: no hay ninguna.
 | `pnpm check:style` | Solo el estilo visual de la documentación |
 | `pnpm check:rules` | Solo que las fichas de regla coincidan con el catálogo |
 | `pnpm docs:rules` | Regenera las 26 fichas, su índice y la página publicada |
-| `pnpm check:rules` | Que las fichas de regla coincidan con el catálogo |
-| `pnpm docs:rules` | Regenera las 26 fichas, su índice y la página publicada |
+| `pnpm forensics:demo` | Calcula DigitalCustody Labs desde el fixture y genera cinco informes |
+| `pnpm lab:regtest` | Levanta Bitcoin Core regtest desde cero, genera transacciones y reconcilia UTXOs |
 | `pnpm generate:data-key` | Genera una clave AES-256 para la persistencia cifrada |
 | `pnpm seed:demo` | Vuelca el estado de demostración por stdout |
 | `pnpm package:windows` | Genera el icono y empaqueta la edición portable |

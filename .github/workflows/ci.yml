@@ -1,7 +1,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # CI — RootCause Bitcoin Defense
 #
-# Cinco puertas, y ninguna es decorativa:
+# Seis trabajos, y ninguno es decorativo:
 #
 #   1. calidad        → validacion del repositorio y tests en tres sistemas
 #                       operativos y dos versiones de Node.
@@ -11,10 +11,12 @@
 #                       comprueba que rechaza semillas, mutaciones sin cabecera
 #                       y RPC remoto; y que la allowlist RPC sigue siendo de
 #                       solo lectura.
-#   4. app-windows    → empaqueta la edicion de escritorio y la ARRANCA para
+#   4. regtest        → levanta Bitcoin Core desde cero, genera transacciones
+#                       controladas y produce los cinco informes forenses.
+#   5. app-windows    → empaqueta la edicion de escritorio y la ARRANCA para
 #                       comprobar que sirve el panel. Un ZIP del tamano
 #                       esperado no prueba que la aplicacion funcione.
-#   5. documentacion  → los enlaces internos existen y el estilo visual sigue
+#   6. documentacion  → los enlaces internos existen y el estilo visual sigue
 #                       siendo el de la familia RootCause.
 #
 # Robustez: actions oficiales pinneadas a commit SHA, permisos minimos,
@@ -141,6 +143,32 @@ jobs:
             exit 1
           fi
           echo "  ningun metodo de gasto presente"
+
+  regtest-forensics:
+    name: Bitcoin Core regtest y reconciliacion UTXO
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Node LTS
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+
+      - name: Generar y reconciliar DigitalCustody Labs
+        run: node scripts/run-regtest-lab.js
+
+      - name: Publicar los cinco informes forenses
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: digital-custody-labs-forensics
+          path: build/bitcoin-forensics-regtest/
+          retention-days: 7
+          if-no-files-found: error
 
   app-windows:
     name: Aplicacion de Windows (empaquetar y arrancar)

@@ -5,10 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="RootCause Bitcoin Defense — aplicación de escritorio watch-only que inventaría la procedencia de claves Bitcoin, detecta firmware con defectos de entropía publicados y explica la causa raíz con evidencia. Todo local, cero dependencias, nunca pide semillas." />
+    content="RootCause Bitcoin Defense — aplicación watch-only y laboratorio UTXO que analiza procedencia, change, fees, transacciones y reconciliación contable en regtest. Todo local, cero dependencias, nunca pide semillas." />
   <meta property="og:title" content="RootCause Bitcoin Defense — defensa watch-only para custodia Bitcoin" />
   <meta property="og:description"
-    content="Tu wallet puede estar comprometida sin que nadie la haya tocado. Inventario de procedencia de claves, avisos de firmware y respuesta a incidentes. Local, sin dependencias y sin pedirte jamás una semilla." />
+    content="Forensics Bitcoin sobre el modelo UTXO real: procedencia, grafo de transacciones, reconciliación y custodia segura en regtest. Local, sin dependencias y sin pedirte jamás una semilla." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://vladimiracunadev-create.github.io/rootcause-bitcoin-defense/" />
   <title>RootCause Bitcoin Defense</title>
@@ -24,6 +24,7 @@
       <nav class="nav-links">
         <a href="#problema">El problema</a>
         <a href="#que-hace">Qué hace</a>
+        <a href="#forensics">Forensics UTXO</a>
         <a href="reglas.html">Reglas</a>
         <a href="#prueba">La prueba</a>
         <a href="#honestidad">Honestidad</a>
@@ -115,6 +116,40 @@
             modelo, firmware y método.
           </p>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="forensics" class="alt">
+    <div class="inner">
+      <p class="eyebrow">DigitalCustody Labs</p>
+      <h2>Bitcoin es un conjunto de UTXOs, no una lista de movimientos</h2>
+      <p class="lead">
+        El laboratorio levanta Bitcoin Core en regtest, genera depósitos y retiros
+        sin valor real, reconstruye inputs, outputs, change y fees, y reconcilia el
+        saldo calculado con un libro interno de 100 BTC.
+      </p>
+      <div class="grid">
+        <article class="card">
+          <span class="mark" aria-hidden="true">⛓</span>
+          <h3>Procedencia verificable</h3>
+          <p>Cada UTXO conserva txid, índice, dirección, bloque, fecha y confirmaciones; el grafo enlaza cada gasto con sus outputs anteriores.</p>
+        </article>
+        <article class="card">
+          <span class="mark" aria-hidden="true">≠</span>
+          <h3>Reconciliación calculada</h3>
+          <p>La diferencia sale de sumar UTXOs controlados y compararlos con el libro. Cambiar las transacciones cambia el resultado.</p>
+        </article>
+        <article class="card">
+          <span class="mark" aria-hidden="true">✓</span>
+          <h3>Laboratorio seguro</h3>
+          <p>Regtest reproducible, selección de monedas y PSBT educativos, multisig, roles, límites, allowlist y auditoría inmutable. Nunca usa fondos reales.</p>
+        </article>
+      </div>
+      <pre class="block"><span class="cmd">$ npm run forensics:demo</span>  → cinco informes forenses
+<span class="cmd">$ npm run lab:regtest</span>     → Bitcoin Core desde cero</pre>
+      <div class="cta" style="margin-top:2rem">
+        <a class="btn btn-primary" href="https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense/blob/main/docs/BITCOIN_FORENSICS_LAB.md">Abrir el laboratorio</a>
       </div>
     </div>
   </section>
@@ -295,7 +330,7 @@ Invariantes de seguridad verificados: 20 comprobaciones.</pre>
         </article>
       </div>
 
-      <pre class="block"><span class="cmd">PS&gt; Get-FileHash .\RootCause-Bitcoin-Defense-0.2.0-win-x64-setup.exe -Algorithm SHA256</span>
+      <pre class="block"><span class="cmd">PS&gt; Get-FileHash .\RootCause-Bitcoin-Defense-0.3.0-win-x64-setup.exe -Algorithm SHA256</span>
 <span class="cmd">$ git clone https://github.com/vladimiracunadev-create/rootcause-bitcoin-defense</span>
 <span class="cmd">$ node src/server.js</span>   → http://127.0.0.1:8787</pre>
 

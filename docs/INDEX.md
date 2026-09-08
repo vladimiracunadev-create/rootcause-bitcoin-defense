@@ -20,6 +20,7 @@ Toda la documentación del proyecto, agrupada por a quién sirve.
 | [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) | Problemas comunes, con el comando que confirma cada causa |
 | [`POLITICA_DE_PRIVACIDAD_LOCAL.md`](POLITICA_DE_PRIVACIDAD_LOCAL.md) | Qué datos toca el producto, dónde quedan y cómo verificarlo |
 | [`POSTURA_DE_DESPLIEGUE.md`](POSTURA_DE_DESPLIEGUE.md) | Los ocho controles con los que la aplicación se audita a sí misma |
+| [`BITCOIN_FORENSICS_LAB.md`](BITCOIN_FORENSICS_LAB.md) | Laboratorio UTXO: regtest, reconciliación y cinco informes forenses |
 | [`SECURITY-CHECKLIST.md`](SECURITY-CHECKLIST.md) | Comprobaciones antes de usarlo con información real |
 
 ## 📖 Documentación de sistema
@@ -48,7 +49,7 @@ qué queda sin verificar.
 | [`COMMANDS.md`](COMMANDS.md) | Referencia de comandos, variables de entorno y llamadas a la API |
 | [`REQUIREMENTS.md`](REQUIREMENTS.md) | Requisitos para usar y para desarrollar |
 | [`TESTING.md`](TESTING.md) | Estrategia de pruebas y las cinco puertas de calidad |
-| [`CI_GITHUB.md`](CI_GITHUB.md) | Los tres workflows y cómo replicarlos en local |
+| [`CI_GITHUB.md`](CI_GITHUB.md) | Los cinco workflows y cómo replicarlos en local |
 | [`RELEASE_CHECKLIST.md`](RELEASE_CHECKLIST.md) | Publicar un release, con la verificación de cada paso |
 | [`AUDITORIA_14_ETAPAS.md`](AUDITORIA_14_ETAPAS.md) | El skill de auditoría de custodia Bitcoin, etapa por etapa |
 | [`AUDITORIA_CONTINUA.md`](AUDITORIA_CONTINUA.md) | Cómo se mantiene el sistema al día: reevaluación al cambiar, CI y auditoría semanal |

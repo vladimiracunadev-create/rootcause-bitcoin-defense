@@ -216,7 +216,7 @@ necesaria para que la aplicación arranque y detecte.
 
 | Indicador | Valor |
 | --- | --- |
-| Pruebas | 64, todas pasando (`node --test`) |
+| Pruebas | 69, todas pasando (`node --test`) |
 | Validadores del repositorio | 7, todos en verde |
 | Invariantes de seguridad verificados en marcha | 20 |
 | Reglas implementadas y documentadas | 26 de 26 |

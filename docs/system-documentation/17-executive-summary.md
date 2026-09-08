@@ -16,8 +16,8 @@ clave y se puede demostrar?**
 | ¿Qué es? | Una aplicación local que inventaría la procedencia de claves Bitcoin y detecta exposición criptográfica |
 | ¿Qué **no** es? | Una wallet. No custodia claves, no firma, no transmite y rechaza cualquier semilla que se le envíe |
 | ¿Para quién? | Titulares de custodia propia, tesorerías pequeñas, respondedores de incidentes y auditores |
-| ¿En qué estado? | Versión 0.3.0, funcional, publicada, con 64 pruebas y 11 puertas de calidad automáticas |
-| ¿Cuánto código? | Unas 6900 líneas de JavaScript, **sin una sola dependencia de terceros** |
+| ¿En qué estado? | Versión 0.3.0, funcional, publicada, con 69 pruebas y 15 trabajos de calidad automáticos |
+| ¿Cuánto código? | Unas 7100 líneas de JavaScript, **sin una sola dependencia de terceros** |
 | ¿Licencia? | MIT |
 
 ---
@@ -89,8 +89,8 @@ del usuario. **Cero dependencias de terceros**, verificado en cada compilación.
 | Indicador | Valor |
 | --- | --- |
 | Versión | 0.3.0, publicada con artefactos para Windows |
-| Pruebas | 64, todas pasando |
-| Puertas de calidad automáticas | 11 trabajos en 5 workflows |
+| Pruebas | 69, todas pasando |
+| Puertas de calidad automáticas | 15 trabajos en 5 workflows |
 | Sistemas operativos validados | Windows, Linux y macOS, en Node 22 y 24 |
 | Reglas implementadas y documentadas | 26 de 26 |
 | Documentación | 33 documentos + 26 fichas de regla + este análisis |

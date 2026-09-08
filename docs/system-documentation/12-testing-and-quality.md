@@ -32,7 +32,7 @@ pruebas siguientes por orden de valor.
 
 ## 2 · Inventario de pruebas
 
-**64 casos en 11 archivos**, todos pasando.
+**69 casos en 13 archivos**, todos pasando.
 
 | Archivo | Casos | Tipo |
 | --- | ---: | --- |
@@ -43,6 +43,7 @@ pruebas siguientes por orden de valor.
 | `test/api.test.js` | 4 | **Integración con servidor HTTP real** |
 | `test/rule-engine.test.js` | 4 | Unitaria de dominio |
 | `test/bitcoin-rpc.test.js` | 3 | Unitaria con `fetch` inyectado |
+| `test/bitcoin-forensics.test.js` | 5 | Unitaria de dominio y generación de informes |
 | `test/encrypted-store.test.js` | 3 | Unitaria con sistema de archivos real |
 | `test/secret-guard.test.js` | 3 | Unitaria de dominio |
 | `test/firmware.test.js` | 3 | Unitaria de dominio |
@@ -131,11 +132,12 @@ un `DefenseService` reales. **No hay mocks de la capa HTTP.** Cubre:
 
 ## 5 · Las puertas de calidad
 
-Cinco en CI, más una de auditoría con seis trabajos.
+Seis en CI, seis en la auditoría y uno en cada workflow de CodeQL, release y Pages: 15 trabajos en total.
 
 | Puerta | Trabajo de CI | Qué garantiza |
 | --- | --- | --- |
 | Calidad | `calidad` | Validación y pruebas en **3 sistemas operativos × 2 versiones de Node** |
+| CI | `regtest-forensics` | Bitcoin Core real, transacciones controladas y cinco informes UTXO |
 | Solo local | `solo-local` | Cero dependencias, cero orígenes remotos, CSP intacta, `npm ls` vacío |
 | Invariantes | `invariantes` | **Arranca la aplicación real** y la ataca; más un `grep` contra métodos RPC de gasto |
 | App de Windows | `app-windows` | Empaqueta, **arranca el `.cmd` real** y comprueba `/api/health`, el panel y **que el inventario no esté vacío** |
@@ -169,7 +171,7 @@ Deducidos del comportamiento de CI y del release, no de un documento:
 
 | Criterio | Dónde se exige |
 | --- | --- |
-| Las 64 pruebas pasan en 6 combinaciones | `ci.yml` |
+| Las 69 pruebas pasan en 6 combinaciones | `ci.yml` |
 | Cero dependencias declaradas o instaladas | `check-local-only.js` |
 | CSP con sus 5 directivas clave, sin `unsafe-inline` | Ídem |
 | Ningún método RPC de gasto en `src/` | `grep` en `ci.yml` |

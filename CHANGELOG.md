@@ -2,8 +2,23 @@
 
 ## Sin publicar
 
-Documentación de sistema completa, y las dos correcciones que ese análisis
-identificó como prioritarias.
+Forensics Bitcoin sobre el modelo UTXO real, además de la documentación de
+sistema y las correcciones identificadas por ese análisis.
+
+### Añade — forensics UTXO
+
+- Parser de transacciones con inputs, outputs y cantidades exactas en satoshis;
+  cálculo de fees, confirmaciones, metadatos de bloque e historia por dirección.
+- Conjunto UTXO, detección explícita de change, grafo GraphML y procedencia por
+  outpoint para reconciliar el libro interno con las wallets controladas.
+- Caso **DigitalCustody Labs** calculado desde los datos, con los informes
+  `bitcoin-summary.md`, `utxo-analysis.csv`, `transaction-graph.graphml`,
+  `reconciliation.csv` y `timeline.md`.
+- Laboratorio reproducible de Bitcoin Core en regtest, sin fondos reales, y un
+  fixture determinista que corre sin Docker.
+- Contenido seguro sobre selección de monedas, PSBT, multisig, separación de
+  roles, límites de retiro, allowlisting, aprobaciones y auditoría inmutable.
+- La suite pasa de 64 a **69 pruebas**.
 
 ### Corrige
 
